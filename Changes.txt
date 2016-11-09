@@ -1,0 +1,88 @@
+  9 DEVI Darshan Pune
+  Mahalaxmi kolhapur
+  EkviraDevi Lonavla
+  Mandhar Devi
+
+1. Mobile number first. Leave event customer search
+2. User wise ticket details report
+3. Custom SMS all Mobile/Alternate number search.
+4. Delete specific data (Bus master, Customer Master, Ticket Master)
+
+
+
+Tables:
+----------------------------------------
+Alter TABLE dbo.bus_Mapping ADD
+Discount	int,
+Discount_Given_By	varchar(50),
+DiscountReason	varchar(50),
+Actual_Fees	int,
+Created_By	varchar(50),
+Created_Date	datetime,
+Updated_By	varchar(50),
+Updated_Date	datetime
+
+ALTER TABLE dbo.Customer_Master DROP COLUMN Fees;
+ALTER TABLE dbo.Customer_Master DROP COLUMN Discount;
+ALTER TABLE dbo.Customer_Master DROP COLUMN Discount_Given_By;
+ALTER TABLE dbo.Customer_Master DROP COLUMN DiscountReason;
+ALTER TABLE dbo.Customer_Master DROP COLUMN Actual_Fees;
+
+CREATE TABLE dbo.Bus_Route_Master
+
+ALTER TABLE dbo.Bus_Master DROP COLUMN Bus_Route;
+ALTER TABLE dbo.Bus_Master ADD Route_ID int
+
+SPs:
+-----
+ALTER PROCEDURE [dbo].[sp_GetAllCustomers]
+ALTER PROCEDURE [dbo].[sp_getCustomerDetails]
+
+CREATE PROCEDURE [dbo].[sp_InsertCustomerAndTravel]
+CREATE PROCEDURE [dbo].[sp_UpdateCustomerAndTravel]
+
+DROP PROCEDURE [dbo].[sp_InsertCustomer]
+DROP PROCEDURE [dbo].[sp_UpdateCustomer]
+DROP PROCEDURE dbo.sp_CustomerReport
+DROP PROCEDURE [dbo].[sp_DeleteCustomer]
+
+ALTER PROCEDURE [dbo].[sp_AllYatraDateAllBusesCashReport]
+ALTER PROCEDURE [dbo].[sp_DailyCashReport]
+ALTER PROCEDURE [dbo].[sp_DailyCashReport_Yearly]
+ALTER PROCEDURE [dbo].[sp_CashReport_Userwise]
+ALTER PROCEDURE [dbo].[sp_CashReport_UserwiseYearly]
+ALTER PROCEDURE [dbo].[sp_CashReport]
+ALTER PROCEDURE [dbo].[sp_CashReport_Yearly]
+ALTER PROCEDURE [dbo].[sp_DiscountReport_Yearly]
+
+ALTER PROCEDURE [dbo].[sp_BirthDateReport]
+
+ALTER PROCEDURE [dbo].[sp_getBusRegistrationInfo]
+ALTER PROCEDURE [dbo].[sp_UpdateBusRegistration]
+
+ALTER PROCEDURE [dbo].[sp_AllYatraDateAllBusesCashReport]
+ALTER PROCEDURE [dbo].[sp_getAvailableSeatNo]
+ALTER PROCEDURE [dbo].[sp_SearchReport]
+ALTER PROCEDURE [dbo].[sp_DailyCashReport]
+ALTER PROCEDURE [dbo].[sp_DailyCashReport_Yearly]
+
+
+Scripts:
+---------
+DeleteDuplicate
+
+Efforts:
+--------
+Customer duplicate change - 3 hrs
+Reports impacted for Customer Change - 1 hr
+Birthdate Report monthly - 1/2 hr
+
+Print through coding - 1 hr
+Route parameter - 4 hrs
+
+Multiple Registration - 5 hrs
+Userwise Ticket Report - 1 hr
+Delete Specific Data - 1 hr
+
+Customer Management - 2 hrs
+Installations - 4 hrs
