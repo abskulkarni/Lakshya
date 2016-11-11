@@ -1,0 +1,798 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{56451063-6A08-49A5-8F6F-9C45FF53FCDB}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Lakshya_Yatra</RootNamespace>
+    <AssemblyName>Lakshya-Yatra</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AForge.Video">
+      <HintPath>..\..\AForge\AForge.Video.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video.DirectShow">
+      <HintPath>..\..\AForge\AForge.Video.DirectShow.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="FlashControlV71, Version=1.0.3187.32366, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BirthdayWishes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BirthdayWishes.Designer.cs">
+      <DependentUpon>BirthdayWishes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessRules\BusinessRules.cs" />
+    <Compile Include="BusRegistration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BusRegistration.Designer.cs">
+      <DependentUpon>BusRegistration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChangePassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangePassword.Designer.cs">
+      <DependentUpon>ChangePassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerMaintenance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomerMaintenance.Designer.cs">
+      <DependentUpon>CustomerMaintenance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomSMS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomSMS.Designer.cs">
+      <DependentUpon>CustomSMS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Multiple_Registration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Multiple_Registration.Designer.cs">
+      <DependentUpon>Multiple_Registration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Registration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registration.Designer.cs">
+      <DependentUpon>Registration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReportContainer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReportContainer.Designer.cs">
+      <DependentUpon>ReportContainer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\BusReport\rptBusReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptBusReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\CashReports\AllYatraAllYatraDatesReport\rptAllYatraDatesAllBuses.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptAllYatraDatesAllBuses.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\CashReports\DailyCashReport\rptDailyCashReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptDailyCashReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\CashReports\UserwiseCashReport\dsCashReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsCashReport.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\CashReports\UserwiseCashReport\rptUserwiseCashReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptUserwiseCashReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\CashReports\UserwiseCashReport\UserwiseCashReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\CashReports\UserwiseCashReport\UserwiseCashReport.Designer.cs">
+      <DependentUpon>UserwiseCashReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\CashReports\UserwiseYearlyCashReport\dsCashReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsCashReport.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\CashReports\UserwiseYearlyCashReport\rptUserwiseYearlyCashReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptUserwiseYearlyCashReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\CashReports\UserwiseYearlyCashReport\UserwiseYearlyCashReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\CashReports\UserwiseYearlyCashReport\UserwiseYearlyCashReport.Designer.cs">
+      <DependentUpon>UserwiseYearlyCashReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\CashReports\YatraDatewiseCashReport\rptYatraDatewiseCashReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptYatraDatewiseCashReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\DiscountReport\DiscountReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\DiscountReport\DiscountReport.Designer.cs">
+      <DependentUpon>DiscountReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DiscountReport\dsDiscountReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsDiscountReport.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DiscountReport\rptDiscountReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptDiscountReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\ElectionReport\dsElectionReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsElectionReport.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ElectionReport\ElectionReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\ElectionReport\ElectionReport.Designer.cs">
+      <DependentUpon>ElectionReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ElectionReport\rptElectionReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptElectionReport.rpt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\EmptySeatsReport\rptEmptySeats.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptEmptySeats.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\ExpenseReport\dsExpenseReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsExpenseReport.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ExpenseReport\ExpenseReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\ExpenseReport\ExpenseReport.Designer.cs">
+      <DependentUpon>ExpenseReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ExpenseReport\rptExpenseReport_Datewise.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptExpenseReport_Datewise.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\ExpenseReport\rptExpenseReport_Datewise_1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptExpenseReport_Datewise_1.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\ExpenseReport\rptExpenseReport_Userwise.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptExpenseReport_Userwise.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\Other Reports\BirthdateReport\BirthDateReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\Other Reports\BirthdateReport\BirthDateReport.Designer.cs">
+      <DependentUpon>BirthDateReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Other Reports\BirthdateReport\dsBirthDateReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsBirthDateReport.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Other Reports\BirthdateReport\rptBirthDateReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptBirthDateReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\Other Reports\Bloodgroup\BloodGroupReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\Other Reports\Bloodgroup\BloodGroupReport.Designer.cs">
+      <DependentUpon>BloodGroupReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Other Reports\Bloodgroup\dsBlodGroupReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsBlodGroupReport.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Other Reports\Bloodgroup\rptBloodGroupReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptBloodGroupReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\TicketReports\UserwiseTicketReport\dsUserwiseTicketReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsUserwiseTicketReport.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\TicketReports\UserwiseTicketReport\rptUserwiseTicketReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptUserwiseTicketReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\TicketReports\UserwiseTicketReport\UserwiseTicketReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\TicketReports\UserwiseTicketReport\UserwiseTicketReport.Designer.cs">
+      <DependentUpon>UserwiseTicketReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserMaintenance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserMaintenance.Designer.cs">
+      <DependentUpon>UserMaintenance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\BusReport\BusReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\BusReport\BusReport.Designer.cs">
+      <DependentUpon>BusReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CashExpenses.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CashExpenses.Designer.cs">
+      <DependentUpon>CashExpenses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\CashReports\AllYatraAllYatraDatesReport\AllYatraDatesAllBusesReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\CashReports\AllYatraAllYatraDatesReport\AllYatraDatesAllBusesReport.Designer.cs">
+      <DependentUpon>AllYatraDatesAllBusesReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\CashReports\AllYatraAllYatraDatesReport\dsAllYatraDatesAllBuses.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsAllYatraDatesAllBuses.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\CashReports\DailyCashReport\DailyCashReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\CashReports\DailyCashReport\DailyCashReport.Designer.cs">
+      <DependentUpon>DailyCashReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DeleteAllDataPwd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeleteAllDataPwd.Designer.cs">
+      <DependentUpon>DeleteAllDataPwd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\BusReport\dsBusReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsBusReport.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\CashReports\YatraDatewiseCashReport\dsCashReport.Designer.cs">
+      <DependentUpon>dsCashReport.xsd</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\CashReports\DailyCashReport\dsDailyCashReport.cs">
+      <DependentUpon>dsDailyCashReport.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\CashReports\DailyCashReport\dsDailyCashReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsDailyCashReport.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\EmptySeatsReport\dsEmptySeats.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsEmptySeats.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\EmptySeatsReport\EmptySeats.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\EmptySeatsReport\EmptySeats.Designer.cs">
+      <DependentUpon>EmptySeats.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="LakshyaYatra.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LakshyaYatra.Designer.cs">
+      <DependentUpon>LakshyaYatra.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\CashReports\YatraDatewiseCashReport\Report.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\CashReports\YatraDatewiseCashReport\Report.Designer.cs">
+      <DependentUpon>Report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SearchCustomer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchCustomer.Designer.cs">
+      <DependentUpon>SearchCustomer.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="BirthdayWishes.resx">
+      <DependentUpon>BirthdayWishes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BusRegistration.resx">
+      <DependentUpon>BusRegistration.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangePassword.resx">
+      <DependentUpon>ChangePassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomerMaintenance.resx">
+      <DependentUpon>CustomerMaintenance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomSMS.resx">
+      <DependentUpon>CustomSMS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Multiple_Registration.resx">
+      <DependentUpon>Multiple_Registration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registration.resx">
+      <DependentUpon>Registration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportContainer.resx">
+      <DependentUpon>ReportContainer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\BusReport\rptBusReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptBusReport.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CashReports\AllYatraAllYatraDatesReport\rptAllYatraDatesAllBuses.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptAllYatraDatesAllBuses.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CashReports\DailyCashReport\rptDailyCashReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptDailyCashReport.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CashReports\UserwiseCashReport\rptUserwiseCashReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptUserwiseCashReport.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CashReports\UserwiseCashReport\UserwiseCashReport.resx">
+      <DependentUpon>UserwiseCashReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CashReports\UserwiseYearlyCashReport\rptUserwiseYearlyCashReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptUserwiseYearlyCashReport.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CashReports\UserwiseYearlyCashReport\UserwiseYearlyCashReport.resx">
+      <DependentUpon>UserwiseYearlyCashReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CashReports\YatraDatewiseCashReport\rptYatraDatewiseCashReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptYatraDatewiseCashReport.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\DiscountReport\DiscountReport.resx">
+      <DependentUpon>DiscountReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\DiscountReport\rptDiscountReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptDiscountReport.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\ElectionReport\ElectionReport.resx">
+      <DependentUpon>ElectionReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\ElectionReport\rptElectionReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptElectionReport.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\EmptySeatsReport\rptEmptySeats.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptEmptySeats.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\ExpenseReport\ExpenseReport.resx">
+      <DependentUpon>ExpenseReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\ExpenseReport\rptExpenseReport_Datewise.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptExpenseReport_Datewise.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\ExpenseReport\rptExpenseReport_Datewise_1.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptExpenseReport_Datewise_1.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\ExpenseReport\rptExpenseReport_Userwise.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptExpenseReport_Userwise.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Other Reports\BirthdateReport\BirthDateReport.resx">
+      <DependentUpon>BirthDateReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Other Reports\BirthdateReport\rptBirthDateReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptBirthDateReport.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Other Reports\Bloodgroup\BloodGroupReport.resx">
+      <DependentUpon>BloodGroupReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Other Reports\Bloodgroup\rptBloodGroupReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptBloodGroupReport.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\TicketReports\UserwiseTicketReport\rptUserwiseTicketReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptUserwiseTicketReport.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\TicketReports\UserwiseTicketReport\UserwiseTicketReport.resx">
+      <DependentUpon>UserwiseTicketReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserMaintenance.resx">
+      <DependentUpon>UserMaintenance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\BusReport\BusReport.resx">
+      <DependentUpon>BusReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CashExpenses.resx">
+      <DependentUpon>CashExpenses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CashReports\AllYatraAllYatraDatesReport\AllYatraDatesAllBusesReport.resx">
+      <DependentUpon>AllYatraDatesAllBusesReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CashReports\AllYatraAllYatraDatesReport\rptAllYatraDatesAllBuses.rdlc" />
+    <EmbeddedResource Include="Reports\CashReports\DailyCashReport\DailyCashReport.resx">
+      <DependentUpon>DailyCashReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeleteAllDataPwd.resx">
+      <DependentUpon>DeleteAllDataPwd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\EmptySeatsReport\EmptySeats.resx">
+      <DependentUpon>EmptySeats.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LakshyaYatra.resx">
+      <DependentUpon>LakshyaYatra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Reports\CashReports\YatraDatewiseCashReport\Report.resx">
+      <DependentUpon>Report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SearchCustomer.resx">
+      <DependentUpon>SearchCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Reports\BusReport\dsBusReport.xsc">
+      <DependentUpon>dsBusReport.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\BusReport\dsBusReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsBusReport.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reports\BusReport\dsBusReport.xss">
+      <DependentUpon>dsBusReport.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\CashReports\AllYatraAllYatraDatesReport\dsAllYatraDatesAllBuses.xsc">
+      <DependentUpon>dsAllYatraDatesAllBuses.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\CashReports\AllYatraAllYatraDatesReport\dsAllYatraDatesAllBuses.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsAllYatraDatesAllBuses.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reports\CashReports\AllYatraAllYatraDatesReport\dsAllYatraDatesAllBuses.xss">
+      <DependentUpon>dsAllYatraDatesAllBuses.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\CashReports\UserwiseCashReport\dsCashReport.xsc">
+      <DependentUpon>dsCashReport.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\CashReports\UserwiseCashReport\dsCashReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsCashReport.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reports\CashReports\UserwiseCashReport\dsCashReport.xss">
+      <DependentUpon>dsCashReport.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\CashReports\UserwiseYearlyCashReport\dsCashReport.xsc">
+      <DependentUpon>dsCashReport.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\CashReports\UserwiseYearlyCashReport\dsCashReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsCashReport.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reports\CashReports\UserwiseYearlyCashReport\dsCashReport.xss">
+      <DependentUpon>dsCashReport.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\CashReports\YatraDatewiseCashReport\dsCashReport.xsc">
+      <DependentUpon>dsCashReport.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\CashReports\YatraDatewiseCashReport\dsCashReport.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsCashReport.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Reports\CashReports\YatraDatewiseCashReport\dsCashReport.xss">
+      <DependentUpon>dsCashReport.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\CashReports\DailyCashReport\dsDailyCashReport.xsc">
+      <DependentUpon>dsDailyCashReport.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\CashReports\DailyCashReport\dsDailyCashReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsDailyCashReport.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reports\CashReports\DailyCashReport\dsDailyCashReport.xss">
+      <DependentUpon>dsDailyCashReport.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\DiscountReport\dsDiscountReport.xsc">
+      <DependentUpon>dsDiscountReport.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\DiscountReport\dsDiscountReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsDiscountReport.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reports\DiscountReport\dsDiscountReport.xss">
+      <DependentUpon>dsDiscountReport.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\ElectionReport\dsElectionReport.xsc">
+      <DependentUpon>dsElectionReport.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\ElectionReport\dsElectionReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsElectionReport.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reports\ElectionReport\dsElectionReport.xss">
+      <DependentUpon>dsElectionReport.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\EmptySeatsReport\dsEmptySeats.xsc">
+      <DependentUpon>dsEmptySeats.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\EmptySeatsReport\dsEmptySeats.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsEmptySeats.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reports\EmptySeatsReport\dsEmptySeats.xss">
+      <DependentUpon>dsEmptySeats.xsd</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\user-interface-design.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\digital-waves-background.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Fasticon-Happy-Bus-Bus-green.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Reports\ExpenseReport\dsExpenseReport.xsc">
+      <DependentUpon>dsExpenseReport.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\ExpenseReport\dsExpenseReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsExpenseReport.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reports\ExpenseReport\dsExpenseReport.xss">
+      <DependentUpon>dsExpenseReport.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\Other Reports\BirthdateReport\dsBirthDateReport.xsc">
+      <DependentUpon>dsBirthDateReport.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\Other Reports\BirthdateReport\dsBirthDateReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsBirthDateReport.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reports\Other Reports\BirthdateReport\dsBirthDateReport.xss">
+      <DependentUpon>dsBirthDateReport.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\Other Reports\Bloodgroup\dsBlodGroupReport.xsc">
+      <DependentUpon>dsBlodGroupReport.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\Other Reports\Bloodgroup\dsBlodGroupReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsBlodGroupReport.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reports\Other Reports\Bloodgroup\dsBlodGroupReport.xss">
+      <DependentUpon>dsBlodGroupReport.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\TicketReports\UserwiseTicketReport\dsUserwiseTicketReport.xsc">
+      <DependentUpon>dsUserwiseTicketReport.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\TicketReports\UserwiseTicketReport\dsUserwiseTicketReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsUserwiseTicketReport.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reports\TicketReports\UserwiseTicketReport\dsUserwiseTicketReport.xss">
+      <DependentUpon>dsUserwiseTicketReport.xsd</DependentUpon>
+    </None>
+    <None Include="Resources\NoImage.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

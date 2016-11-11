@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsBlodGroupReport" targetNamespace="http://tempuri.org/dsBlodGroupReport.xsd" xmlns:mstns="http://tempuri.org/dsBlodGroupReport.xsd" xmlns="http://tempuri.org/dsBlodGroupReport.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsBlodGroupReport" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsBlodGroupReport" msprop:Generator_UserDSName="dsBlodGroupReport">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtBloodGroup" msprop:Generator_TableClassName="dtBloodGroupDataTable" msprop:Generator_TableVarName="tabledtBloodGroup" msprop:Generator_RowChangedName="dtBloodGroupRowChanged" msprop:Generator_TablePropName="dtBloodGroup" msprop:Generator_RowDeletingName="dtBloodGroupRowDeleting" msprop:Generator_RowChangingName="dtBloodGroupRowChanging" msprop:Generator_RowEvHandlerName="dtBloodGroupRowChangeEventHandler" msprop:Generator_RowDeletedName="dtBloodGroupRowDeleted" msprop:Generator_RowClassName="dtBloodGroupRow" msprop:Generator_UserTableName="dtBloodGroup" msprop:Generator_RowEvArgName="dtBloodGroupRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="First_Name" msprop:Generator_ColumnVarNameInTable="columnFirst_Name" msprop:Generator_ColumnPropNameInRow="First_Name" msprop:Generator_ColumnPropNameInTable="First_NameColumn" msprop:Generator_UserColumnName="First_Name" type="xs:string" minOccurs="0" />
+              <xs:element name="Last_Name" msprop:Generator_ColumnVarNameInTable="columnLast_Name" msprop:Generator_ColumnPropNameInRow="Last_Name" msprop:Generator_ColumnPropNameInTable="Last_NameColumn" msprop:Generator_UserColumnName="Last_Name" type="xs:string" minOccurs="0" />
+              <xs:element name="Address" msprop:Generator_ColumnVarNameInTable="columnAddress" msprop:Generator_ColumnPropNameInRow="Address" msprop:Generator_ColumnPropNameInTable="AddressColumn" msprop:Generator_UserColumnName="Address" type="xs:string" minOccurs="0" />
+              <xs:element name="Age" msprop:Generator_ColumnVarNameInTable="columnAge" msprop:Generator_ColumnPropNameInRow="Age" msprop:Generator_ColumnPropNameInTable="AgeColumn" msprop:Generator_UserColumnName="Age" type="xs:short" minOccurs="0" />
+              <xs:element name="Blood_Group" msprop:Generator_ColumnVarNameInTable="columnBlood_Group" msprop:Generator_ColumnPropNameInRow="Blood_Group" msprop:Generator_ColumnPropNameInTable="Blood_GroupColumn" msprop:Generator_UserColumnName="Blood_Group" type="xs:string" minOccurs="0" />
+              <xs:element name="Mobile_No" msprop:Generator_ColumnVarNameInTable="columnMobile_No" msprop:Generator_ColumnPropNameInRow="Mobile_No" msprop:Generator_ColumnPropNameInTable="Mobile_NoColumn" msprop:Generator_UserColumnName="Mobile_No" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsBusReport" targetNamespace="http://tempuri.org/dsBusReport.xsd" xmlns:mstns="http://tempuri.org/dsBusReport.xsd" xmlns="http://tempuri.org/dsBusReport.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsBusReport" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsBusReport" msprop:Generator_UserDSName="dsBusReport">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtBusReport" msprop:Generator_TableClassName="dtBusReportDataTable" msprop:Generator_TableVarName="tabledtBusReport" msprop:Generator_RowChangedName="dtBusReportRowChanged" msprop:Generator_TablePropName="dtBusReport" msprop:Generator_RowDeletingName="dtBusReportRowDeleting" msprop:Generator_RowChangingName="dtBusReportRowChanging" msprop:Generator_RowEvHandlerName="dtBusReportRowChangeEventHandler" msprop:Generator_RowDeletedName="dtBusReportRowDeleted" msprop:Generator_RowClassName="dtBusReportRow" msprop:Generator_UserTableName="dtBusReport" msprop:Generator_RowEvArgName="dtBusReportRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Yatra_Date" msprop:Generator_ColumnVarNameInTable="columnYatra_Date" msprop:Generator_ColumnPropNameInRow="Yatra_Date" msprop:Generator_ColumnPropNameInTable="Yatra_DateColumn" msprop:Generator_UserColumnName="Yatra_Date" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Bus_Name" msprop:Generator_ColumnVarNameInTable="columnBus_Name" msprop:Generator_ColumnPropNameInRow="Bus_Name" msprop:Generator_ColumnPropNameInTable="Bus_NameColumn" msprop:Generator_UserColumnName="Bus_Name" type="xs:string" minOccurs="0" />
+              <xs:element name="Seat_No" msprop:Generator_ColumnVarNameInTable="columnSeat_No" msprop:Generator_ColumnPropNameInRow="Seat_No" msprop:Generator_ColumnPropNameInTable="Seat_NoColumn" msprop:Generator_UserColumnName="Seat_No" type="xs:short" minOccurs="0" />
+              <xs:element name="First_Name" msprop:Generator_ColumnVarNameInTable="columnFirst_Name" msprop:Generator_ColumnPropNameInRow="First_Name" msprop:Generator_ColumnPropNameInTable="First_NameColumn" msprop:Generator_UserColumnName="First_Name" type="xs:string" minOccurs="0" />
+              <xs:element name="Last_Name" msprop:Generator_ColumnVarNameInTable="columnLast_Name" msprop:Generator_ColumnPropNameInRow="Last_Name" msprop:Generator_ColumnPropNameInTable="Last_NameColumn" msprop:Generator_UserColumnName="Last_Name" type="xs:string" minOccurs="0" />
+              <xs:element name="Mobile_No" msprop:Generator_ColumnVarNameInTable="columnMobile_No" msprop:Generator_ColumnPropNameInRow="Mobile_No" msprop:Generator_ColumnPropNameInTable="Mobile_NoColumn" msprop:Generator_UserColumnName="Mobile_No" type="xs:string" minOccurs="0" />
+              <xs:element name="Address" msprop:Generator_ColumnVarNameInTable="columnAddress" msprop:Generator_ColumnPropNameInRow="Address" msprop:Generator_ColumnPropNameInTable="AddressColumn" msprop:Generator_UserColumnName="Address" type="xs:string" minOccurs="0" />
+              <xs:element name="Alternate_Mobile" msprop:Generator_ColumnVarNameInTable="columnAlternate_Mobile" msprop:Generator_ColumnPropNameInRow="Alternate_Mobile" msprop:Generator_ColumnPropNameInTable="Alternate_MobileColumn" msprop:Generator_UserColumnName="Alternate_Mobile" type="xs:string" minOccurs="0" />
+              <xs:element name="Registration_Date" msprop:Generator_ColumnVarNameInTable="columnRegistration_Date" msprop:Generator_ColumnPropNameInRow="Registration_Date" msprop:Generator_ColumnPropNameInTable="Registration_DateColumn" msprop:Generator_UserColumnName="Registration_Date" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
