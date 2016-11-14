@@ -289,6 +289,8 @@ namespace Lakshya_Yatra.Reports.ElectionReport {
             
             private global::System.Data.DataColumn columnAlternate_Mobile;
             
+            private global::System.Data.DataColumn columnArea;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public dtElectionReportDataTable() {
@@ -364,6 +366,14 @@ namespace Lakshya_Yatra.Reports.ElectionReport {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn AreaColumn {
+                get {
+                    return this.columnArea;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -399,14 +409,15 @@ namespace Lakshya_Yatra.Reports.ElectionReport {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public dtElectionReportRow AdddtElectionReportRow(string First_Name, string Last_Name, string Address, string Mobile_No, string Alternate_Mobile) {
+            public dtElectionReportRow AdddtElectionReportRow(string First_Name, string Last_Name, string Address, string Mobile_No, string Alternate_Mobile, string Area) {
                 dtElectionReportRow rowdtElectionReportRow = ((dtElectionReportRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         First_Name,
                         Last_Name,
                         Address,
                         Mobile_No,
-                        Alternate_Mobile};
+                        Alternate_Mobile,
+                        Area};
                 rowdtElectionReportRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowdtElectionReportRow);
                 return rowdtElectionReportRow;
@@ -434,6 +445,7 @@ namespace Lakshya_Yatra.Reports.ElectionReport {
                 this.columnAddress = base.Columns["Address"];
                 this.columnMobile_No = base.Columns["Mobile_No"];
                 this.columnAlternate_Mobile = base.Columns["Alternate_Mobile"];
+                this.columnArea = base.Columns["Area"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -449,6 +461,8 @@ namespace Lakshya_Yatra.Reports.ElectionReport {
                 base.Columns.Add(this.columnMobile_No);
                 this.columnAlternate_Mobile = new global::System.Data.DataColumn("Alternate_Mobile", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnAlternate_Mobile);
+                this.columnArea = new global::System.Data.DataColumn("Area", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnArea);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -671,6 +685,22 @@ namespace Lakshya_Yatra.Reports.ElectionReport {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Area {
+                get {
+                    try {
+                        return ((string)(this[this.tabledtElectionReport.AreaColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Area\' in table \'dtElectionReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledtElectionReport.AreaColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsFirst_NameNull() {
                 return this.IsNull(this.tabledtElectionReport.First_NameColumn);
             }
@@ -727,6 +757,18 @@ namespace Lakshya_Yatra.Reports.ElectionReport {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetAlternate_MobileNull() {
                 this[this.tabledtElectionReport.Alternate_MobileColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsAreaNull() {
+                return this.IsNull(this.tabledtElectionReport.AreaColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetAreaNull() {
+                this[this.tabledtElectionReport.AreaColumn] = global::System.Convert.DBNull;
             }
         }
         

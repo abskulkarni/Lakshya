@@ -12,7 +12,7 @@
   <xs:element name="dsElectionReport" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsElectionReport" msprop:Generator_UserDSName="dsElectionReport">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="dtElectionReport" msprop:Generator_TableClassName="dtElectionReportDataTable" msprop:Generator_TableVarName="tabledtElectionReport" msprop:Generator_TablePropName="dtElectionReport" msprop:Generator_RowDeletingName="dtElectionReportRowDeleting" msprop:Generator_RowChangingName="dtElectionReportRowChanging" msprop:Generator_RowEvHandlerName="dtElectionReportRowChangeEventHandler" msprop:Generator_RowDeletedName="dtElectionReportRowDeleted" msprop:Generator_UserTableName="dtElectionReport" msprop:Generator_RowChangedName="dtElectionReportRowChanged" msprop:Generator_RowEvArgName="dtElectionReportRowChangeEvent" msprop:Generator_RowClassName="dtElectionReportRow">
+        <xs:element name="dtElectionReport" msprop:Generator_TableClassName="dtElectionReportDataTable" msprop:Generator_TableVarName="tabledtElectionReport" msprop:Generator_RowChangedName="dtElectionReportRowChanged" msprop:Generator_TablePropName="dtElectionReport" msprop:Generator_RowDeletingName="dtElectionReportRowDeleting" msprop:Generator_RowChangingName="dtElectionReportRowChanging" msprop:Generator_RowEvHandlerName="dtElectionReportRowChangeEventHandler" msprop:Generator_RowDeletedName="dtElectionReportRowDeleted" msprop:Generator_RowClassName="dtElectionReportRow" msprop:Generator_UserTableName="dtElectionReport" msprop:Generator_RowEvArgName="dtElectionReportRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="First_Name" msprop:Generator_ColumnVarNameInTable="columnFirst_Name" msprop:Generator_ColumnPropNameInRow="First_Name" msprop:Generator_ColumnPropNameInTable="First_NameColumn" msprop:Generator_UserColumnName="First_Name" type="xs:string" minOccurs="0" />
@@ -20,6 +20,7 @@
               <xs:element name="Address" msprop:Generator_ColumnVarNameInTable="columnAddress" msprop:Generator_ColumnPropNameInRow="Address" msprop:Generator_ColumnPropNameInTable="AddressColumn" msprop:Generator_UserColumnName="Address" type="xs:string" minOccurs="0" />
               <xs:element name="Mobile_No" msprop:Generator_ColumnVarNameInTable="columnMobile_No" msprop:Generator_ColumnPropNameInRow="Mobile_No" msprop:Generator_ColumnPropNameInTable="Mobile_NoColumn" msprop:Generator_UserColumnName="Mobile_No" type="xs:string" minOccurs="0" />
               <xs:element name="Alternate_Mobile" msprop:Generator_ColumnVarNameInTable="columnAlternate_Mobile" msprop:Generator_ColumnPropNameInRow="Alternate_Mobile" msprop:Generator_ColumnPropNameInTable="Alternate_MobileColumn" msprop:Generator_UserColumnName="Alternate_Mobile" type="xs:string" minOccurs="0" />
+              <xs:element name="Area" msprop:Generator_ColumnVarNameInTable="columnArea" msprop:Generator_ColumnPropNameInRow="Area" msprop:Generator_ColumnPropNameInTable="AreaColumn" msprop:Generator_UserColumnName="Area" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

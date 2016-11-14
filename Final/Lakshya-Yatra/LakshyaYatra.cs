@@ -668,5 +668,26 @@ namespace Lakshya_Yatra
                 frmCustomerMaintenance.Show();
             }
         }
+
+        private void areaManagementToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bool IsOpen = false;
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f.Text == "Area Maintenance")
+                {
+                    IsOpen = true;
+                    f.Focus();
+                    break;
+                }
+            }
+            if (IsOpen == false)
+            {
+                AreaMaintenance frmAreaMaintenance = new AreaMaintenance();
+                frmAreaMaintenance.MdiParent = this;
+                frmAreaMaintenance.WindowState = FormWindowState.Maximized;
+                frmAreaMaintenance.Show();
+            }
+        }
     }
 }

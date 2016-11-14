@@ -15,17 +15,64 @@ namespace Lakshya_Yatra
         # endregion
 
         #region GetElectionReport 
-        public DataSet GetElectionReport()
+        public DataSet GetElectionReport(int Area_ID)
         {
             SqlCommand sqlCmd = new SqlCommand();
             sqlCmd.CommandText = "GetElectionReport";
+            if (Area_ID > 0)
+                sqlCmd.Parameters.Add(new SqlParameter("@Area_ID", SqlDbType.Int)).Value = Area_ID;
             sqlCmd.CommandType = CommandType.StoredProcedure;
             DataSet dsGetElectionReport = this.ExecuteToDataSet(sqlCmd);
             return dsGetElectionReport;
         }
         #endregion
 
+        #region Area Management Functions 
+        
+        public DataTable InsertUpdateArea(int Area_ID, string Area, bool IsVisible, string UserName)
+        {
+            SqlCommand sqlCmd = new SqlCommand();
+            sqlCmd.CommandText = "dbo.InsertUpdateArea";
+            sqlCmd.Parameters.Add(new SqlParameter("@userName", SqlDbType.VarChar)).Value = UserName;
+            sqlCmd.Parameters.Add(new SqlParameter("@Area_ID", SqlDbType.Int)).Value = Area_ID;
+            sqlCmd.Parameters.Add(new SqlParameter("@Area", SqlDbType.VarChar)).Value = Area;
+            sqlCmd.Parameters.Add(new SqlParameter("@IsVisible", SqlDbType.Bit)).Value = IsVisible;
+
+            sqlCmd.CommandType = CommandType.StoredProcedure;
+            DataSet dsAreaDetails = this.ExecuteToDataSet(sqlCmd);
+            return dsAreaDetails.Tables[0];
+        }
+
+        public DataTable DeleteArea(int Area_ID)
+        {
+            SqlCommand sqlCmd = new SqlCommand();
+            sqlCmd.CommandText = "dbo.DeleteArea";
+            sqlCmd.Parameters.Add(new SqlParameter("@Area_ID", SqlDbType.Int)).Value = Area_ID;
+
+            sqlCmd.CommandType = CommandType.StoredProcedure;
+            DataSet dsAreaDetails = this.ExecuteToDataSet(sqlCmd);
+            return dsAreaDetails.Tables[0];
+        }
+        #endregion
+
         #region Customer Management Functions 
+
+        public DataTable GetAreas(bool withSelect = true)
+        {
+            SqlCommand sqlCmd = new SqlCommand();
+            sqlCmd.CommandText = "dbo.getAreas";
+            sqlCmd.CommandType = CommandType.StoredProcedure;
+            DataSet dsgetAreas = this.ExecuteToDataSet(sqlCmd);
+            if (withSelect)
+            {
+                DataRow dr = dsgetAreas.Tables[0].NewRow();
+                dr["Area_ID"] = 0;
+                dr["Area"] = "--Select--";
+                dsgetAreas.Tables[0].Rows.InsertAt(dr, 0);
+                dr = null;
+            }
+            return dsgetAreas.Tables[0];
+        }
 
         public DataTable GetCustomers(string First_Name, string Last_Name, string Mobile_No)
         {
@@ -43,7 +90,7 @@ namespace Lakshya_Yatra
             return dsCustomerDetails.Tables[0];
         }
 
-        public DataTable InsertCustomer(string First_Name, string Last_Name, string Mobile_No, string Address,
+        public DataTable InsertCustomer(string First_Name, string Last_Name, string Mobile_No, string Address, int Area_ID,
                                         DateTime Birth_Date, bool isBirthDateknown, string Blood_Group, string Alternate_Mobile, string UserName)
         {
             SqlCommand sqlCmd = new SqlCommand();
@@ -59,13 +106,15 @@ namespace Lakshya_Yatra
                 sqlCmd.Parameters.Add(new SqlParameter("@Blood_Group", SqlDbType.VarChar)).Value = Blood_Group;
             if (isBirthDateknown)
                 sqlCmd.Parameters.Add(new SqlParameter("@Birth_Date", SqlDbType.Date)).Value = Birth_Date;
+            if (Area_ID > 0)
+                sqlCmd.Parameters.Add(new SqlParameter("@Area_ID", SqlDbType.Int)).Value = Area_ID;
 
             sqlCmd.CommandType = CommandType.StoredProcedure;
             DataSet dsCustomerDetails = this.ExecuteToDataSet(sqlCmd);
             return dsCustomerDetails.Tables[0];
         }
 
-        public DataTable UpdateCustomer(int Customer_ID, string First_Name, string Last_Name, string Mobile_No, string Address,
+        public DataTable UpdateCustomer(int Customer_ID, string First_Name, string Last_Name, string Mobile_No, string Address, int Area_ID,
                                         DateTime Birth_Date, bool isBirthDateknown, string Blood_Group, string Alternate_Mobile, string UserName)
         {
             SqlCommand sqlCmd = new SqlCommand();
@@ -82,6 +131,8 @@ namespace Lakshya_Yatra
                 sqlCmd.Parameters.Add(new SqlParameter("@Blood_Group", SqlDbType.VarChar)).Value = Blood_Group;
             if (isBirthDateknown)
                 sqlCmd.Parameters.Add(new SqlParameter("@Birth_Date", SqlDbType.Date)).Value = Birth_Date;
+            if (Area_ID > 0)
+                sqlCmd.Parameters.Add(new SqlParameter("@Area_ID", SqlDbType.Int)).Value = Area_ID;
 
             sqlCmd.CommandType = CommandType.StoredProcedure;
             DataSet dsCustomerDetails = this.ExecuteToDataSet(sqlCmd);
@@ -237,11 +288,12 @@ namespace Lakshya_Yatra
             return dsBusRoute;
         }
 
-        public DataSet GetCustomerTickets(int Customer_ID)
+        public DataSet GetCustomerTickets(int Customer_ID, bool showThisYearTickets)
         {
             SqlCommand sqlCmd = new SqlCommand();
             sqlCmd.CommandText = "GetCustomerTickets";
             sqlCmd.Parameters.Add(new SqlParameter("@Cust_ID", SqlDbType.Int)).Value = Customer_ID;
+            sqlCmd.Parameters.Add(new SqlParameter("@showThisYearTickets", SqlDbType.Bit)).Value = showThisYearTickets;
             sqlCmd.CommandType = CommandType.StoredProcedure;
             DataSet dsGetCustomerTickets = this.ExecuteToDataSet(sqlCmd);
             return dsGetCustomerTickets;
@@ -451,7 +503,7 @@ namespace Lakshya_Yatra
 
         # region InsertCustomer
         public DataSet InsertUpdateCustomer(DateTime Registration_Date,
-            DateTime Navratri_Date, string First_Name, string Last_Name, string Address,
+            DateTime Navratri_Date, string First_Name, string Last_Name, string Address, int Area_ID,
             float Age, DateTime? Birth_Date, string Blood_Group, string Mobile_No, string Bus_No, int Seat_No, int Fees, byte[] Auto_Time, bool DiscountChanged, int Discount, string Discount_Given_By, string DiscountReason, string created_By, int Customer_ID = 0, int Bus_Master_ID = 0, string Alternate_Mobile = "")
         {
             SqlCommand sqlCmd = new SqlCommand();
@@ -477,6 +529,8 @@ namespace Lakshya_Yatra
                 sqlCmd.Parameters.Add(new SqlParameter("@Birth_Date", SqlDbType.Date)).Value = Birth_Date;
             if (!string.IsNullOrEmpty(Blood_Group))
                 sqlCmd.Parameters.Add(new SqlParameter("@Blood_Group", SqlDbType.VarChar)).Value = Blood_Group;
+            if (Area_ID > 0)
+                sqlCmd.Parameters.Add(new SqlParameter("@Area_ID", SqlDbType.Int)).Value = Area_ID;
 
             sqlCmd.Parameters.Add(new SqlParameter("@DiscountChanged", SqlDbType.Bit)).Value = DiscountChanged;
             sqlCmd.Parameters.Add(new SqlParameter("@Discount", SqlDbType.Int)).Value = Discount;

@@ -12,6 +12,7 @@ namespace Lakshya_Yatra
 {
     public partial class ElectionReport : Form
     {
+        BusinessRules objBusinessRules = new BusinessRules();
         public ElectionReport()
         {
             InitializeComponent();
@@ -22,8 +23,8 @@ namespace Lakshya_Yatra
             this.Cursor = Cursors.WaitCursor;
             try
             {
-                BusinessRules objBusinessRules = new BusinessRules();
-                using (DataSet ds = objBusinessRules.GetElectionReport())
+                
+                using (DataSet ds = objBusinessRules.GetElectionReport(Convert.ToInt16(cbArea.SelectedValue)))
                 {
                     ReportContainer frmReportContainer = new ReportContainer();
 
@@ -42,6 +43,26 @@ namespace Lakshya_Yatra
             {
                 this.Cursor = Cursors.Default;
             }
+        }
+
+        private void ElectionReport_Load(object sender, EventArgs e)
+        {
+            InitializaForm();
+        }
+
+        private void InitializaForm()
+        {
+            GetAreas();
+            
+        }
+
+        private void GetAreas()
+        {
+            cbArea.DataSource = objBusinessRules.GetAreas(true);
+            cbArea.DisplayMember = "Area";
+            cbArea.ValueMember = "Area_ID";
+            if (cbArea.DataSource != null)
+                cbArea.SelectedIndex = 0;
         }
     }
 }
