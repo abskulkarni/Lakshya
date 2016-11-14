@@ -39,7 +39,9 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adminToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changePasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.userManagementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.customerManagementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.busRegistrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteAllDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -78,8 +80,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtUserName = new System.Windows.Forms.TextBox();
             this.btnLogin = new System.Windows.Forms.Button();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.customerManagementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.areaManagementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.panelLogin.SuspendLayout();
@@ -154,6 +155,7 @@
             this.toolStripSeparator7,
             this.userManagementToolStripMenuItem,
             this.customerManagementToolStripMenuItem,
+            this.areaManagementToolStripMenuItem,
             this.toolStripSeparator3,
             this.busRegistrationToolStripMenuItem,
             this.deleteAllDataToolStripMenuItem,
@@ -169,12 +171,24 @@
             this.changePasswordToolStripMenuItem.Text = "Change &Password";
             this.changePasswordToolStripMenuItem.Click += new System.EventHandler(this.changePasswordToolStripMenuItem_Click);
             // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(245, 6);
+            // 
             // userManagementToolStripMenuItem
             // 
             this.userManagementToolStripMenuItem.Name = "userManagementToolStripMenuItem";
             this.userManagementToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
-            this.userManagementToolStripMenuItem.Text = "User Management";
+            this.userManagementToolStripMenuItem.Text = "&User Management";
             this.userManagementToolStripMenuItem.Click += new System.EventHandler(this.userManagementToolStripMenuItem_Click);
+            // 
+            // customerManagementToolStripMenuItem
+            // 
+            this.customerManagementToolStripMenuItem.Name = "customerManagementToolStripMenuItem";
+            this.customerManagementToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
+            this.customerManagementToolStripMenuItem.Text = "&Customer Management";
+            this.customerManagementToolStripMenuItem.Click += new System.EventHandler(this.customerManagementToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
@@ -192,14 +206,14 @@
             // 
             this.deleteAllDataToolStripMenuItem.Name = "deleteAllDataToolStripMenuItem";
             this.deleteAllDataToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
-            this.deleteAllDataToolStripMenuItem.Text = "Delete All Data";
+            this.deleteAllDataToolStripMenuItem.Text = "&Delete All Data";
             this.deleteAllDataToolStripMenuItem.Click += new System.EventHandler(this.deleteAllDataToolStripMenuItem_Click);
             // 
             // cashExpenseTransactionsToolStripMenuItem
             // 
             this.cashExpenseTransactionsToolStripMenuItem.Name = "cashExpenseTransactionsToolStripMenuItem";
             this.cashExpenseTransactionsToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
-            this.cashExpenseTransactionsToolStripMenuItem.Text = "Cash Expense Transactions";
+            this.cashExpenseTransactionsToolStripMenuItem.Text = "Cash Expense &Transactions";
             this.cashExpenseTransactionsToolStripMenuItem.Click += new System.EventHandler(this.cashExpenseTransactionsToolStripMenuItem_Click);
             // 
             // reportsToolStripMenuItem
@@ -494,17 +508,12 @@
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
-            // toolStripSeparator7
+            // areaManagementToolStripMenuItem
             // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(245, 6);
-            // 
-            // customerManagementToolStripMenuItem
-            // 
-            this.customerManagementToolStripMenuItem.Name = "customerManagementToolStripMenuItem";
-            this.customerManagementToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
-            this.customerManagementToolStripMenuItem.Text = "&Customer Management";
-            this.customerManagementToolStripMenuItem.Click += new System.EventHandler(this.customerManagementToolStripMenuItem_Click);
+            this.areaManagementToolStripMenuItem.Name = "areaManagementToolStripMenuItem";
+            this.areaManagementToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
+            this.areaManagementToolStripMenuItem.Text = "&Area Management";
+            this.areaManagementToolStripMenuItem.Click += new System.EventHandler(this.areaManagementToolStripMenuItem_Click);
             // 
             // LakshyaYatra
             // 
@@ -587,6 +596,7 @@
         private System.Windows.Forms.ToolStripButton multipleRegistrationToolStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem customerManagementToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem areaManagementToolStripMenuItem;
     }
 }
 

@@ -68,11 +68,11 @@ namespace Lakshya_Yatra
                 submitMode = "Add";
                 HideShowSearchCustomer("hide");
                 
-                chkDontKnowBirthdate.Checked = false; dtpBirthDate.Enabled = true;
+                chkDontKnowBirthdate.Checked = true; dtpBirthDate.Enabled = false;
 
-                chkDontKnowAlternateMobile.Checked = false; txtAlternateMobileNo.Enabled = true;
+                chkDontKnowAlternateMobile.Checked = true; txtAlternateMobileNo.Enabled = false;
 
-                chkDontKnowBloodGroup.Checked = false; cbBloodGroup.Enabled = true; cbBloodGroup.SelectedIndex = 0;
+                chkDontKnowBloodGroup.Checked = true; cbBloodGroup.Enabled = false; cbBloodGroup.SelectedIndex = -1;
                 imageCaptured = false;
                 //groupBoxPrint.Visible = false;
                 panelPrintTicket.Visible = btnPrint.Visible = false;
@@ -91,6 +91,8 @@ namespace Lakshya_Yatra
 
                 ResetTravelDetails();
                 Utilities.Instance.WriteLog("Called date value changed event");
+
+                GetAreas();
 
                 if (formLoad)
                 {
@@ -293,6 +295,7 @@ namespace Lakshya_Yatra
                     txtFirstName.Text = Convert.ToString(dt.Rows[0]["First_Name"]);
                     txtLastName.Text = Convert.ToString(dt.Rows[0]["Last_Name"]);
                     txtAddress.Text = Convert.ToString(dt.Rows[0]["Address"]);
+                    cbArea.SelectedValue = Convert.ToInt16(dt.Rows[0]["Area_ID"]);
 
                     if (!string.IsNullOrEmpty(dt.Rows[0]["Blood_Group"].ToString()))
                     {
@@ -372,6 +375,16 @@ namespace Lakshya_Yatra
                 {
                     result = false;
                     MessageBox.Show("Please enter Address.");
+                    txtAddress.Focus();
+                }
+            }
+
+            if (result)
+            {
+                if (Convert.ToInt16(cbArea.SelectedValue) == 0)
+                {
+                    result = false;
+                    MessageBox.Show("Please select Area.");
                     txtAddress.Focus();
                 }
             }
@@ -554,10 +567,11 @@ namespace Lakshya_Yatra
                 string Discount_Given_By = User.Instance.User_Name;
                 int Discount = string.IsNullOrEmpty(txtDiscount.Text.Trim()) ? 0 : Convert.ToInt16(txtDiscount.Text.Trim());
                 string DiscountReason = txtDiscountReason.Text.Trim();
+                int Area_ID = Convert.ToInt16(cbArea.SelectedValue);
 
                 Utilities.Instance.WriteLog("Collected form values");
                 Utilities.Instance.WriteLog("Calling InsertUpdateCustomer method from UI");
-                DataSet ds = objBusinessRules.InsertUpdateCustomer(strRegistrationDate, strYatraDate, strFirstName, strLastName, strAddress, strAge, strBirthDate, 
+                DataSet ds = objBusinessRules.InsertUpdateCustomer(strRegistrationDate, strYatraDate, strFirstName, strLastName, strAddress,Area_ID ,strAge, strBirthDate, 
                                                                     strBloodGroup, strMobileNo, strBusNo, strSeatNo, strFees, Auto_Time,
                                                                     DiscountChanged, Discount, Discount_Given_By,DiscountReason,User.Instance.User_Name,
                                                                     Customer_ID, Bus_Master_ID,AlternateMobile);
@@ -660,6 +674,13 @@ namespace Lakshya_Yatra
                 imgSnapShot.Image = img;
                 imgTicket.Image = img;
             }
+        }
+
+        private void GetAreas()
+        {
+            cbArea.DataSource = objBusinessRules.GetAreas();
+            cbArea.DisplayMember = "Area";
+            cbArea.ValueMember = "Area_ID";
         }
 
         private void bntCapture_Click(object sender, EventArgs e)
@@ -1197,6 +1218,7 @@ namespace Lakshya_Yatra
                     cbBloodGroup.SelectedIndex = -1;
                 }
 
+                cbArea.SelectedValue = Convert.ToInt16(selectedRow.Cells["Area_ID"].Value);
                 int customerID = Convert.ToInt16(selectedRow.Cells["Customer_ID"].Value);
 
                 if (System.IO.File.Exists(imagesFolder + customerID.ToString() + ".jpg"))

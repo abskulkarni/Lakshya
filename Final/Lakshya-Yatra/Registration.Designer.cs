@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Registration));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.txtRegistrationDate = new System.Windows.Forms.TextBox();
             this.imgCapture = new System.Windows.Forms.PictureBox();
@@ -63,6 +63,8 @@
             this.label16 = new System.Windows.Forms.Label();
             this.btnAddNew = new System.Windows.Forms.Button();
             this.grpRegistrationDetails = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cbArea = new System.Windows.Forms.ComboBox();
             this.label24 = new System.Windows.Forms.Label();
             this.txtSearchAddress = new System.Windows.Forms.TextBox();
             this.chkDontKnowBirthdate = new System.Windows.Forms.CheckBox();
@@ -470,6 +472,8 @@
             // 
             // grpRegistrationDetails
             // 
+            this.grpRegistrationDetails.Controls.Add(this.label5);
+            this.grpRegistrationDetails.Controls.Add(this.cbArea);
             this.grpRegistrationDetails.Controls.Add(this.label24);
             this.grpRegistrationDetails.Controls.Add(this.txtSearchAddress);
             this.grpRegistrationDetails.Controls.Add(this.chkDontKnowBirthdate);
@@ -498,11 +502,32 @@
             this.grpRegistrationDetails.TabStop = false;
             this.grpRegistrationDetails.Text = "Registration Details:";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.Black;
+            this.label5.Location = new System.Drawing.Point(108, 84);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(36, 14);
+            this.label5.TabIndex = 24;
+            this.label5.Text = "Area";
+            // 
+            // cbArea
+            // 
+            this.cbArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbArea.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbArea.FormattingEnabled = true;
+            this.cbArea.Location = new System.Drawing.Point(150, 81);
+            this.cbArea.Name = "cbArea";
+            this.cbArea.Size = new System.Drawing.Size(167, 22);
+            this.cbArea.TabIndex = 25;
+            // 
             // label24
             // 
             this.label24.Font = new System.Drawing.Font("Verdana", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label24.ForeColor = System.Drawing.Color.Black;
-            this.label24.Location = new System.Drawing.Point(156, 124);
+            this.label24.Location = new System.Drawing.Point(156, 141);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(149, 26);
             this.label24.TabIndex = 19;
@@ -514,7 +539,7 @@
             this.txtSearchAddress.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.txtSearchAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSearchAddress.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSearchAddress.Location = new System.Drawing.Point(150, 99);
+            this.txtSearchAddress.Location = new System.Drawing.Point(150, 116);
             this.txtSearchAddress.MaxLength = 40;
             this.txtSearchAddress.Name = "txtSearchAddress";
             this.txtSearchAddress.Size = new System.Drawing.Size(167, 22);
@@ -527,7 +552,7 @@
             // 
             this.chkDontKnowBirthdate.AutoSize = true;
             this.chkDontKnowBirthdate.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkDontKnowBirthdate.Location = new System.Drawing.Point(268, 164);
+            this.chkDontKnowBirthdate.Location = new System.Drawing.Point(268, 176);
             this.chkDontKnowBirthdate.Name = "chkDontKnowBirthdate";
             this.chkDontKnowBirthdate.Size = new System.Drawing.Size(97, 18);
             this.chkDontKnowBirthdate.TabIndex = 7;
@@ -541,7 +566,7 @@
             // 
             this.chkDontKnowAlternateMobile.AutoSize = true;
             this.chkDontKnowAlternateMobile.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkDontKnowAlternateMobile.Location = new System.Drawing.Point(268, 240);
+            this.chkDontKnowAlternateMobile.Location = new System.Drawing.Point(268, 249);
             this.chkDontKnowAlternateMobile.Name = "chkDontKnowAlternateMobile";
             this.chkDontKnowAlternateMobile.Size = new System.Drawing.Size(97, 18);
             this.chkDontKnowAlternateMobile.TabIndex = 11;
@@ -555,7 +580,7 @@
             // 
             this.chkDontKnowBloodGroup.AutoSize = true;
             this.chkDontKnowBloodGroup.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkDontKnowBloodGroup.Location = new System.Drawing.Point(268, 198);
+            this.chkDontKnowBloodGroup.Location = new System.Drawing.Point(268, 213);
             this.chkDontKnowBloodGroup.Name = "chkDontKnowBloodGroup";
             this.chkDontKnowBloodGroup.Size = new System.Drawing.Size(97, 18);
             this.chkDontKnowBloodGroup.TabIndex = 9;
@@ -570,7 +595,7 @@
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label19.ForeColor = System.Drawing.Color.Black;
-            this.label19.Location = new System.Drawing.Point(7, 238);
+            this.label19.Location = new System.Drawing.Point(7, 247);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(130, 14);
             this.label19.TabIndex = 17;
@@ -582,7 +607,7 @@
             this.txtAlternateMobileNo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.txtAlternateMobileNo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtAlternateMobileNo.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAlternateMobileNo.Location = new System.Drawing.Point(148, 236);
+            this.txtAlternateMobileNo.Location = new System.Drawing.Point(148, 245);
             this.txtAlternateMobileNo.MaxLength = 10;
             this.txtAlternateMobileNo.Name = "txtAlternateMobileNo";
             this.txtAlternateMobileNo.Size = new System.Drawing.Size(98, 22);
@@ -607,7 +632,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(101, 66);
+            this.label3.Location = new System.Drawing.Point(101, 49);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(43, 14);
             this.label3.TabIndex = 3;
@@ -618,7 +643,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(72, 164);
+            this.label6.Location = new System.Drawing.Point(72, 176);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(65, 14);
             this.label6.TabIndex = 6;
@@ -629,7 +654,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.Black;
-            this.label7.Location = new System.Drawing.Point(53, 197);
+            this.label7.Location = new System.Drawing.Point(53, 212);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(84, 14);
             this.label7.TabIndex = 7;
@@ -640,7 +665,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(94, 101);
+            this.label4.Location = new System.Drawing.Point(86, 118);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(58, 14);
             this.label4.TabIndex = 4;
@@ -663,7 +688,7 @@
             this.txtLastName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.txtLastName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtLastName.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLastName.Location = new System.Drawing.Point(323, 64);
+            this.txtLastName.Location = new System.Drawing.Point(323, 47);
             this.txtLastName.MaxLength = 40;
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.Size = new System.Drawing.Size(151, 22);
@@ -676,7 +701,7 @@
             this.dtpBirthDate.Checked = false;
             this.dtpBirthDate.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpBirthDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpBirthDate.Location = new System.Drawing.Point(148, 160);
+            this.dtpBirthDate.Location = new System.Drawing.Point(148, 172);
             this.dtpBirthDate.Name = "dtpBirthDate";
             this.dtpBirthDate.Size = new System.Drawing.Size(100, 22);
             this.dtpBirthDate.TabIndex = 6;
@@ -690,7 +715,7 @@
             this.txtFirstName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.txtFirstName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtFirstName.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFirstName.Location = new System.Drawing.Point(150, 64);
+            this.txtFirstName.Location = new System.Drawing.Point(150, 47);
             this.txtFirstName.MaxLength = 40;
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.Size = new System.Drawing.Size(167, 22);
@@ -712,7 +737,7 @@
             "AB-",
             "O+",
             "O-"});
-            this.cbBloodGroup.Location = new System.Drawing.Point(148, 194);
+            this.cbBloodGroup.Location = new System.Drawing.Point(148, 209);
             this.cbBloodGroup.Name = "cbBloodGroup";
             this.cbBloodGroup.Size = new System.Drawing.Size(100, 22);
             this.cbBloodGroup.TabIndex = 8;
@@ -725,7 +750,7 @@
             this.txtAddress.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.txtAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtAddress.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAddress.Location = new System.Drawing.Point(323, 99);
+            this.txtAddress.Location = new System.Drawing.Point(323, 116);
             this.txtAddress.MaxLength = 200;
             this.txtAddress.Multiline = true;
             this.txtAddress.Name = "txtAddress";
@@ -740,7 +765,7 @@
             this.txtMobileNo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.txtMobileNo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtMobileNo.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMobileNo.Location = new System.Drawing.Point(150, 35);
+            this.txtMobileNo.Location = new System.Drawing.Point(225, 16);
             this.txtMobileNo.MaxLength = 10;
             this.txtMobileNo.Name = "txtMobileNo";
             this.txtMobileNo.Size = new System.Drawing.Size(98, 22);
@@ -1090,27 +1115,27 @@
             // 
             this.dgvCustomers.AllowUserToAddRows = false;
             this.dgvCustomers.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.dgvCustomers.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.dgvCustomers.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvCustomers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvCustomers.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvCustomers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.LightGray;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCustomers.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.LightGray;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCustomers.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvCustomers.Location = new System.Drawing.Point(23, 85);
             this.dgvCustomers.MultiSelect = false;
             this.dgvCustomers.Name = "dgvCustomers";
             this.dgvCustomers.ReadOnly = true;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
-            this.dgvCustomers.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            this.dgvCustomers.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvCustomers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvCustomers.Size = new System.Drawing.Size(923, 499);
             this.dgvCustomers.TabIndex = 31;
@@ -1329,5 +1354,7 @@
         private System.Windows.Forms.Button bntStart;
         private System.Windows.Forms.TextBox txtMobileNo;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cbArea;
     }
 }

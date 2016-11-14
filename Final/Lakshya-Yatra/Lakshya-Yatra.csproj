@@ -94,6 +94,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AreaMaintenance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AreaMaintenance.Designer.cs">
+      <DependentUpon>AreaMaintenance.cs</DependentUpon>
+    </Compile>
     <Compile Include="BirthdayWishes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -429,6 +435,9 @@
     <Compile Include="SearchCustomer.Designer.cs">
       <DependentUpon>SearchCustomer.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AreaMaintenance.resx">
+      <DependentUpon>AreaMaintenance.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BirthdayWishes.resx">
       <DependentUpon>BirthdayWishes.cs</DependentUpon>
     </EmbeddedResource>

@@ -13,6 +13,7 @@ namespace Lakshya_Yatra
     public partial class CustomerMaintenance : Form
     {
         DataTable dtCustomers = null;
+        BusinessRules objBusinessRules = new BusinessRules();
         int Customer_ID;
         enum OperationMode
         {
@@ -40,6 +41,10 @@ namespace Lakshya_Yatra
             txtSearchFirstName.Text = txtSearchFirstName.Text = txtSearchLastName.Text = string.Empty;
 
             chkDontKnowBirthdate.Checked = chkDontKnowBloodGroup.Checked = chkDontKnowAlternateMobile.Checked = true;
+
+            cbArea.DataSource = objBusinessRules.GetAreas();
+            cbArea.DisplayMember = "Area";
+            cbArea.ValueMember = "Area_ID";
 
             SetFormForEditCustomer();
         }
@@ -172,7 +177,7 @@ namespace Lakshya_Yatra
             this.Cursor = Cursors.WaitCursor;
             try
             {
-                BusinessRules objBusinessRules = new BusinessRules();
+                
                 dtCustomers = objBusinessRules.GetCustomers(FirstName, LastName, Mobile_No);
                 dgvCustomers.DataSource = dtCustomers.Rows.Count > 0 ? dtCustomers : null;
 
@@ -194,12 +199,11 @@ namespace Lakshya_Yatra
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (!ValidateInputs()) return;
-            BusinessRules objBusinessRules = new BusinessRules();
             string Blood_Group = cbBloodGroup.SelectedItem != null ? cbBloodGroup.SelectedItem.ToString() : string.Empty;
             if (runningMode == OperationMode.AddCustomer)
             {
                 using (DataTable dt = objBusinessRules.InsertCustomer(txtFirstName.Text.Trim(), txtLastName.Text.Trim(), txtMobileNo.Text.Trim(), 
-                                                                        txtAddress.Text.Trim(),dtpBirthDate.Value, !chkDontKnowBirthdate.Checked,Blood_Group,
+                                                                        txtAddress.Text.Trim(),Convert.ToInt16(cbArea.SelectedValue),dtpBirthDate.Value, !chkDontKnowBirthdate.Checked,Blood_Group,
                                                                         txtAlternateMobileNo.Text.Trim(),User.Instance.User_Name))
                 {
                     switch (Convert.ToInt16(dt.Rows[0][0]))
@@ -221,7 +225,7 @@ namespace Lakshya_Yatra
             else if (runningMode == OperationMode.EditCustomer)
             {
                 using (DataTable dt = objBusinessRules.UpdateCustomer(Customer_ID, txtFirstName.Text.Trim(), txtLastName.Text.Trim(), txtMobileNo.Text.Trim(),
-                                                                        txtAddress.Text.Trim(), dtpBirthDate.Value, !chkDontKnowBirthdate.Checked, Blood_Group,
+                                                                        txtAddress.Text.Trim(),Convert.ToInt16(cbArea.SelectedValue), dtpBirthDate.Value, !chkDontKnowBirthdate.Checked, Blood_Group,
                                                                         txtAlternateMobileNo.Text.Trim(), User.Instance.User_Name))
                 {
                     switch (Convert.ToInt16(dt.Rows[0][0]))
@@ -265,7 +269,6 @@ namespace Lakshya_Yatra
                 try
                 {
                     Customer_ID = Convert.ToInt16(dgvCustomers.SelectedRows[0].Cells["Customer_ID"].Value);
-                    BusinessRules objBusinessRules = new BusinessRules();
                     using (DataTable dt = objBusinessRules.DeleteCustomer(Customer_ID))
                     {
                         switch (Convert.ToInt16(dt.Rows[0][0]))
