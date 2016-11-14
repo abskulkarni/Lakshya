@@ -6,16 +6,48 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
+ALTER TABLE dbo.Customer_Master ADD IS_DLT int default 0;
+GO
+
+update dbo.Customer_Master set IS_DLT = 0
+GO
+
+update dbo.Customer_Master set IS_DLT = 1 where Created_By is null
+GO
+
+delete from dbo.Customer_Master where first_name = 'test' or Alternate_Mobile = '1111111111' or First_Name = 'abhirahul'
+go
 ;WITH CTE AS(
    SELECT customer_id, mobile_no,first_name,last_name,created_date,
        RN = ROW_NUMBER() OVER(PARTITION BY convert(bigint, mobile_no) ORDER BY created_date)
    FROM dbo.Customer_Master
-   where Created_Date is not null
+   where Created_Date is not null and updated_date is null
 )
 --select * from CTE where RN > 1 and Mobile_No = '9767809661'
-delete cMaster
+update cMaster
 --select
 --CTE.Created_Date, CTE.RN, cMaster.*
+set IS_DLT = 1
+from
+Customer_Master cMaster
+inner join
+CTE
+on cMaster.Customer_ID = CTE.Customer_ID
+where RN > 1 
+--order by CTE.Created_Date, CTE.RN
+GO
+
+;WITH CTE AS(
+   SELECT customer_id, mobile_no,first_name,last_name,created_date,
+       RN = ROW_NUMBER() OVER(PARTITION BY convert(bigint, mobile_no) ORDER BY updated_date desc)
+   FROM dbo.Customer_Master
+   where Created_Date is not null and updated_date is not null
+)
+--select * from CTE where RN > 1 and Mobile_No = '9767809661'
+update cMaster
+--select
+--CTE.Created_Date, CTE.RN, cMaster.*
+set IS_DLT = 1
 from
 Customer_Master cMaster
 inner join
@@ -388,56 +420,28 @@ END
 GO
 
 CREATE PROCEDURE [dbo].[sp_GetCustomerTickets] --5268
-(@Cust_ID int = NULL, @showThisYearTickets bit)
+(@Cust_ID int = NULL)
 AS
 BEGIN
 	SET NOCOUNT ON;
-	if @showThisYearTickets = 1
-	begin
-		select 
-		cMaster.Customer_ID as CustomerID, busMapping.Bus_Master_ID as BusMasterID, 
-				format(bMaster.Navratri_Date, 'dd-MMM-yyyy') as yatra_date, 
-				bMaster.Bus_Name, bMaster.Seat_No, brm.Route_ID, brm.Bus_Route,
-				cMaster.[Address], cMaster.First_Name, cMaster.Last_Name
-		from
-		dbo.Customer_Master cMaster
-		inner join
-		dbo.bus_Mapping busMapping
-		on cMaster.Customer_ID = busMapping.Customer_ID
-		inner join
-		dbo.Bus_Master bMaster
-		on bMaster.Bus_Master_ID = busMapping.Bus_Master_ID
-		inner join
-		dbo.Bus_Route_Master brm
-		on bMaster.Route_ID = brm.Route_ID
-		where cMaster.Customer_ID = isnull(@Cust_ID,cMaster.Customer_ID) and cMaster.IS_DLT = 0
-		and convert(date,busMapping.Created_Date) = convert(date, getdate())
-		and year(busMapping.Created_Date) < year(getdate())
-		order by busMapping.Created_Date
-	end
-	else
-	begin
-		select 
-		cMaster.Customer_ID as CustomerID, busMapping.Bus_Master_ID as BusMasterID, 
-				format(bMaster.Navratri_Date, 'dd-MMM-yyyy') as yatra_date, 
-				bMaster.Bus_Name, bMaster.Seat_No, brm.Route_ID, brm.Bus_Route,
-				cMaster.[Address], cMaster.First_Name, cMaster.Last_Name
-		from
-		dbo.Customer_Master cMaster
-		inner join
-		dbo.bus_Mapping busMapping
-		on cMaster.Customer_ID = busMapping.Customer_ID
-		inner join
-		dbo.Bus_Master bMaster
-		on bMaster.Bus_Master_ID = busMapping.Bus_Master_ID
-		inner join
-		dbo.Bus_Route_Master brm
-		on bMaster.Route_ID = brm.Route_ID
-		where cMaster.Customer_ID = isnull(@Cust_ID,cMaster.Customer_ID) and cMaster.IS_DLT = 0
-		and convert(date,busMapping.Created_Date) < convert(date, getdate())
-		and year(busMapping.Created_Date) < year(getdate())
-		order by busMapping.Created_Date
-	end
+	select 
+	cMaster.Customer_ID as CustomerID, busMapping.Bus_Master_ID as BusMasterID, 
+			format(bMaster.Navratri_Date, 'dd-MMM-yyyy') as yatra_date, 
+			bMaster.Bus_Name, bMaster.Seat_No, brm.Route_ID, brm.Bus_Route,
+			cMaster.[Address], cMaster.First_Name, cMaster.Last_Name
+	from
+	dbo.Customer_Master cMaster
+	inner join
+	dbo.bus_Mapping busMapping
+	on cMaster.Customer_ID = busMapping.Customer_ID
+	inner join
+	dbo.Bus_Master bMaster
+	on bMaster.Bus_Master_ID = busMapping.Bus_Master_ID
+	inner join
+	dbo.Bus_Route_Master brm
+	on bMaster.Route_ID = brm.Route_ID
+	where cMaster.Customer_ID = isnull(@Cust_ID,cMaster.Customer_ID) and cMaster.IS_DLT = 0
+	order by busMapping.Created_Date
 END
 GO
 
@@ -1337,52 +1341,17 @@ GO
 
 -- ***** Bus Route ID Impacted SPs END ******
 
-create procedure [dbo].[GetElectionReport] --null
-
-@Area_ID int = null
+CREATE procedure [dbo].[GetElectionReport]
 as
 begin
 	SET NOCOUNT ON
-
-	declare @tbl table (Customer_ID int,
-	First_Name varchar(50),
-	Last_Name  varchar(50),
-	Address  varchar(300),
-	Mobile_No  varchar(50),
-	Alternate_Mobile  varchar(50),
-	area  varchar(50),area_id int)
-
-	insert into @tbl(Customer_ID,
-	First_Name,
-	Last_Name,
-	Address,
-	Mobile_No,
-	Alternate_Mobile, area_id)
 	select Customer_ID,
 	First_Name,
 	Last_Name,
 	Address,
 	Mobile_No,
-	Alternate_Mobile,
-	Area_ID
-	from dbo.Customer_Master cMaster
-	where isnull(cMaster.Area_ID,'') = ISNULL(@Area_ID, isnull(cMaster.Area_ID,''))
-
-	update t set area = am.Area
-	from
-	dbo.Area_Master am
-	join
-	@tbl t
-	on am.Area_ID = t.area_id
-
-	select Customer_ID,
-	First_Name,
-	Last_Name,
-	Address,
-	Mobile_No,
-	Alternate_Mobile,
-	Area_ID, area from @tbl
-
+	Alternate_Mobile
+	from dbo.Customer_Master
 end
 GO
 
@@ -1480,7 +1449,7 @@ CREATE PROCEDURE dbo.DeleteCustomer(@Customer_ID int)
 AS
 begin
 	if exists(select 1 from dbo.bus_Mapping bm inner join dbo.Customer_Master cm on bm.Customer_ID = cm.Customer_ID
-				where cm.Customer_ID = @Customer_ID and cm.IS_DLT = 0)
+				 where cm.Customer_ID = @Customer_ID and cm.IS_DLT = 0)
 	begin
 		select 0;
 		return;
