@@ -6,16 +6,28 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
+ALTER TABLE dbo.Customer_Master ADD IS_DLT int default 0;
+GO
+
+update dbo.Customer_Master set IS_DLT = 0
+GO
+
+update dbo.Customer_Master set IS_DLT = 1 where Created_By is null
+GO
+
+delete from dbo.Customer_Master where first_name = 'test' or Alternate_Mobile = '1111111111' or First_Name = 'abhirahul'
+go
 ;WITH CTE AS(
    SELECT customer_id, mobile_no,first_name,last_name,created_date,
        RN = ROW_NUMBER() OVER(PARTITION BY convert(bigint, mobile_no) ORDER BY created_date)
    FROM dbo.Customer_Master
-   where Created_Date is not null
+   where Created_Date is not null and updated_date is null
 )
 --select * from CTE where RN > 1 and Mobile_No = '9767809661'
-delete cMaster
+update cMaster
 --select
 --CTE.Created_Date, CTE.RN, cMaster.*
+set IS_DLT = 1
 from
 Customer_Master cMaster
 inner join
@@ -24,8 +36,53 @@ on cMaster.Customer_ID = CTE.Customer_ID
 where RN > 1 
 --order by CTE.Created_Date, CTE.RN
 GO
-delete from dbo.Customer_Master where Created_By is null
+
+;WITH CTE AS(
+   SELECT customer_id, mobile_no,first_name,last_name,created_date,
+       RN = ROW_NUMBER() OVER(PARTITION BY convert(bigint, mobile_no) ORDER BY updated_date desc)
+   FROM dbo.Customer_Master
+   where Created_Date is not null and updated_date is not null
+)
+--select * from CTE where RN > 1 and Mobile_No = '9767809661'
+update cMaster
+--select
+--CTE.Created_Date, CTE.RN, cMaster.*
+set IS_DLT = 1
+from
+Customer_Master cMaster
+inner join
+CTE
+on cMaster.Customer_ID = CTE.Customer_ID
+where RN > 1 
+--order by CTE.Created_Date, CTE.RN
+
 GO
+
+update cMasterNullUpdates
+SET IS_DLT = 1
+from
+dbo.Customer_Master cMasterNotNullUpdates
+inner join
+dbo.Customer_Master cMasterNullUpdates
+on cMasterNotNullUpdates.Mobile_No = cMasterNullUpdates.Mobile_No
+where cMasterNullUpdates.Updated_Date is null and cMasterNotNullUpdates.Updated_Date is not null
+GO
+
+CREATE TABLE [dbo].[Area_Master]([Area_ID] [int] IDENTITY(1,1) NOT NULL,
+	[Area] [varchar](100) NULL,
+	[Is_Visible] bit default 1,
+	[Created_By] [varchar](30) NULL,
+	[Created_Date] [datetime] NULL,
+	[Updated_By] [varchar](50) NULL,
+	[Updated_Date] [datetime] NULL,
+ CONSTRAINT [PK_Area_Master] PRIMARY KEY CLUSTERED 
+(
+	[Area_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
 
 Alter TABLE dbo.bus_Mapping ADD
 Discount	int,
@@ -68,6 +125,54 @@ ALTER TABLE dbo.Customer_Master DROP COLUMN Discount;
 ALTER TABLE dbo.Customer_Master DROP COLUMN Discount_Given_By;
 ALTER TABLE dbo.Customer_Master DROP COLUMN DiscountReason;
 ALTER TABLE dbo.Customer_Master DROP COLUMN Actual_Fees;
+
+ALTER TABLE dbo.Customer_Master ADD Area_ID int default 0;
+GO
+
+
+create procedure dbo.GetAreas
+as
+begin
+	set nocount on;
+	select area_ID, Area, Is_Visible from dbo.Area_Master order by area
+end
+GO
+
+create procedure dbo.InsertUpdateArea
+@Area_ID int, @Area varchar(30), @IsVisible bit = 1, @UserName varchar(30)
+as
+begin
+	set nocount on;
+
+	if @Area_ID = 0
+	begin
+		insert into dbo.Area_Master (Area, Is_Visible, Created_By, Created_Date) values (@Area,@IsVisible, @UserName, GETDATE())
+		select SCOPE_IDENTITY();
+	end
+	else
+	begin
+		update dbo.Area_Master set Area = @Area, Is_Visible = @IsVisible,
+									Updated_By = @UserName, Updated_Date = GETDATE()
+		
+		 where Area_ID = @Area_ID
+		select @Area_ID;
+	end
+end
+GO
+
+create procedure dbo.DeleteArea
+@Area_ID int
+as
+begin
+	if exists (select 1 from dbo.Customer_Master where isnull(Area_ID,0) = @Area_ID)
+	begin
+		select -1;
+		return
+	end
+
+	delete from dbo.Area_Master where Area_ID = @Area_ID
+	select @Area_ID;
+end
 GO
 
 CREATE TABLE [dbo].[Bus_Route_Master](
@@ -179,11 +284,11 @@ BEGIN
      SET NOCOUNT ON 
 
 	select 	cMaster.Customer_ID, cMaster.First_Name, 
-			cMaster.Last_Name, cMaster.Address, 
+			cMaster.Last_Name, cMaster.Address, cMaster.Area_ID,
 			cMaster.Mobile_No, cMaster.Blood_Group,cMaster.Alternate_Mobile, format(cMaster.Birth_Date,'dd/MMM/yyyy') Birth_Date
 	from
-	Customer_Master cMaster
-
+	dbo.Customer_Master cMaster
+	where IS_DLT = 0
 END
 GO
 
@@ -197,7 +302,7 @@ BEGIN
 
 	select 
 	cMaster.Customer_ID, busMapping.Bus_Master_ID ,busMapping.Created_Date as Registration_Date, cMaster.First_Name, 
-			cMaster.Last_Name, cMaster.Address, cMaster.Age, cMaster.Birth_Date , cMaster.Blood_Group ,
+			cMaster.Last_Name, cMaster.Address, cMaster.Area_ID, cMaster.Age, cMaster.Birth_Date , cMaster.Blood_Group ,
 			cMaster.Mobile_No, bMaster.Bus_Fees , cMaster.Alternate_Mobile ,
 			busMapping.Discount, busMapping.Discount_Given_By,busMapping.DiscountReason ,busMapping.Actual_Fees,
 			bMaster.Navratri_Date as yatra_date, bMaster.Bus_Name, bMaster.Seat_No, bMaster.Auto_Time
@@ -212,6 +317,7 @@ BEGIN
 	inner join
 	dbo.bus_route_master brm
 	on brm.Route_ID = bMaster.Route_ID
+	left join dbo.Area_Master tArea on cMaster.Area_ID = tArea.Area_ID
 	where cMaster.Customer_ID = @Customer_ID and bMaster.Bus_Master_ID = @Bus_Master_ID
 
 END 
@@ -313,7 +419,7 @@ BEGIN
 END 
 GO
 
-ALTER PROCEDURE [dbo].[sp_GetCustomerTickets] --5268
+CREATE PROCEDURE [dbo].[sp_GetCustomerTickets] --5268
 (@Cust_ID int = NULL)
 AS
 BEGIN
@@ -334,7 +440,7 @@ BEGIN
 	inner join
 	dbo.Bus_Route_Master brm
 	on bMaster.Route_ID = brm.Route_ID
-	where cMaster.Customer_ID = isnull(@Cust_ID,cMaster.Customer_ID)
+	where cMaster.Customer_ID = isnull(@Cust_ID,cMaster.Customer_ID) and cMaster.IS_DLT = 0
 	order by busMapping.Created_Date
 END
 GO
@@ -344,6 +450,7 @@ create PROCEDURE [dbo].[sp_InsertCustomerAndTravel]
            ,@First_Name varchar(50)
            ,@Last_Name varchar(50)
            ,@Address varchar(500)
+		   ,@Area_ID int = null
            ,@Age  numeric(6, 2)
            ,@Birth_Date date = null
            ,@Blood_Group varchar(50) = null
@@ -385,14 +492,15 @@ DECLARE @bus_master_id int;
 		end
 	end
 
-	if exists(select 1 from dbo.Customer_Master where Mobile_No = @Mobile_No)
+	if exists(select 1 from dbo.Customer_Master where Mobile_No = @Mobile_No and IS_DLT = 0)
 	BEGIN
-		SET @custID = (select Customer_ID from dbo.Customer_Master where Mobile_No = @Mobile_No);
+		SET @custID = (select Customer_ID from dbo.Customer_Master where Mobile_No = @Mobile_No and IS_DLT = 0);
 
 		UPDATE [dbo].[Customer_Master]
 		SET [First_Name] = @First_Name
 		  ,[Last_Name] = @Last_Name
 		  ,[Address] = @Address
+		  ,[Area_ID] = @Area_ID
 		  ,[Age] = @Age
 		  ,[Birth_Date] = @Birth_Date
 		  ,[Blood_Group] = @Blood_Group
@@ -409,6 +517,7 @@ DECLARE @bus_master_id int;
 			   ,[First_Name] 
 			   ,[Last_Name] 
 			   ,[Address] 
+			   ,[Area_ID]
 			   ,[Age] 
 			   ,[Birth_Date]
 			   ,[Blood_Group]
@@ -422,6 +531,7 @@ DECLARE @bus_master_id int;
 			   ,@First_Name
 			   ,@Last_Name
 			   ,@Address
+			   ,@Area_ID
 			   ,@Age
 			   ,@Birth_Date
 			   ,@Blood_Group
@@ -468,6 +578,7 @@ CREATE PROCEDURE [dbo].[sp_UpdateCustomerAndTravel]
 	   @First_Name varchar(50),
 	   @Last_Name varchar(50), 
 	   @Address varchar(500),
+	   @Area_ID int = null,
 	   @Mobile_No varchar(50),
 	   @Age numeric(6, 2),
 	   @Birth_Date date = null, 
@@ -517,13 +628,14 @@ BEGIN
     
 	-- Below Update is added so that there will be only one customer with given mobile number
 	UPDATE [dbo].[Customer_Master]
-	SET Mobile_No = NULL where [Mobile_No] = @Mobile_No 
+	SET Mobile_No = NULL where [Mobile_No] = @Mobile_No and IS_DLT = 0
 
 
     UPDATE [dbo].[Customer_Master]
 	SET [First_Name] = @First_Name
       ,[Last_Name] = @Last_Name
       ,[Address] = @Address
+	  ,[Area_ID] = @Area_ID
       ,[Age] = @Age
       ,[Birth_Date] = @Birth_Date
       ,[Blood_Group] = @Blood_Group
@@ -531,7 +643,7 @@ BEGIN
 	  ,Alternate_Mobile = @Alternate_Mobile	  
 	  ,Updated_By = @Updated_By
 	  ,Updated_Date = @Updated_Date
-	 WHERE Customer_ID = @Customer_ID
+	 WHERE Customer_ID = @Customer_ID and IS_DLT = 0
 	 
 	 insert into bus_Mapping (Customer_ID,Bus_Master_ID,Discount
 		   ,Discount_Given_By
@@ -563,11 +675,13 @@ BEGIN
      SET NOCOUNT ON 
 
 	select 	cMaster.Customer_ID, cMaster.First_Name, 
-			cMaster.Last_Name, cMaster.Address, 
+			cMaster.Last_Name, cMaster.Address, isnull(cMaster.Area_ID,0) Area_ID,
 			cMaster.Mobile_No, cMaster.Blood_Group,cMaster.Alternate_Mobile, format(cMaster.Birth_Date,'dd/MMM/yyyy') Birth_Date
 	from
-	Customer_Master cMaster
-	where Mobile_No = @Mobile_No
+	dbo.Customer_Master cMaster
+	left join
+	dbo.Area_Master tArea on tArea.Area_ID = cMaster.Area_ID
+	where Mobile_No = @Mobile_No and IS_DLT = 0
 
 END 
 
@@ -1050,7 +1164,7 @@ END
 
 GO
 
-ALTER PROCEDURE [dbo].[sp_SearchReport] --@Cust_ID = 3368
+ALTER PROCEDURE [dbo].[sp_SearchReport] --@First_Name = 'tobedeleted'
 		(@Cust_ID int = NULL,
 		@Blood_Group varchar(50) = NULL,
 		@Mobile_No varchar(50) = NULL,
@@ -1245,6 +1359,7 @@ GO
 CREATE procedure [dbo].[InsertCustomer](@First_Name varchar(50)
            ,@Last_Name varchar(50)
            ,@Address varchar(500)
+		   ,@Area_ID int = null
            ,@Birth_Date date = NULL
            ,@Blood_Group varchar(50) = NULL
            ,@Mobile_No varchar(50)
@@ -1254,7 +1369,7 @@ as
 begin
 SET NOCOUNT ON
 
-if exists(select 1 from dbo.Customer_Master where Mobile_No = @Mobile_No)
+if exists(select 1 from dbo.Customer_Master where Mobile_No = @Mobile_No and IS_DLT = 0)
 begin
 	select 0;
 	return;
@@ -1265,6 +1380,7 @@ INSERT INTO [dbo].[Customer_Master]
            ,First_Name
            ,Last_Name
            ,Address
+		   ,Area_ID
            ,Birth_Date
            ,Blood_Group
            ,Mobile_No
@@ -1276,6 +1392,7 @@ INSERT INTO [dbo].[Customer_Master]
            ,@First_Name
            ,@Last_Name
            ,@Address
+		   ,@Area_ID
            ,@Birth_Date
            ,@Blood_Group
            ,@Mobile_No
@@ -1292,6 +1409,7 @@ CREATE procedure [dbo].[UpdateCustomer](@Customer_ID int
 			,@First_Name varchar(50)
            ,@Last_Name varchar(50)
            ,@Address varchar(500)
+		   ,@Area_ID int = null
            ,@Birth_Date date = NULL
            ,@Blood_Group varchar(50) = NULL
            ,@Mobile_No varchar(50)
@@ -1301,7 +1419,7 @@ as
 begin
 SET NOCOUNT ON
 
-if exists(select 1 from dbo.Customer_Master where Mobile_No = @Mobile_No and Customer_ID <> @Customer_ID)
+if exists(select 1 from dbo.Customer_Master where Mobile_No = @Mobile_No and Customer_ID <> @Customer_ID and IS_DLT = 0)
 begin
 	select 0;
 	return;
@@ -1312,13 +1430,14 @@ update [dbo].[Customer_Master]
            ,First_Name = @First_Name
            ,Last_Name = @Last_Name
            ,Address = @Address
+		   ,Area_ID = @Area_ID
            ,Birth_Date = @Birth_Date
            ,Blood_Group = @Blood_Group
            ,Mobile_No = @Mobile_No
            ,Alternate_Mobile = @Alternate_Mobile
            ,Updated_By = @UserName
 		   ,Updated_Date = GETDATE()
-	where Customer_ID = @Customer_ID
+	where Customer_ID = @Customer_ID and IS_DLT = 0
 
 	select @Customer_ID;
 
@@ -1329,13 +1448,14 @@ GO
 CREATE PROCEDURE dbo.DeleteCustomer(@Customer_ID int)
 AS
 begin
-	if exists(select 1 from dbo.bus_Mapping where Customer_ID = @Customer_ID)
+	if exists(select 1 from dbo.bus_Mapping bm inner join dbo.Customer_Master cm on bm.Customer_ID = cm.Customer_ID
+				 where cm.Customer_ID = @Customer_ID and cm.IS_DLT = 0)
 	begin
 		select 0;
 		return;
 	end
 
-	DELETE FROM dbo.Customer_Master where Customer_ID = @Customer_ID;
+	DELETE FROM dbo.Customer_Master where Customer_ID = @Customer_ID and IS_DLT = 0;
 
 	Select @Customer_ID;
 end
@@ -1356,6 +1476,7 @@ BEGIN
 	where First_Name like (case when @First_Name is null then First_Name else @First_Name + '%' end)
 	AND Last_Name like (case when @Last_Name is null then Last_Name else @Last_Name + '%' end)
 	AND Mobile_No like (case when @Mobile_No is null then Mobile_No else @Mobile_No + '%' end)
+	AND IS_DLT = 0
 END
 
 

@@ -81,7 +81,7 @@ namespace Lakshya_Yatra
                 lblCustomerID.Text = "New Customer";
                 chkDontKnowBirthdate.Checked = true; dtpBirthDate.Enabled = false;
 
-                chkDontKnowAlternateMobile.Checked = false; txtAlternateMobileNo.Enabled = true;
+                chkDontKnowAlternateMobile.Checked = true; txtAlternateMobileNo.Enabled = false;
 
                 chkDontKnowBloodGroup.Checked = true; cbBloodGroup.Enabled = false; cbBloodGroup.SelectedIndex = -1;
                 imageCaptured = false;
@@ -102,6 +102,8 @@ namespace Lakshya_Yatra
 
                 ResetTravelDetails();
                 Utilities.Instance.WriteLog("Called date value changed event");
+
+                GetAreas();
 
                 if (formLoad)
                 {
@@ -145,6 +147,8 @@ namespace Lakshya_Yatra
                     txtRegistrationDate.Text = Convert.ToDateTime(ds.Tables[0].Rows[0]["Registration_Date"]).ToString("dd-MMM-yyyy");
 
                     dtpNavratriDate.Value = Convert.ToDateTime(ds.Tables[0].Rows[0]["yatra_date"]).Date;
+
+                    cbArea.SelectedValue = ds.Tables[0].Rows[0]["Area_ID"] != DBNull.Value ? Convert.ToInt16(ds.Tables[0].Rows[0]["Area_ID"]) : 0;
 
                     txtFirstName.Text = ds.Tables[0].Rows[0]["First_Name"].ToString();
                     txtLastName.Text = ds.Tables[0].Rows[0]["Last_Name"].ToString();
@@ -204,6 +208,13 @@ namespace Lakshya_Yatra
                 Utilities.Instance.WriteLog("*** Exception in InitializeForm \n" + ex.Message);
                 MessageBox.Show(ex.Message);
             }           
+        }
+
+        private void GetAreas()
+        {
+            cbArea.DataSource = objBusinessRules.GetAreas();
+            cbArea.DisplayMember = "Area";
+            cbArea.ValueMember = "Area_ID";
         }
 
         private void SetCustomerImage()
@@ -306,6 +317,16 @@ namespace Lakshya_Yatra
                 {
                     result = false;
                     MessageBox.Show("Please enter Address.");
+                    txtAddress.Focus();
+                }
+            }
+
+            if (result)
+            {
+                if (Convert.ToInt16(cbArea.SelectedValue) == 0)
+                {
+                    result = false;
+                    MessageBox.Show("Please select Area.");
                     txtAddress.Focus();
                 }
             }
@@ -478,7 +499,7 @@ namespace Lakshya_Yatra
                 int strSeatNo = int.Parse(cbSeatNo.Items[cbSeatNo.SelectedIndex].ToString());
                 int strFees = !string.IsNullOrEmpty(txtFees.Text) ? int.Parse(txtFees.Text) : 0;
                 string AlternateMobile = !chkDontKnowAlternateMobile.Checked ? txtAlternateMobileNo.Text.Trim() : string.Empty;
-
+                int Area_ID = Convert.ToInt16(cbArea.SelectedValue);
 
                 bool DiscountChanged = true;
                 if (lblOriginalDiscount.Text == txtDiscount.Text.Trim() && lblOriginalDiscountReason.Text.Trim() == txtDiscountReason.Text.Trim())
@@ -491,7 +512,7 @@ namespace Lakshya_Yatra
 
                 Utilities.Instance.WriteLog("Collected form values");
                 Utilities.Instance.WriteLog("Calling InsertUpdateCustomer method from UI");
-                DataSet ds = objBusinessRules.InsertUpdateCustomer(strRegistrationDate, strYatraDate, strFirstName, strLastName, strAddress, strAge, strBirthDate, 
+                DataSet ds = objBusinessRules.InsertUpdateCustomer(strRegistrationDate, strYatraDate, strFirstName, strLastName, strAddress, Area_ID, strAge, strBirthDate, 
                                                                     strBloodGroup, strMobileNo, strBusNo, strSeatNo, strFees, Auto_Time,
                                                                     DiscountChanged, Discount, Discount_Given_By,DiscountReason,User.Instance.User_Name,
                                                                     Customer_ID, Bus_Master_ID,AlternateMobile);
@@ -703,82 +724,7 @@ namespace Lakshya_Yatra
         {
             Utilities.Instance.WriteLog("Entered btnPrint_Click");
             try
-            {
-                #region Old Code for Printing 
-                /*
-                if (ConfigurationManager.AppSettings["IP"] == "3")
-                {
-                    #region code for 1366x768 resolution 
-                    Graphics grp = this.CreateGraphics();
-                    Size formSize = this.Size;
-                    bitmap = new Bitmap(formSize.Width, formSize.Height, grp);
-                    grp = Graphics.FromImage(bitmap);
-
-                    //Copy screen area that that the Panel covers.
-                    Point panelLocation = PointToScreen(panelPrintTicket.Location);
-                    grp.CopyFromScreen(panelLocation.X, panelLocation.Y, 0, 0, panelPrintTicket.Size);
-                    //Show the Print Preview Dialog.
-                    printPreviewDialog1.Document = printDocument1;
-                    printDocument1.Print();
-                    //printPreviewDialog1.PrintPreviewControl.Zoom = 1;
-                    //printPreviewDialog1.ShowDialog();
-                    bitmap = null;
-                    btnRefreshAutoLists.Focus();
-
-
-                    #endregion
-                }
-
-                else if (ConfigurationManager.AppSettings["IP"] == "2")
-                {
-                    #region code for Main resolution 1920 x 1080 
-
-                    Graphics grp = this.CreateGraphics();
-                    Size formSize = new System.Drawing.Size(390, 230);
-                    bitmap = new Bitmap(390, 230, grp);
-                    grp = Graphics.FromImage(bitmap);
-
-                    //Copy screen area that that the Panel covers.
-                    Point panelLocation = PointToScreen(panelPrintTicket.Location);
-                    grp.CopyFromScreen(panelLocation.X + 140, panelLocation.Y + 100, 0, 0, formSize);
-
-                    //Show the Print Preview Dialog.
-                    printPreviewDialog1.Document = printDocument1;
-                    printDocument1.Print();
-                    //printPreviewDialog1.PrintPreviewControl.Zoom = 1;
-                    //printPreviewDialog1.ShowDialog();
-                    //bitmap.Dispose();
-                    bitmap = null;
-
-                    btnRefreshAutoLists.Focus();
-                    #endregion
-                }
-                else if (ConfigurationManager.AppSettings["IP"] == "4")
-                {
-                    #region code for 1288x800 resolution
-
-                    Graphics grp = this.CreateGraphics();
-                    Size formSize = this.Size;
-                    bitmap = new Bitmap(formSize.Width, formSize.Height, grp);
-                    grp = Graphics.FromImage(bitmap);
-
-                    //Copy screen area that that the Panel covers.
-                    Point panelLocation = PointToScreen(panelPrintTicket.Location);
-                    grp.CopyFromScreen(panelLocation.X, panelLocation.Y, 0, 0, panelPrintTicket.Size);
-
-                    //Show the Print Preview Dialog.
-                    printPreviewDialog1.Document = printDocument1;
-                    printDocument1.Print();
-                    //printPreviewDialog1.PrintPreviewControl.Zoom = 1;
-                    //printPreviewDialog1.ShowDialog();
-                    bitmap = null;
-                    btnRefreshAutoLists.Focus();
-                    #endregion
-                }
-                */
-                
-                #endregion
-            
+            {            
                 if (dgvTickets.DataSource == null) return;
 
 
@@ -793,8 +739,8 @@ namespace Lakshya_Yatra
                     print_Name = string.Format("{0} {1}", Convert.ToString(dgvRow.Cells["First_Name"].Value), Convert.ToString(dgvRow.Cells["Last_Name"].Value));
                     print_Address = Convert.ToString(dgvRow.Cells["Address"].Value);
                     printPreviewDialog1.Document = printDocument1;
-                    //printDocument1.Print();
-                    printPreviewDialog1.ShowDialog();
+                    printDocument1.Print();
+                    // printPreviewDialog1.ShowDialog();
                 }
                 
             }
@@ -828,24 +774,19 @@ namespace Lakshya_Yatra
             Font f = new System.Drawing.Font("Microsoft Sans Serif", 10.2f, FontStyle.Regular);
             Graphics g = e.Graphics;
 
-            if (ConfigurationManager.AppSettings["IP"] == "3")
+            if (printImg != null)
             {
-                #region Code for 1366x768 Resolution
-                if (printImg != null)
-                {
-                    g.DrawImage(img, 10, 10, 98, 91);
-                    printImg.Dispose();
-                }
-
-                g.DrawString("ID : \t\t" + print_CustomerID.ToString(), f, Brushes.Black, 145.0f, 10.0f);
-                g.DrawString("Vehicle No. : \t" + print_Bus_Name.ToString(), f, Brushes.Black, 145.0f, 30.0f);
-                g.DrawString("Seat No. : \t" + print_Seat_No.ToString(), f, Brushes.Black, 145.0f, 50.0f);
-                g.DrawString("Yatra Date : \t" + print_Yatra_Date.ToString(), f, Brushes.Black, 145.0f, 70.0f);
-
-                g.DrawString("Name : \t" + print_Name.ToString(), f, Brushes.Black, 10.0f, 100.0f);
-                g.DrawString("Address : \t" + print_Address.ToString(), f, Brushes.Black, 10.0f, 120.0f);
-                #endregion
+                g.DrawImage(img, 10, 10, 98, 91);
+                printImg.Dispose();
             }
+
+            g.DrawString("ID : \t\t" + print_CustomerID.ToString(), f, Brushes.Black, 145.0f, 10.0f);
+            g.DrawString("Vehicle No. : \t" + print_Bus_Name.ToString(), f, Brushes.Black, 145.0f, 30.0f);
+            g.DrawString("Seat No. : \t" + print_Seat_No.ToString(), f, Brushes.Black, 145.0f, 50.0f);
+            g.DrawString("Yatra Date : \t" + print_Yatra_Date.ToString(), f, Brushes.Black, 145.0f, 70.0f);
+
+            g.DrawString("Name : \t" + print_Name.ToString(), f, Brushes.Black, 10.0f, 100.0f);
+            g.DrawString("Address : \t" + print_Address.ToString(), f, Brushes.Black, 10.0f, 120.0f);
         }
 
         private void btnAddNew_Click(object sender, EventArgs e)
@@ -1039,10 +980,14 @@ namespace Lakshya_Yatra
         private void GetCustomerTickets()
         {
             //DataSet dsTickets = objBusinessRules.GetCustomerTickets(Customer_ID);
-            using(DataSet dsTickets = objBusinessRules.GetCustomerTickets(Customer_ID))
+            using(DataSet dsTickets = objBusinessRules.GetCustomerTickets(Customer_ID, true))
             {
                 dgvTickets.DataSource = dsTickets.Tables[0].Rows.Count > 0 ? dsTickets.Tables[0] : null;
                 btnPrint.Visible = dsTickets.Tables[0].Rows.Count > 0 ? true : false;
+            }
+            using (DataSet dsTickets = objBusinessRules.GetCustomerTickets(Customer_ID, false))
+            {
+                dgvPreviousTickets.DataSource = dsTickets.Tables[0].Rows.Count > 0 ? dsTickets.Tables[0] : null;
             }
         }
 
@@ -1078,6 +1023,7 @@ namespace Lakshya_Yatra
                     txtFirstName.Text = Convert.ToString(dt.Rows[0]["First_Name"]);
                     txtLastName.Text = Convert.ToString(dt.Rows[0]["Last_Name"]);
                     txtAddress.Text = Convert.ToString(dt.Rows[0]["Address"]);
+                    cbArea.SelectedValue = dt.Rows[0]["Area_ID"] != DBNull.Value ? Convert.ToInt16(dt.Rows[0]["Area_ID"]) : 0;
 
                     if (!string.IsNullOrEmpty(dt.Rows[0]["Blood_Group"].ToString()))
                     {
@@ -1113,6 +1059,7 @@ namespace Lakshya_Yatra
                 {
                     lblCustomerID.Text = "New Customer";
                     Customer_ID = 0;
+                    cbArea.SelectedValue = 0;
 
                     txtFirstName.Text = txtLastName.Text = txtAddress.Text = string.Empty;
                     chkDontKnowBloodGroup.Checked = true;
@@ -1267,6 +1214,7 @@ namespace Lakshya_Yatra
                 }
 
                 Customer_ID = Convert.ToInt16(selectedRow.Cells["Customer_ID"].Value);
+                cbArea.SelectedValue = !string.IsNullOrEmpty(selectedRow.Cells["Area_ID"].Value.ToString()) ? Convert.ToInt16(selectedRow.Cells["Area_ID"].Value) : 0;
 
                 imageCaptured = true;
                 SetCustomerImage();
@@ -1349,6 +1297,18 @@ namespace Lakshya_Yatra
                 if (!string.IsNullOrEmpty(txt.Text.Trim()) && txt.Text.Trim().Length == 10)
                 {
                     GetCustomerDetailsForMobile(txt.Text.Trim());
+                }
+
+                ((Control)sender).BackColor = Color.White;
+                ((Control)sender).ForeColor = Color.Black;
+            }
+            else if (sender is TextBox && ((TextBox)sender).Name == "txtAddress")
+            {
+                TextBox txt = (TextBox)sender;
+                
+                if (chkDontKnowBirthdate.Checked && chkDontKnowAlternateMobile.Checked && chkDontKnowBloodGroup.Checked)
+                {
+                    cbBusRoutes.Focus();
                 }
 
                 ((Control)sender).BackColor = Color.White;
@@ -1473,6 +1433,27 @@ namespace Lakshya_Yatra
             catch (Exception ex)
             {
                 MessageBox.Show("Error in updating Record, please contact System Administrator!\n" + ex.Message.ToString());
+            }
+        }
+
+        private void btnPrintOld_Click(object sender, EventArgs e)
+        {
+            if (dgvPreviousTickets.DataSource == null) return;
+
+
+            foreach (DataGridViewRow dgvRow in dgvPreviousTickets.Rows)
+            {
+                print_CustomerID = print_Address = print_Bus_Name = print_Name = print_Seat_No = print_Yatra_Date = string.Empty;
+
+                print_CustomerID = Convert.ToString(dgvRow.Cells["CustomerID1"].Value);
+                print_Bus_Name = Convert.ToString(dgvRow.Cells["Bus_Name1"].Value);
+                print_Seat_No = Convert.ToString(dgvRow.Cells["Seat_No1"].Value);
+                print_Yatra_Date = Convert.ToString(dgvRow.Cells["Yatra_Date1"].Value);
+                print_Name = string.Format("{0} {1}", Convert.ToString(dgvRow.Cells["First_Name1"].Value), Convert.ToString(dgvRow.Cells["Last_Name1"].Value));
+                print_Address = Convert.ToString(dgvRow.Cells["Address1"].Value);
+                printPreviewDialog1.Document = printDocument1;
+                printDocument1.Print();
+                //printPreviewDialog1.ShowDialog();
             }
         }
 

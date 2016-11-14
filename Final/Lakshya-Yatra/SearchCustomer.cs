@@ -160,24 +160,24 @@ namespace Lakshya_Yatra
                 if (f.Text == "Registration")
                 {
                     IsOpen = true;
-                    Registration frmRegistration = (Registration)f;                    
+                    Multiple_Registration frmRegistration = (Multiple_Registration)f;                    
                     frmRegistration.Customer_ID = Convert.ToInt32(dgvCustomers.SelectedRows[0].Cells["Customer_ID"].Value);
                     frmRegistration.Bus_Master_ID = Convert.ToInt32(dgvCustomers.SelectedRows[0].Cells["Bus_Master_ID"].Value);
                     frmRegistration.Show();
-                    frmRegistration.InitializeForm();
+                    frmRegistration.InitializeForm(true);
                     f.Focus();
                     break;
                 }
             }
             if (IsOpen == false)
             {
-                Registration frmRegistration = new Registration();
+                Multiple_Registration frmRegistration = new Multiple_Registration();
                 frmRegistration.MdiParent = this.MdiParent;
                 frmRegistration.WindowState = FormWindowState.Maximized;
                 frmRegistration.Customer_ID = Convert.ToInt32(dgvCustomers.SelectedRows[0].Cells["Customer_ID"].Value);
                 frmRegistration.Bus_Master_ID = Convert.ToInt32(dgvCustomers.SelectedRows[0].Cells["Bus_Master_ID"].Value);
                 frmRegistration.Show();
-                frmRegistration.InitializeForm();
+                frmRegistration.InitializeForm(true);
             }
         }
         

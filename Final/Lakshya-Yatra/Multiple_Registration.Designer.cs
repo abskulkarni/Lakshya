@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Multiple_Registration));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.txtRegistrationDate = new System.Windows.Forms.TextBox();
             this.bntCapture = new System.Windows.Forms.Button();
@@ -51,6 +51,8 @@
             this.btnPrint = new System.Windows.Forms.Button();
             this.btnAddNew = new System.Windows.Forms.Button();
             this.grpRegistrationDetails = new System.Windows.Forms.GroupBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.cbArea = new System.Windows.Forms.ComboBox();
             this.lblCustomerID = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
@@ -120,6 +122,17 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editTicketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteTicketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dgvPreviousTickets = new System.Windows.Forms.DataGridView();
+            this.btnPrintOld = new System.Windows.Forms.Button();
+            this.CustomerID1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Bus_Route1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Yatra_Date1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Bus_Name1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Seat_No1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BusMasterID1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Address1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.First_Name1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Last_Name1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grpPicture.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgCapture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgVideo)).BeginInit();
@@ -130,6 +143,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTickets)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPreviousTickets)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -161,7 +175,7 @@
             this.bntCapture.Location = new System.Drawing.Point(122, 202);
             this.bntCapture.Name = "bntCapture";
             this.bntCapture.Size = new System.Drawing.Size(118, 25);
-            this.bntCapture.TabIndex = 22;
+            this.bntCapture.TabIndex = 23;
             this.bntCapture.Text = "Capture Image";
             this.bntCapture.UseVisualStyleBackColor = false;
             this.bntCapture.Click += new System.EventHandler(this.bntCapture_Click);
@@ -198,7 +212,7 @@
             this.grpPicture.Location = new System.Drawing.Point(479, 42);
             this.grpPicture.Name = "grpPicture";
             this.grpPicture.Size = new System.Drawing.Size(353, 243);
-            this.grpPicture.TabIndex = 21;
+            this.grpPicture.TabIndex = 22;
             this.grpPicture.TabStop = false;
             this.grpPicture.Text = "Picture";
             // 
@@ -293,7 +307,7 @@
             this.btnSubmit.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(108, 31);
-            this.btnSubmit.TabIndex = 23;
+            this.btnSubmit.TabIndex = 24;
             this.btnSubmit.Text = "Submit";
             this.btnSubmit.UseVisualStyleBackColor = false;
             this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
@@ -345,6 +359,8 @@
             // 
             // grpRegistrationDetails
             // 
+            this.grpRegistrationDetails.Controls.Add(this.label14);
+            this.grpRegistrationDetails.Controls.Add(this.cbArea);
             this.grpRegistrationDetails.Controls.Add(this.lblCustomerID);
             this.grpRegistrationDetails.Controls.Add(this.label5);
             this.grpRegistrationDetails.Controls.Add(this.label24);
@@ -375,12 +391,33 @@
             this.grpRegistrationDetails.TabStop = false;
             this.grpRegistrationDetails.Text = "Registration Details:";
             // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.ForeColor = System.Drawing.Color.Black;
+            this.label14.Location = new System.Drawing.Point(47, 116);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(36, 14);
+            this.label14.TabIndex = 22;
+            this.label14.Text = "Area";
+            // 
+            // cbArea
+            // 
+            this.cbArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbArea.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbArea.FormattingEnabled = true;
+            this.cbArea.Location = new System.Drawing.Point(103, 113);
+            this.cbArea.Name = "cbArea";
+            this.cbArea.Size = new System.Drawing.Size(161, 22);
+            this.cbArea.TabIndex = 4;
+            // 
             // lblCustomerID
             // 
             this.lblCustomerID.AutoSize = true;
             this.lblCustomerID.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCustomerID.ForeColor = System.Drawing.Color.Black;
-            this.lblCustomerID.Location = new System.Drawing.Point(217, 25);
+            this.lblCustomerID.Location = new System.Drawing.Point(349, 15);
             this.lblCustomerID.Name = "lblCustomerID";
             this.lblCustomerID.Size = new System.Drawing.Size(100, 14);
             this.lblCustomerID.TabIndex = 21;
@@ -391,17 +428,17 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(116, 25);
+            this.label5.Location = new System.Drawing.Point(320, 15);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(95, 14);
+            this.label5.Size = new System.Drawing.Size(30, 14);
             this.label5.TabIndex = 20;
-            this.label5.Text = "Customer ID :";
+            this.label5.Text = "ID :";
             // 
             // label24
             // 
             this.label24.Font = new System.Drawing.Font("Verdana", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label24.ForeColor = System.Drawing.Color.Black;
-            this.label24.Location = new System.Drawing.Point(95, 166);
+            this.label24.Location = new System.Drawing.Point(101, 176);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(149, 26);
             this.label24.TabIndex = 19;
@@ -413,11 +450,11 @@
             this.txtSearchAddress.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.txtSearchAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSearchAddress.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSearchAddress.Location = new System.Drawing.Point(97, 141);
+            this.txtSearchAddress.Location = new System.Drawing.Point(103, 151);
             this.txtSearchAddress.MaxLength = 40;
             this.txtSearchAddress.Name = "txtSearchAddress";
-            this.txtSearchAddress.Size = new System.Drawing.Size(167, 22);
-            this.txtSearchAddress.TabIndex = 4;
+            this.txtSearchAddress.Size = new System.Drawing.Size(161, 22);
+            this.txtSearchAddress.TabIndex = 5;
             this.txtSearchAddress.TextChanged += new System.EventHandler(this.txtSearchAddress_TextChanged);
             this.txtSearchAddress.Enter += new System.EventHandler(this.ActivateControl);
             this.txtSearchAddress.Leave += new System.EventHandler(this.DeActivateControl);
@@ -426,10 +463,10 @@
             // 
             this.chkDontKnowBirthdate.AutoSize = true;
             this.chkDontKnowBirthdate.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkDontKnowBirthdate.Location = new System.Drawing.Point(270, 206);
+            this.chkDontKnowBirthdate.Location = new System.Drawing.Point(270, 214);
             this.chkDontKnowBirthdate.Name = "chkDontKnowBirthdate";
             this.chkDontKnowBirthdate.Size = new System.Drawing.Size(97, 18);
-            this.chkDontKnowBirthdate.TabIndex = 7;
+            this.chkDontKnowBirthdate.TabIndex = 8;
             this.chkDontKnowBirthdate.Text = "Don\'t know";
             this.chkDontKnowBirthdate.UseVisualStyleBackColor = true;
             this.chkDontKnowBirthdate.CheckedChanged += new System.EventHandler(this.chkDontKnowBirthdate_CheckedChanged);
@@ -443,7 +480,7 @@
             this.chkDontKnowAlternateMobile.Location = new System.Drawing.Point(270, 279);
             this.chkDontKnowAlternateMobile.Name = "chkDontKnowAlternateMobile";
             this.chkDontKnowAlternateMobile.Size = new System.Drawing.Size(97, 18);
-            this.chkDontKnowAlternateMobile.TabIndex = 11;
+            this.chkDontKnowAlternateMobile.TabIndex = 12;
             this.chkDontKnowAlternateMobile.Text = "Don\'t know";
             this.chkDontKnowAlternateMobile.UseVisualStyleBackColor = true;
             this.chkDontKnowAlternateMobile.CheckedChanged += new System.EventHandler(this.chkDontKnowAlternateMobile_CheckedChanged);
@@ -454,10 +491,10 @@
             // 
             this.chkDontKnowBloodGroup.AutoSize = true;
             this.chkDontKnowBloodGroup.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkDontKnowBloodGroup.Location = new System.Drawing.Point(270, 239);
+            this.chkDontKnowBloodGroup.Location = new System.Drawing.Point(270, 246);
             this.chkDontKnowBloodGroup.Name = "chkDontKnowBloodGroup";
             this.chkDontKnowBloodGroup.Size = new System.Drawing.Size(97, 18);
-            this.chkDontKnowBloodGroup.TabIndex = 9;
+            this.chkDontKnowBloodGroup.TabIndex = 10;
             this.chkDontKnowBloodGroup.Text = "Don\'t know";
             this.chkDontKnowBloodGroup.UseVisualStyleBackColor = true;
             this.chkDontKnowBloodGroup.CheckedChanged += new System.EventHandler(this.chkDontKnowBloodGroup_CheckedChanged);
@@ -506,7 +543,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(40, 108);
+            this.label3.Location = new System.Drawing.Point(102, 61);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(43, 14);
             this.label3.TabIndex = 3;
@@ -517,7 +554,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(66, 206);
+            this.label6.Location = new System.Drawing.Point(66, 214);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(65, 14);
             this.label6.TabIndex = 6;
@@ -528,7 +565,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.Black;
-            this.label7.Location = new System.Drawing.Point(47, 240);
+            this.label7.Location = new System.Drawing.Point(47, 247);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(84, 14);
             this.label7.TabIndex = 7;
@@ -539,7 +576,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(25, 143);
+            this.label4.Location = new System.Drawing.Point(25, 153);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(58, 14);
             this.label4.TabIndex = 4;
@@ -550,7 +587,7 @@
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.Black;
-            this.label8.Location = new System.Drawing.Point(123, 63);
+            this.label8.Location = new System.Drawing.Point(211, 20);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(72, 14);
             this.label8.TabIndex = 8;
@@ -562,7 +599,7 @@
             this.txtLastName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.txtLastName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtLastName.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLastName.Location = new System.Drawing.Point(270, 106);
+            this.txtLastName.Location = new System.Drawing.Point(254, 78);
             this.txtLastName.MaxLength = 40;
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.Size = new System.Drawing.Size(151, 22);
@@ -575,10 +612,10 @@
             this.dtpBirthDate.Checked = false;
             this.dtpBirthDate.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpBirthDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpBirthDate.Location = new System.Drawing.Point(150, 203);
+            this.dtpBirthDate.Location = new System.Drawing.Point(150, 211);
             this.dtpBirthDate.Name = "dtpBirthDate";
             this.dtpBirthDate.Size = new System.Drawing.Size(100, 22);
-            this.dtpBirthDate.TabIndex = 6;
+            this.dtpBirthDate.TabIndex = 7;
             this.dtpBirthDate.ValueChanged += new System.EventHandler(this.dtpBirthDate_ValueChanged);
             this.dtpBirthDate.Enter += new System.EventHandler(this.ActivateControl);
             this.dtpBirthDate.Leave += new System.EventHandler(this.DeActivateControl);
@@ -589,10 +626,10 @@
             this.txtFirstName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.txtFirstName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtFirstName.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFirstName.Location = new System.Drawing.Point(97, 106);
+            this.txtFirstName.Location = new System.Drawing.Point(103, 78);
             this.txtFirstName.MaxLength = 40;
             this.txtFirstName.Name = "txtFirstName";
-            this.txtFirstName.Size = new System.Drawing.Size(167, 22);
+            this.txtFirstName.Size = new System.Drawing.Size(145, 22);
             this.txtFirstName.TabIndex = 2;
             this.txtFirstName.Enter += new System.EventHandler(this.ActivateControl);
             this.txtFirstName.Leave += new System.EventHandler(this.DeActivateControl);
@@ -611,10 +648,10 @@
             "AB-",
             "O+",
             "O-"});
-            this.cbBloodGroup.Location = new System.Drawing.Point(150, 237);
+            this.cbBloodGroup.Location = new System.Drawing.Point(150, 244);
             this.cbBloodGroup.Name = "cbBloodGroup";
             this.cbBloodGroup.Size = new System.Drawing.Size(100, 22);
-            this.cbBloodGroup.TabIndex = 8;
+            this.cbBloodGroup.TabIndex = 9;
             this.cbBloodGroup.Enter += new System.EventHandler(this.ActivateControl);
             this.cbBloodGroup.Leave += new System.EventHandler(this.DeActivateControl);
             // 
@@ -624,12 +661,12 @@
             this.txtAddress.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.txtAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtAddress.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAddress.Location = new System.Drawing.Point(270, 141);
+            this.txtAddress.Location = new System.Drawing.Point(270, 151);
             this.txtAddress.MaxLength = 200;
             this.txtAddress.Multiline = true;
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(159, 51);
-            this.txtAddress.TabIndex = 5;
+            this.txtAddress.TabIndex = 6;
             this.txtAddress.Enter += new System.EventHandler(this.ActivateControl);
             this.txtAddress.Leave += new System.EventHandler(this.DeActivateControl);
             // 
@@ -639,7 +676,7 @@
             this.txtMobileNo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.txtMobileNo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtMobileNo.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMobileNo.Location = new System.Drawing.Point(219, 61);
+            this.txtMobileNo.Location = new System.Drawing.Point(198, 40);
             this.txtMobileNo.MaxLength = 10;
             this.txtMobileNo.Name = "txtMobileNo";
             this.txtMobileNo.Size = new System.Drawing.Size(98, 22);
@@ -682,7 +719,7 @@
             this.txtFees.MaxLength = 4;
             this.txtFees.Name = "txtFees";
             this.txtFees.Size = new System.Drawing.Size(103, 22);
-            this.txtFees.TabIndex = 15;
+            this.txtFees.TabIndex = 16;
             this.txtFees.TextChanged += new System.EventHandler(this.txtFees_TextChanged);
             this.txtFees.Enter += new System.EventHandler(this.ActivateControl);
             this.txtFees.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.RestrictToPositiveInteger);
@@ -712,7 +749,7 @@
             this.grpTravelDetails.Location = new System.Drawing.Point(12, 357);
             this.grpTravelDetails.Name = "grpTravelDetails";
             this.grpTravelDetails.Size = new System.Drawing.Size(449, 241);
-            this.grpTravelDetails.TabIndex = 12;
+            this.grpTravelDetails.TabIndex = 13;
             this.grpTravelDetails.TabStop = false;
             this.grpTravelDetails.Text = "Travel Details ";
             // 
@@ -736,7 +773,7 @@
             this.cbBusRoutes.Location = new System.Drawing.Point(111, 43);
             this.cbBusRoutes.Name = "cbBusRoutes";
             this.cbBusRoutes.Size = new System.Drawing.Size(296, 22);
-            this.cbBusRoutes.TabIndex = 13;
+            this.cbBusRoutes.TabIndex = 14;
             this.cbBusRoutes.SelectedIndexChanged += new System.EventHandler(this.cbBusRoutes_SelectedIndexChanged);
             // 
             // lblOriginalDiscountReason
@@ -768,7 +805,7 @@
             this.txtDiscountReason.Multiline = true;
             this.txtDiscountReason.Name = "txtDiscountReason";
             this.txtDiscountReason.Size = new System.Drawing.Size(161, 45);
-            this.txtDiscountReason.TabIndex = 18;
+            this.txtDiscountReason.TabIndex = 19;
             this.txtDiscountReason.Enter += new System.EventHandler(this.ActivateControl);
             this.txtDiscountReason.Leave += new System.EventHandler(this.DeActivateControl);
             // 
@@ -790,7 +827,7 @@
             this.chkDiscount.Location = new System.Drawing.Point(13, 122);
             this.chkDiscount.Name = "chkDiscount";
             this.chkDiscount.Size = new System.Drawing.Size(80, 18);
-            this.chkDiscount.TabIndex = 16;
+            this.chkDiscount.TabIndex = 17;
             this.chkDiscount.Text = "Discount";
             this.chkDiscount.UseVisualStyleBackColor = true;
             this.chkDiscount.CheckedChanged += new System.EventHandler(this.chkDiscount_CheckedChanged);
@@ -805,7 +842,7 @@
             this.txtDiscount.MaxLength = 4;
             this.txtDiscount.Name = "txtDiscount";
             this.txtDiscount.Size = new System.Drawing.Size(103, 22);
-            this.txtDiscount.TabIndex = 17;
+            this.txtDiscount.TabIndex = 18;
             this.txtDiscount.Enter += new System.EventHandler(this.ActivateControl);
             this.txtDiscount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.RestrictToPositiveInteger);
             this.txtDiscount.Leave += new System.EventHandler(this.DeActivateControl);
@@ -843,7 +880,7 @@
             this.dtpNavratriDate.Location = new System.Drawing.Point(111, 79);
             this.dtpNavratriDate.Name = "dtpNavratriDate";
             this.dtpNavratriDate.Size = new System.Drawing.Size(103, 22);
-            this.dtpNavratriDate.TabIndex = 14;
+            this.dtpNavratriDate.TabIndex = 15;
             this.dtpNavratriDate.ValueChanged += new System.EventHandler(this.dtpNavratriDate_ValueChanged);
             this.dtpNavratriDate.Enter += new System.EventHandler(this.ActivateControl);
             this.dtpNavratriDate.Leave += new System.EventHandler(this.DeActivateControl);
@@ -857,7 +894,7 @@
             this.cbBus.Location = new System.Drawing.Point(111, 155);
             this.cbBus.Name = "cbBus";
             this.cbBus.Size = new System.Drawing.Size(88, 22);
-            this.cbBus.TabIndex = 19;
+            this.cbBus.TabIndex = 20;
             this.cbBus.SelectedIndexChanged += new System.EventHandler(this.cbBus_SelectedIndexChanged);
             this.cbBus.Enter += new System.EventHandler(this.ActivateControl);
             this.cbBus.Leave += new System.EventHandler(this.DeActivateControl);
@@ -870,7 +907,7 @@
             this.cbSeatNo.Location = new System.Drawing.Point(112, 204);
             this.cbSeatNo.Name = "cbSeatNo";
             this.cbSeatNo.Size = new System.Drawing.Size(87, 22);
-            this.cbSeatNo.TabIndex = 20;
+            this.cbSeatNo.TabIndex = 21;
             this.cbSeatNo.SelectedIndexChanged += new System.EventHandler(this.cbSeatNo_SelectedIndexChanged);
             this.cbSeatNo.Enter += new System.EventHandler(this.ActivateControl);
             this.cbSeatNo.Leave += new System.EventHandler(this.DeActivateControl);
@@ -944,7 +981,7 @@
             this.panelSearch.Controls.Add(this.label17);
             this.panelSearch.Controls.Add(this.txtSearchLastName);
             this.panelSearch.Controls.Add(this.txtSearchFirstName);
-            this.panelSearch.Location = new System.Drawing.Point(12, 26);
+            this.panelSearch.Location = new System.Drawing.Point(12, 34);
             this.panelSearch.Name = "panelSearch";
             this.panelSearch.Size = new System.Drawing.Size(968, 602);
             this.panelSearch.TabIndex = 20;
@@ -989,27 +1026,27 @@
             // 
             this.dgvCustomers.AllowUserToAddRows = false;
             this.dgvCustomers.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.dgvCustomers.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.dgvCustomers.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
             this.dgvCustomers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvCustomers.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvCustomers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.LightGray;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCustomers.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.LightGray;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCustomers.DefaultCellStyle = dataGridViewCellStyle11;
             this.dgvCustomers.Location = new System.Drawing.Point(23, 85);
             this.dgvCustomers.MultiSelect = false;
             this.dgvCustomers.Name = "dgvCustomers";
             this.dgvCustomers.ReadOnly = true;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-            this.dgvCustomers.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black;
+            this.dgvCustomers.RowsDefaultCellStyle = dataGridViewCellStyle12;
             this.dgvCustomers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvCustomers.Size = new System.Drawing.Size(923, 499);
             this.dgvCustomers.TabIndex = 31;
@@ -1218,12 +1255,117 @@
             this.deleteTicketToolStripMenuItem.Text = "&Delete Ticket";
             this.deleteTicketToolStripMenuItem.Click += new System.EventHandler(this.deleteTicketToolStripMenuItem_Click);
             // 
+            // dgvPreviousTickets
+            // 
+            this.dgvPreviousTickets.AllowUserToAddRows = false;
+            this.dgvPreviousTickets.AllowUserToDeleteRows = false;
+            this.dgvPreviousTickets.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPreviousTickets.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.CustomerID1,
+            this.Bus_Route1,
+            this.Yatra_Date1,
+            this.Bus_Name1,
+            this.Seat_No1,
+            this.BusMasterID1,
+            this.Address1,
+            this.First_Name1,
+            this.Last_Name1});
+            this.dgvPreviousTickets.Location = new System.Drawing.Point(838, 27);
+            this.dgvPreviousTickets.Name = "dgvPreviousTickets";
+            this.dgvPreviousTickets.ReadOnly = true;
+            this.dgvPreviousTickets.RowHeadersVisible = false;
+            this.dgvPreviousTickets.Size = new System.Drawing.Size(406, 258);
+            this.dgvPreviousTickets.TabIndex = 29;
+            this.dgvPreviousTickets.TabStop = false;
+            // 
+            // btnPrintOld
+            // 
+            this.btnPrintOld.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPrintOld.Location = new System.Drawing.Point(1250, 253);
+            this.btnPrintOld.Name = "btnPrintOld";
+            this.btnPrintOld.Size = new System.Drawing.Size(91, 32);
+            this.btnPrintOld.TabIndex = 30;
+            this.btnPrintOld.Text = "Print";
+            this.btnPrintOld.UseVisualStyleBackColor = false;
+            this.btnPrintOld.Click += new System.EventHandler(this.btnPrintOld_Click);
+            // 
+            // CustomerID1
+            // 
+            this.CustomerID1.DataPropertyName = "CustomerID";
+            this.CustomerID1.HeaderText = "Customer ID";
+            this.CustomerID1.Name = "CustomerID1";
+            this.CustomerID1.ReadOnly = true;
+            this.CustomerID1.Visible = false;
+            this.CustomerID1.Width = 120;
+            // 
+            // Bus_Route1
+            // 
+            this.Bus_Route1.DataPropertyName = "Bus_Route";
+            this.Bus_Route1.HeaderText = "Bus Route";
+            this.Bus_Route1.Name = "Bus_Route1";
+            this.Bus_Route1.ReadOnly = true;
+            // 
+            // Yatra_Date1
+            // 
+            this.Yatra_Date1.DataPropertyName = "Yatra_Date";
+            this.Yatra_Date1.HeaderText = "Yatra Date";
+            this.Yatra_Date1.Name = "Yatra_Date1";
+            this.Yatra_Date1.ReadOnly = true;
+            // 
+            // Bus_Name1
+            // 
+            this.Bus_Name1.DataPropertyName = "Bus_Name";
+            this.Bus_Name1.HeaderText = "Bus Name";
+            this.Bus_Name1.Name = "Bus_Name1";
+            this.Bus_Name1.ReadOnly = true;
+            // 
+            // Seat_No1
+            // 
+            this.Seat_No1.DataPropertyName = "Seat_No";
+            this.Seat_No1.HeaderText = "Seat No";
+            this.Seat_No1.Name = "Seat_No1";
+            this.Seat_No1.ReadOnly = true;
+            // 
+            // BusMasterID1
+            // 
+            this.BusMasterID1.DataPropertyName = "BusMasterID";
+            this.BusMasterID1.HeaderText = "Bus Master ID";
+            this.BusMasterID1.Name = "BusMasterID1";
+            this.BusMasterID1.ReadOnly = true;
+            this.BusMasterID1.Visible = false;
+            // 
+            // Address1
+            // 
+            this.Address1.DataPropertyName = "Address";
+            this.Address1.HeaderText = "Address";
+            this.Address1.Name = "Address1";
+            this.Address1.ReadOnly = true;
+            this.Address1.Visible = false;
+            // 
+            // First_Name1
+            // 
+            this.First_Name1.DataPropertyName = "First_Name";
+            this.First_Name1.HeaderText = "First Name";
+            this.First_Name1.Name = "First_Name1";
+            this.First_Name1.ReadOnly = true;
+            this.First_Name1.Visible = false;
+            // 
+            // Last_Name1
+            // 
+            this.Last_Name1.DataPropertyName = "Last_Name";
+            this.Last_Name1.HeaderText = "Last Name";
+            this.Last_Name1.Name = "Last_Name1";
+            this.Last_Name1.ReadOnly = true;
+            this.Last_Name1.Visible = false;
+            // 
             // Multiple_Registration
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1282, 733);
+            this.ClientSize = new System.Drawing.Size(1370, 733);
+            this.Controls.Add(this.btnPrintOld);
+            this.Controls.Add(this.dgvPreviousTickets);
             this.Controls.Add(this.dgvTickets);
             this.Controls.Add(this.btnRefreshAutoLists);
             this.Controls.Add(this.btnPrint);
@@ -1238,7 +1380,7 @@
             this.Controls.Add(this.panelSearch);
             this.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "Multiple_Registration";
-            this.Text = "Registration";
+            this.Text = "Multiple Registration";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Registration_FormClosing);
             this.Load += new System.EventHandler(this.Registration_Load);
             this.grpPicture.ResumeLayout(false);
@@ -1255,6 +1397,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTickets)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPreviousTickets)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1349,5 +1492,18 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Address;
         private System.Windows.Forms.DataGridViewTextBoxColumn First_Name;
         private System.Windows.Forms.DataGridViewTextBoxColumn Last_Name;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ComboBox cbArea;
+        private System.Windows.Forms.DataGridView dgvPreviousTickets;
+        private System.Windows.Forms.Button btnPrintOld;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CustomerID1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Bus_Route1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Yatra_Date1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Bus_Name1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Seat_No1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BusMasterID1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Address1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn First_Name1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Last_Name1;
     }
 }
