@@ -724,82 +724,7 @@ namespace Lakshya_Yatra
         {
             Utilities.Instance.WriteLog("Entered btnPrint_Click");
             try
-            {
-                #region Old Code for Printing 
-                /*
-                if (ConfigurationManager.AppSettings["IP"] == "3")
-                {
-                    #region code for 1366x768 resolution 
-                    Graphics grp = this.CreateGraphics();
-                    Size formSize = this.Size;
-                    bitmap = new Bitmap(formSize.Width, formSize.Height, grp);
-                    grp = Graphics.FromImage(bitmap);
-
-                    //Copy screen area that that the Panel covers.
-                    Point panelLocation = PointToScreen(panelPrintTicket.Location);
-                    grp.CopyFromScreen(panelLocation.X, panelLocation.Y, 0, 0, panelPrintTicket.Size);
-                    //Show the Print Preview Dialog.
-                    printPreviewDialog1.Document = printDocument1;
-                    printDocument1.Print();
-                    //printPreviewDialog1.PrintPreviewControl.Zoom = 1;
-                    //printPreviewDialog1.ShowDialog();
-                    bitmap = null;
-                    btnRefreshAutoLists.Focus();
-
-
-                    #endregion
-                }
-
-                else if (ConfigurationManager.AppSettings["IP"] == "2")
-                {
-                    #region code for Main resolution 1920 x 1080 
-
-                    Graphics grp = this.CreateGraphics();
-                    Size formSize = new System.Drawing.Size(390, 230);
-                    bitmap = new Bitmap(390, 230, grp);
-                    grp = Graphics.FromImage(bitmap);
-
-                    //Copy screen area that that the Panel covers.
-                    Point panelLocation = PointToScreen(panelPrintTicket.Location);
-                    grp.CopyFromScreen(panelLocation.X + 140, panelLocation.Y + 100, 0, 0, formSize);
-
-                    //Show the Print Preview Dialog.
-                    printPreviewDialog1.Document = printDocument1;
-                    printDocument1.Print();
-                    //printPreviewDialog1.PrintPreviewControl.Zoom = 1;
-                    //printPreviewDialog1.ShowDialog();
-                    //bitmap.Dispose();
-                    bitmap = null;
-
-                    btnRefreshAutoLists.Focus();
-                    #endregion
-                }
-                else if (ConfigurationManager.AppSettings["IP"] == "4")
-                {
-                    #region code for 1288x800 resolution
-
-                    Graphics grp = this.CreateGraphics();
-                    Size formSize = this.Size;
-                    bitmap = new Bitmap(formSize.Width, formSize.Height, grp);
-                    grp = Graphics.FromImage(bitmap);
-
-                    //Copy screen area that that the Panel covers.
-                    Point panelLocation = PointToScreen(panelPrintTicket.Location);
-                    grp.CopyFromScreen(panelLocation.X, panelLocation.Y, 0, 0, panelPrintTicket.Size);
-
-                    //Show the Print Preview Dialog.
-                    printPreviewDialog1.Document = printDocument1;
-                    printDocument1.Print();
-                    //printPreviewDialog1.PrintPreviewControl.Zoom = 1;
-                    //printPreviewDialog1.ShowDialog();
-                    bitmap = null;
-                    btnRefreshAutoLists.Focus();
-                    #endregion
-                }
-                */
-                
-                #endregion
-            
+            {            
                 if (dgvTickets.DataSource == null) return;
 
 
@@ -814,8 +739,8 @@ namespace Lakshya_Yatra
                     print_Name = string.Format("{0} {1}", Convert.ToString(dgvRow.Cells["First_Name"].Value), Convert.ToString(dgvRow.Cells["Last_Name"].Value));
                     print_Address = Convert.ToString(dgvRow.Cells["Address"].Value);
                     printPreviewDialog1.Document = printDocument1;
-                    //printDocument1.Print();
-                    printPreviewDialog1.ShowDialog();
+                    printDocument1.Print();
+                    // printPreviewDialog1.ShowDialog();
                 }
                 
             }
@@ -849,24 +774,19 @@ namespace Lakshya_Yatra
             Font f = new System.Drawing.Font("Microsoft Sans Serif", 10.2f, FontStyle.Regular);
             Graphics g = e.Graphics;
 
-            if (ConfigurationManager.AppSettings["IP"] == "3")
+            if (printImg != null)
             {
-                #region Code for 1366x768 Resolution
-                if (printImg != null)
-                {
-                    g.DrawImage(img, 10, 10, 98, 91);
-                    printImg.Dispose();
-                }
-
-                g.DrawString("ID : \t\t" + print_CustomerID.ToString(), f, Brushes.Black, 145.0f, 10.0f);
-                g.DrawString("Vehicle No. : \t" + print_Bus_Name.ToString(), f, Brushes.Black, 145.0f, 30.0f);
-                g.DrawString("Seat No. : \t" + print_Seat_No.ToString(), f, Brushes.Black, 145.0f, 50.0f);
-                g.DrawString("Yatra Date : \t" + print_Yatra_Date.ToString(), f, Brushes.Black, 145.0f, 70.0f);
-
-                g.DrawString("Name : \t" + print_Name.ToString(), f, Brushes.Black, 10.0f, 100.0f);
-                g.DrawString("Address : \t" + print_Address.ToString(), f, Brushes.Black, 10.0f, 120.0f);
-                #endregion
+                g.DrawImage(img, 10, 10, 98, 91);
+                printImg.Dispose();
             }
+
+            g.DrawString("ID : \t\t" + print_CustomerID.ToString(), f, Brushes.Black, 145.0f, 10.0f);
+            g.DrawString("Vehicle No. : \t" + print_Bus_Name.ToString(), f, Brushes.Black, 145.0f, 30.0f);
+            g.DrawString("Seat No. : \t" + print_Seat_No.ToString(), f, Brushes.Black, 145.0f, 50.0f);
+            g.DrawString("Yatra Date : \t" + print_Yatra_Date.ToString(), f, Brushes.Black, 145.0f, 70.0f);
+
+            g.DrawString("Name : \t" + print_Name.ToString(), f, Brushes.Black, 10.0f, 100.0f);
+            g.DrawString("Address : \t" + print_Address.ToString(), f, Brushes.Black, 10.0f, 120.0f);
         }
 
         private void btnAddNew_Click(object sender, EventArgs e)
@@ -1532,8 +1452,8 @@ namespace Lakshya_Yatra
                 print_Name = string.Format("{0} {1}", Convert.ToString(dgvRow.Cells["First_Name1"].Value), Convert.ToString(dgvRow.Cells["Last_Name1"].Value));
                 print_Address = Convert.ToString(dgvRow.Cells["Address1"].Value);
                 printPreviewDialog1.Document = printDocument1;
-                //printDocument1.Print();
-                printPreviewDialog1.ShowDialog();
+                printDocument1.Print();
+                //printPreviewDialog1.ShowDialog();
             }
         }
 
