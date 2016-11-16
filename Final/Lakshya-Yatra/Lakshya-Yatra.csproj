@@ -131,6 +131,7 @@
     <Compile Include="CustomSMS.Designer.cs">
       <DependentUpon>CustomSMS.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormFactory.cs" />
     <Compile Include="Multiple_Registration.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -724,6 +725,7 @@
     <None Include="Images\digital-waves-background.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DBChangeScripts\Changes_14_Nov_2016.sql" />
     <Content Include="Images\Fasticon-Happy-Bus-Bus-green.ico" />
   </ItemGroup>
   <ItemGroup>

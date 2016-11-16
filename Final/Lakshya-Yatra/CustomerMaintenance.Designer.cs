@@ -28,11 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rdEditDeleteCustomer = new System.Windows.Forms.RadioButton();
-            this.rdAddNewCustomer = new System.Windows.Forms.RadioButton();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.label2 = new System.Windows.Forms.Label();
             this.txtSearchMobileNo = new System.Windows.Forms.TextBox();
@@ -40,9 +38,14 @@
             this.txtSearchLastName = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtSearchFirstName = new System.Windows.Forms.TextBox();
-            this.btnDeleteSelected = new System.Windows.Forms.Button();
             this.dgvCustomers = new System.Windows.Forms.DataGridView();
+            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.deleteCustomerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cbArea = new System.Windows.Forms.ComboBox();
             this.txtAddress = new System.Windows.Forms.TextBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label4 = new System.Windows.Forms.Label();
             this.chkDontKnowBirthdate = new System.Windows.Forms.CheckBox();
             this.chkDontKnowAlternateMobile = new System.Windows.Forms.CheckBox();
@@ -59,56 +62,18 @@
             this.txtLastName = new System.Windows.Forms.TextBox();
             this.txtFirstName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.cbArea = new System.Windows.Forms.ComboBox();
-            this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).BeginInit();
+            this.contextMenuStrip2.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.rdEditDeleteCustomer);
-            this.groupBox1.Controls.Add(this.rdAddNewCustomer);
-            this.groupBox1.Location = new System.Drawing.Point(12, 2);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(337, 49);
-            this.groupBox1.TabIndex = 16;
-            this.groupBox1.TabStop = false;
-            // 
-            // rdEditDeleteCustomer
-            // 
-            this.rdEditDeleteCustomer.AutoSize = true;
-            this.rdEditDeleteCustomer.Checked = true;
-            this.rdEditDeleteCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.rdEditDeleteCustomer.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdEditDeleteCustomer.Location = new System.Drawing.Point(168, 20);
-            this.rdEditDeleteCustomer.Name = "rdEditDeleteCustomer";
-            this.rdEditDeleteCustomer.Size = new System.Drawing.Size(149, 19);
-            this.rdEditDeleteCustomer.TabIndex = 17;
-            this.rdEditDeleteCustomer.TabStop = true;
-            this.rdEditDeleteCustomer.Text = "Edit / Delete Customer";
-            this.rdEditDeleteCustomer.UseVisualStyleBackColor = true;
-            this.rdEditDeleteCustomer.CheckedChanged += new System.EventHandler(this.rdEditDeleteCustomer_CheckedChanged);
-            // 
-            // rdAddNewCustomer
-            // 
-            this.rdAddNewCustomer.AutoSize = true;
-            this.rdAddNewCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.rdAddNewCustomer.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdAddNewCustomer.Location = new System.Drawing.Point(11, 20);
-            this.rdAddNewCustomer.Name = "rdAddNewCustomer";
-            this.rdAddNewCustomer.Size = new System.Drawing.Size(133, 19);
-            this.rdAddNewCustomer.TabIndex = 18;
-            this.rdAddNewCustomer.Text = "Add New Customer";
-            this.rdAddNewCustomer.UseVisualStyleBackColor = true;
-            this.rdAddNewCustomer.CheckedChanged += new System.EventHandler(this.rdAddNewCustomer_CheckedChanged);
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Location = new System.Drawing.Point(12, 57);
+            this.splitContainer1.Location = new System.Drawing.Point(22, 12);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -120,11 +85,11 @@
             this.splitContainer1.Panel1.Controls.Add(this.txtSearchLastName);
             this.splitContainer1.Panel1.Controls.Add(this.label3);
             this.splitContainer1.Panel1.Controls.Add(this.txtSearchFirstName);
-            this.splitContainer1.Panel1.Controls.Add(this.btnDeleteSelected);
             this.splitContainer1.Panel1.Controls.Add(this.dgvCustomers);
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.label8);
             this.splitContainer1.Panel2.Controls.Add(this.cbArea);
             this.splitContainer1.Panel2.Controls.Add(this.txtAddress);
             this.splitContainer1.Panel2.Controls.Add(this.label4);
@@ -143,8 +108,8 @@
             this.splitContainer1.Panel2.Controls.Add(this.txtLastName);
             this.splitContainer1.Panel2.Controls.Add(this.txtFirstName);
             this.splitContainer1.Panel2.Controls.Add(this.label1);
-            this.splitContainer1.Size = new System.Drawing.Size(580, 481);
-            this.splitContainer1.SplitterDistance = 238;
+            this.splitContainer1.Size = new System.Drawing.Size(983, 604);
+            this.splitContainer1.SplitterDistance = 339;
             this.splitContainer1.TabIndex = 0;
             // 
             // label2
@@ -210,78 +175,129 @@
             this.txtSearchFirstName.TabIndex = 2;
             this.txtSearchFirstName.TextChanged += new System.EventHandler(this.SearchUsersParametersChanged);
             // 
-            // btnDeleteSelected
-            // 
-            this.btnDeleteSelected.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDeleteSelected.Location = new System.Drawing.Point(442, 17);
-            this.btnDeleteSelected.Name = "btnDeleteSelected";
-            this.btnDeleteSelected.Size = new System.Drawing.Size(116, 30);
-            this.btnDeleteSelected.TabIndex = 19;
-            this.btnDeleteSelected.Text = " &Delete Selected";
-            this.btnDeleteSelected.UseVisualStyleBackColor = true;
-            this.btnDeleteSelected.Click += new System.EventHandler(this.btnDeleteSelected_Click);
-            // 
             // dgvCustomers
             // 
             this.dgvCustomers.AllowUserToAddRows = false;
             this.dgvCustomers.AllowUserToDeleteRows = false;
             this.dgvCustomers.AllowUserToResizeRows = false;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.SteelBlue;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCustomers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvCustomers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.SteelBlue;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCustomers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvCustomers.ColumnHeadersHeight = 25;
             this.dgvCustomers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.LightGray;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCustomers.DefaultCellStyle = dataGridViewCellStyle4;
+            this.dgvCustomers.ContextMenuStrip = this.contextMenuStrip2;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.LightGray;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCustomers.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvCustomers.EnableHeadersVisualStyles = false;
             this.dgvCustomers.Location = new System.Drawing.Point(13, 53);
             this.dgvCustomers.Name = "dgvCustomers";
             this.dgvCustomers.ReadOnly = true;
             this.dgvCustomers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCustomers.Size = new System.Drawing.Size(545, 180);
+            this.dgvCustomers.Size = new System.Drawing.Size(923, 269);
             this.dgvCustomers.TabIndex = 4;
             this.dgvCustomers.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCustomers_CellClick);
             this.dgvCustomers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCustomers_CellContentClick);
+            this.dgvCustomers.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvCustomers_CellMouseUp);
             this.dgvCustomers.SelectionChanged += new System.EventHandler(this.dgvCustomers_SelectionChanged);
+            // 
+            // contextMenuStrip2
+            // 
+            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteCustomerToolStripMenuItem});
+            this.contextMenuStrip2.Name = "contextMenuStrip2";
+            this.contextMenuStrip2.Size = new System.Drawing.Size(163, 26);
+            // 
+            // deleteCustomerToolStripMenuItem
+            // 
+            this.deleteCustomerToolStripMenuItem.Name = "deleteCustomerToolStripMenuItem";
+            this.deleteCustomerToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.deleteCustomerToolStripMenuItem.Text = "Delete Customer";
+            this.deleteCustomerToolStripMenuItem.Click += new System.EventHandler(this.deleteCustomerToolStripMenuItem_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(345, 61);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(53, 15);
+            this.label8.TabIndex = 138;
+            this.label8.Text = "Address";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // cbArea
+            // 
+            this.cbArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbArea.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbArea.FormattingEnabled = true;
+            this.cbArea.Items.AddRange(new object[] {
+            "A+",
+            "A-",
+            "B+",
+            "B-",
+            "AB+",
+            "AB-",
+            "O+",
+            "O-"});
+            this.cbArea.Location = new System.Drawing.Point(144, 58);
+            this.cbArea.Name = "cbArea";
+            this.cbArea.Size = new System.Drawing.Size(184, 23);
+            this.cbArea.TabIndex = 137;
             // 
             // txtAddress
             // 
             this.txtAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtAddress.ContextMenuStrip = this.contextMenuStrip1;
             this.txtAddress.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAddress.Location = new System.Drawing.Point(351, 84);
+            this.txtAddress.Location = new System.Drawing.Point(404, 58);
             this.txtAddress.MaxLength = 20;
             this.txtAddress.Multiline = true;
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(184, 47);
             this.txtAddress.TabIndex = 8;
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pasteToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(103, 26);
+            // 
+            // pasteToolStripMenuItem
+            // 
+            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.pasteToolStripMenuItem.Text = "Paste";
+            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(81, 87);
+            this.label4.Location = new System.Drawing.Point(93, 58);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 15);
+            this.label4.Size = new System.Drawing.Size(32, 15);
             this.label4.TabIndex = 135;
-            this.label4.Text = "Address";
+            this.label4.Text = "Area";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // chkDontKnowBirthdate
             // 
             this.chkDontKnowBirthdate.AutoSize = true;
             this.chkDontKnowBirthdate.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkDontKnowBirthdate.Location = new System.Drawing.Point(351, 132);
+            this.chkDontKnowBirthdate.Location = new System.Drawing.Point(277, 103);
             this.chkDontKnowBirthdate.Name = "chkDontKnowBirthdate";
             this.chkDontKnowBirthdate.Size = new System.Drawing.Size(86, 19);
             this.chkDontKnowBirthdate.TabIndex = 10;
@@ -293,7 +309,7 @@
             // 
             this.chkDontKnowAlternateMobile.AutoSize = true;
             this.chkDontKnowAlternateMobile.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkDontKnowAlternateMobile.Location = new System.Drawing.Point(351, 205);
+            this.chkDontKnowAlternateMobile.Location = new System.Drawing.Point(342, 216);
             this.chkDontKnowAlternateMobile.Name = "chkDontKnowAlternateMobile";
             this.chkDontKnowAlternateMobile.Size = new System.Drawing.Size(86, 19);
             this.chkDontKnowAlternateMobile.TabIndex = 14;
@@ -305,7 +321,7 @@
             // 
             this.chkDontKnowBloodGroup.AutoSize = true;
             this.chkDontKnowBloodGroup.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkDontKnowBloodGroup.Location = new System.Drawing.Point(351, 165);
+            this.chkDontKnowBloodGroup.Location = new System.Drawing.Point(277, 140);
             this.chkDontKnowBloodGroup.Name = "chkDontKnowBloodGroup";
             this.chkDontKnowBloodGroup.Size = new System.Drawing.Size(86, 19);
             this.chkDontKnowBloodGroup.TabIndex = 12;
@@ -318,7 +334,7 @@
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label19.ForeColor = System.Drawing.Color.Black;
-            this.label19.Location = new System.Drawing.Point(34, 209);
+            this.label19.Location = new System.Drawing.Point(25, 220);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(100, 15);
             this.label19.TabIndex = 130;
@@ -330,7 +346,7 @@
             this.txtAlternateMobileNo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.txtAlternateMobileNo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtAlternateMobileNo.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAlternateMobileNo.Location = new System.Drawing.Point(153, 203);
+            this.txtAlternateMobileNo.Location = new System.Drawing.Point(144, 214);
             this.txtAlternateMobileNo.MaxLength = 10;
             this.txtAlternateMobileNo.Name = "txtAlternateMobileNo";
             this.txtAlternateMobileNo.Size = new System.Drawing.Size(184, 21);
@@ -342,7 +358,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(78, 133);
+            this.label6.Location = new System.Drawing.Point(69, 107);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(56, 15);
             this.label6.TabIndex = 125;
@@ -353,7 +369,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.Black;
-            this.label7.Location = new System.Drawing.Point(58, 167);
+            this.label7.Location = new System.Drawing.Point(49, 141);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(76, 15);
             this.label7.TabIndex = 127;
@@ -364,7 +380,7 @@
             this.dtpBirthDate.Checked = false;
             this.dtpBirthDate.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpBirthDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpBirthDate.Location = new System.Drawing.Point(153, 130);
+            this.dtpBirthDate.Location = new System.Drawing.Point(144, 104);
             this.dtpBirthDate.Name = "dtpBirthDate";
             this.dtpBirthDate.Size = new System.Drawing.Size(100, 21);
             this.dtpBirthDate.TabIndex = 9;
@@ -383,7 +399,7 @@
             "AB-",
             "O+",
             "O-"});
-            this.cbBloodGroup.Location = new System.Drawing.Point(153, 164);
+            this.cbBloodGroup.Location = new System.Drawing.Point(144, 138);
             this.cbBloodGroup.Name = "cbBloodGroup";
             this.cbBloodGroup.Size = new System.Drawing.Size(100, 23);
             this.cbBloodGroup.TabIndex = 11;
@@ -392,7 +408,7 @@
             // 
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(464, 195);
+            this.btnSave.Location = new System.Drawing.Point(455, 206);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(94, 29);
             this.btnSave.TabIndex = 15;
@@ -404,7 +420,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(72, 10);
+            this.label14.Location = new System.Drawing.Point(63, 185);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(62, 15);
             this.label14.TabIndex = 124;
@@ -415,7 +431,7 @@
             // 
             this.txtMobileNo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtMobileNo.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMobileNo.Location = new System.Drawing.Point(153, 8);
+            this.txtMobileNo.Location = new System.Drawing.Point(144, 179);
             this.txtMobileNo.MaxLength = 10;
             this.txtMobileNo.Name = "txtMobileNo";
             this.txtMobileNo.Size = new System.Drawing.Size(184, 21);
@@ -425,7 +441,7 @@
             // 
             this.txtLastName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtLastName.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLastName.Location = new System.Drawing.Point(351, 45);
+            this.txtLastName.Location = new System.Drawing.Point(342, 21);
             this.txtLastName.MaxLength = 20;
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.Size = new System.Drawing.Size(184, 21);
@@ -435,7 +451,7 @@
             // 
             this.txtFirstName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtFirstName.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFirstName.Location = new System.Drawing.Point(153, 45);
+            this.txtFirstName.Location = new System.Drawing.Point(144, 21);
             this.txtFirstName.MaxLength = 20;
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.Size = new System.Drawing.Size(184, 21);
@@ -445,45 +461,23 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(93, 47);
+            this.label1.Location = new System.Drawing.Point(84, 23);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(41, 15);
             this.label1.TabIndex = 122;
             this.label1.Text = "Name";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // cbArea
-            // 
-            this.cbArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbArea.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbArea.FormattingEnabled = true;
-            this.cbArea.Items.AddRange(new object[] {
-            "A+",
-            "A-",
-            "B+",
-            "B-",
-            "AB+",
-            "AB-",
-            "O+",
-            "O-"});
-            this.cbArea.Location = new System.Drawing.Point(153, 84);
-            this.cbArea.Name = "cbArea";
-            this.cbArea.Size = new System.Drawing.Size(184, 23);
-            this.cbArea.TabIndex = 137;
-            // 
             // CustomerMaintenance
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(763, 550);
+            this.ClientSize = new System.Drawing.Size(1017, 620);
             this.Controls.Add(this.splitContainer1);
-            this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "CustomerMaintenance";
             this.Text = "Customer Maintenance";
             this.Load += new System.EventHandler(this.CustomerMaintenance_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -491,21 +485,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).EndInit();
+            this.contextMenuStrip2.ResumeLayout(false);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RadioButton rdEditDeleteCustomer;
-        private System.Windows.Forms.RadioButton rdAddNewCustomer;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtSearchLastName;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtSearchFirstName;
-        private System.Windows.Forms.Button btnDeleteSelected;
         private System.Windows.Forms.DataGridView dgvCustomers;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Label label14;
@@ -527,5 +519,10 @@
         private System.Windows.Forms.TextBox txtAddress;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cbArea;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
+        private System.Windows.Forms.ToolStripMenuItem deleteCustomerToolStripMenuItem;
     }
 }

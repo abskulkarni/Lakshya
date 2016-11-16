@@ -212,5 +212,13 @@ namespace Lakshya_Yatra
         {
             dgvMobileNumbers.DataSource = null;
         }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Clipboard.ContainsText())
+            {
+                txtMessage.Text += Clipboard.GetText(TextDataFormat.Text).ToString();                
+            }
+        }
     }
 }

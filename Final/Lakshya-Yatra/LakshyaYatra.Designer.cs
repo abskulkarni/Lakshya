@@ -33,7 +33,6 @@
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMultipleRegistrationsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.registrationToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,6 +41,7 @@
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.userManagementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.customerManagementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.areaManagementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.busRegistrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteAllDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,7 +68,6 @@
             this.birthdayWishesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.multipleRegistrationToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.printPreviewToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -80,7 +79,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtUserName = new System.Windows.Forms.TextBox();
             this.btnLogin = new System.Windows.Forms.Button();
-            this.areaManagementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.panelLogin.SuspendLayout();
@@ -105,7 +103,6 @@
             // 
             this.fileMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMultipleRegistrationsMenuItem,
-            this.registrationToolStripMenuItem1,
             this.searchToolStripMenuItem,
             this.toolStripSeparator5,
             this.exitToolStripMenuItem});
@@ -121,13 +118,6 @@
             this.toolStripMultipleRegistrationsMenuItem.Size = new System.Drawing.Size(209, 22);
             this.toolStripMultipleRegistrationsMenuItem.Text = "&Multiple Registrations";
             this.toolStripMultipleRegistrationsMenuItem.Click += new System.EventHandler(this.toolStripMultipleRegistrationsMenuItem_Click);
-            // 
-            // registrationToolStripMenuItem1
-            // 
-            this.registrationToolStripMenuItem1.Name = "registrationToolStripMenuItem1";
-            this.registrationToolStripMenuItem1.Size = new System.Drawing.Size(209, 22);
-            this.registrationToolStripMenuItem1.Text = "&Registration";
-            this.registrationToolStripMenuItem1.Click += new System.EventHandler(this.registrationToolStripMenuItem1_Click);
             // 
             // searchToolStripMenuItem
             // 
@@ -189,6 +179,13 @@
             this.customerManagementToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
             this.customerManagementToolStripMenuItem.Text = "&Customer Management";
             this.customerManagementToolStripMenuItem.Click += new System.EventHandler(this.customerManagementToolStripMenuItem_Click);
+            // 
+            // areaManagementToolStripMenuItem
+            // 
+            this.areaManagementToolStripMenuItem.Name = "areaManagementToolStripMenuItem";
+            this.areaManagementToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
+            this.areaManagementToolStripMenuItem.Text = "&Area Management";
+            this.areaManagementToolStripMenuItem.Click += new System.EventHandler(this.areaManagementToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
@@ -375,7 +372,6 @@
             this.toolStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.multipleRegistrationToolStripButton,
-            this.newToolStripButton,
             this.toolStripSeparator1,
             this.printPreviewToolStripButton,
             this.toolStripSeparator2,
@@ -395,16 +391,6 @@
             this.multipleRegistrationToolStripButton.Size = new System.Drawing.Size(24, 24);
             this.multipleRegistrationToolStripButton.Text = "Multiple Registration";
             this.multipleRegistrationToolStripButton.Click += new System.EventHandler(this.multipleRegistrationToolStripButton_Click);
-            // 
-            // newToolStripButton
-            // 
-            this.newToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.newToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripButton.Image")));
-            this.newToolStripButton.ImageTransparentColor = System.Drawing.Color.Black;
-            this.newToolStripButton.Name = "newToolStripButton";
-            this.newToolStripButton.Size = new System.Drawing.Size(24, 24);
-            this.newToolStripButton.Text = "New Registration";
-            this.newToolStripButton.Click += new System.EventHandler(this.ShowNewForm);
             // 
             // toolStripSeparator1
             // 
@@ -508,13 +494,6 @@
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
-            // areaManagementToolStripMenuItem
-            // 
-            this.areaManagementToolStripMenuItem.Name = "areaManagementToolStripMenuItem";
-            this.areaManagementToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
-            this.areaManagementToolStripMenuItem.Text = "&Area Management";
-            this.areaManagementToolStripMenuItem.Click += new System.EventHandler(this.areaManagementToolStripMenuItem_Click);
-            // 
             // LakshyaYatra
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -553,10 +532,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem fileMenu;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripButton newToolStripButton;
         private System.Windows.Forms.ToolStripButton printPreviewToolStripButton;
         private System.Windows.Forms.ToolTip toolTip;
-        private System.Windows.Forms.ToolStripMenuItem registrationToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem adminToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem busRegistrationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem searchToolStripMenuItem;

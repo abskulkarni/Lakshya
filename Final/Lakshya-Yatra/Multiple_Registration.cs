@@ -145,9 +145,10 @@ namespace Lakshya_Yatra
                     Utilities.Instance.WriteLog("Called getCustomerDetails");
                    // Auto_Time = ds.Tables[0].Rows[0]["Auto_Time"] as byte[];
                     txtRegistrationDate.Text = Convert.ToDateTime(ds.Tables[0].Rows[0]["Registration_Date"]).ToString("dd-MMM-yyyy");
+                    cbBusRoutes.SelectedValue = Convert.ToInt16(ds.Tables[0].Rows[0]["Route_ID"]);
 
                     dtpNavratriDate.Value = Convert.ToDateTime(ds.Tables[0].Rows[0]["yatra_date"]).Date;
-
+                    
                     cbArea.SelectedValue = ds.Tables[0].Rows[0]["Area_ID"] != DBNull.Value ? Convert.ToInt16(ds.Tables[0].Rows[0]["Area_ID"]) : 0;
 
                     txtFirstName.Text = ds.Tables[0].Rows[0]["First_Name"].ToString();
@@ -810,15 +811,15 @@ namespace Lakshya_Yatra
             txtFees.Text = string.Empty;
             chkDiscount.Checked = false; lblOriginalDiscount.Text = "0"; txtDiscount.Enabled = false; txtDiscountReason.Enabled = false;
 
-            using (DataSet dsDates = objBusinessRules.GetNavratriDatesForBusRoute(0))
-            {
-                if (dsDates.Tables[0].Rows.Count > 0)
-                {
-                    dtpNavratriDate.MaxDate = new DateTime(9998, 12, 12);
-                    dtpNavratriDate.MinDate = Convert.ToDateTime(dsDates.Tables[0].Rows[0]["Navratri_Date"]);
-                    dtpNavratriDate.MaxDate = Convert.ToDateTime(dsDates.Tables[0].Rows[dsDates.Tables[0].Rows.Count - 1]["Navratri_Date"]);                    
-                }
-            }
+            //using (DataSet dsDates = objBusinessRules.GetNavratriDatesForBusRoute(0))
+            //{
+            //    if (dsDates.Tables[0].Rows.Count > 0)
+            //    {
+            //        dtpNavratriDate.MaxDate = new DateTime(9998, 12, 12);
+            //        dtpNavratriDate.MinDate = Convert.ToDateTime(dsDates.Tables[0].Rows[0]["Navratri_Date"]);
+            //        dtpNavratriDate.MaxDate = Convert.ToDateTime(dsDates.Tables[0].Rows[dsDates.Tables[0].Rows.Count - 1]["Navratri_Date"]);                    
+            //    }
+            //}
 
             lblOriginalDiscountReason.Text = txtDiscountReason.Text = txtDiscount.Text = string.Empty;
             using(DataSet dsBusRoutes = objBusinessRules.GetBusRoutes())
@@ -1454,6 +1455,14 @@ namespace Lakshya_Yatra
                 printPreviewDialog1.Document = printDocument1;
                 printDocument1.Print();
                 //printPreviewDialog1.ShowDialog();
+            }
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Clipboard.ContainsText())
+            {
+                txtAddress.Text += Clipboard.GetText(TextDataFormat.Text).ToString();
             }
         }
 

@@ -288,12 +288,12 @@ namespace Lakshya_Yatra
             return dsBusRoute;
         }
 
-        public DataSet GetCustomerTickets(int Customer_ID, bool showThisYearTickets)
+        public DataSet GetCustomerTickets(int Customer_ID, bool showTodayTickets)
         {
             SqlCommand sqlCmd = new SqlCommand();
             sqlCmd.CommandText = "GetCustomerTickets";
             sqlCmd.Parameters.Add(new SqlParameter("@Cust_ID", SqlDbType.Int)).Value = Customer_ID;
-            sqlCmd.Parameters.Add(new SqlParameter("@showThisYearTickets", SqlDbType.Bit)).Value = showThisYearTickets;
+            sqlCmd.Parameters.Add(new SqlParameter("@showTodayTickets", SqlDbType.Bit)).Value = showTodayTickets;
             sqlCmd.CommandType = CommandType.StoredProcedure;
             DataSet dsGetCustomerTickets = this.ExecuteToDataSet(sqlCmd);
             return dsGetCustomerTickets;
