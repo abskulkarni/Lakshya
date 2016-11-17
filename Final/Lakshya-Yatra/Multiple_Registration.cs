@@ -17,6 +17,7 @@ namespace Lakshya_Yatra
         private VideoCaptureDevice camera = null;
         string imagesFolder = string.Empty;
         string busRoute = string.Empty;
+        bool validationInProgress = false;
 
         AutoCompleteStringCollection autoCompleteCollectionFirstName = new AutoCompleteStringCollection();
         AutoCompleteStringCollection autoCompleteCollectionLastName = new AutoCompleteStringCollection();
@@ -61,6 +62,7 @@ namespace Lakshya_Yatra
             grpRegistrationDetails.BackColor = grpPicture.BackColor = grpTravelDetails.BackColor = label1.BackColor = lblBusTime.BackColor = Color.Transparent;
             imagesFolder = ConfigurationManager.AppSettings["ImagesFolder"];
             dgvTickets.AutoGenerateColumns = false;
+            dgvPreviousTickets.AutoGenerateColumns = false;
 
             dsAllCustomers = objBusinessRules.getAllCustomers();
 
@@ -79,6 +81,7 @@ namespace Lakshya_Yatra
                 submitMode = "Add";
                 HideShowSearchCustomer("hide");
                 lblCustomerID.Text = "New Customer";
+                dgvPreviousTickets.AutoGenerateColumns = false;
                 chkDontKnowBirthdate.Checked = true; dtpBirthDate.Enabled = false;
 
                 chkDontKnowAlternateMobile.Checked = true; txtAlternateMobileNo.Enabled = false;
@@ -273,7 +276,7 @@ namespace Lakshya_Yatra
                         autoCompleteCollectionMobile.Add(dr["Mobile_No"].ToString());
                 }
 
-            txtSearchAddress.AutoCompleteCustomSource = autoCompleteCollectionAddress;
+            //txtSearchAddress.AutoCompleteCustomSource = autoCompleteCollectionAddress;
             txtAlternateMobileNo.AutoCompleteCustomSource = autoCompleteCollectionAlternateMobile;
             txtFirstName.AutoCompleteCustomSource = autoCompleteCollectionFirstName;
             txtLastName.AutoCompleteCustomSource = autoCompleteCollectionLastName;
@@ -294,72 +297,15 @@ namespace Lakshya_Yatra
         {
             //int i = cbNavratraDate.SelectedIndex;
             bool result = true;
-            //FirstName
-            if (string.IsNullOrEmpty(txtFirstName.Text))
+            validationInProgress = true;
+
+            //Mobile No
+            if (string.IsNullOrEmpty(txtMobileNo.Text))
             {
                 result = false;
-                MessageBox.Show("Please enter First Name.");
-                txtFirstName.Focus();
-            }
-
-            if (result)
-            {
-                if (string.IsNullOrEmpty(txtLastName.Text))
-                {
-                    result = false;
-                    MessageBox.Show("Please enter Last Name.");
-                    txtLastName.Focus();
-                }
-            }
-
-            if (result)
-            {
-                if (string.IsNullOrEmpty(txtAddress.Text))
-                {
-                    result = false;
-                    MessageBox.Show("Please enter Address.");
-                    txtAddress.Focus();
-                }
-            }
-
-            if (result)
-            {
-                if (Convert.ToInt16(cbArea.SelectedValue) == 0)
-                {
-                    result = false;
-                    MessageBox.Show("Please select Area.");
-                    txtAddress.Focus();
-                }
-            }
-
-            if (result)
-            {
-                if (chkDontKnowBloodGroup.Checked)
-                {
-                    DialogResult confirmation = MessageBox.Show("Blood group is not selected. Are you sure to continue?","",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
-                    if (confirmation == System.Windows.Forms.DialogResult.No)
-                        result = false;
-                }
-            }
-
-            if (result)
-            {
-                if (!chkDontKnowBloodGroup.Checked && cbBloodGroup.SelectedIndex == -1)
-                {
-                    result = false;
-                    MessageBox.Show("Please select Blood Group.");
-                    cbBloodGroup.Focus();
-                }
-            }
-
-            if (result)
-            {
-                if (string.IsNullOrEmpty(txtMobileNo.Text))
-                {
-                    result = false;
-                    MessageBox.Show("Please enter Mobile Number.");
-                    txtMobileNo.Focus();
-                }
+                //MessageBox.Show("Please enter Mobile Number.");
+                txtMobileNo.BackColor = Color.Red;
+                txtMobileNo.Focus();
             }
 
             if (result)
@@ -368,9 +314,78 @@ namespace Lakshya_Yatra
                 {
                     result = false;
                     MessageBox.Show("Please enter 10 digit valid Mobile Number.");
+                    txtMobileNo.BackColor = Color.Red;
                     txtMobileNo.Focus();
                 }
             }
+
+            //FirstName
+            if (result)
+            {
+                if (string.IsNullOrEmpty(txtFirstName.Text))
+                {
+                    result = false;
+                    //MessageBox.Show("Please enter First Name.");
+                    txtFirstName.BackColor = Color.Red;
+                    txtFirstName.Focus();
+                }
+            }
+
+            if (result)
+            {
+                if (string.IsNullOrEmpty(txtLastName.Text))
+                {
+                    result = false;
+                    //MessageBox.Show("Please enter Last Name.");
+                    txtLastName.BackColor = Color.Red;
+                    txtLastName.Focus();
+                }
+            }
+
+            if (result)
+            {
+                if (Convert.ToInt16(cbArea.SelectedValue) == 0)
+                {
+                    result = false;
+                    //MessageBox.Show("Please select Area.");
+                    cbArea.BackColor = Color.Red;
+                    cbArea.Focus();
+                }
+            }
+
+            if (result)
+            {
+                if (string.IsNullOrEmpty(txtAddress.Text))
+                {
+                    result = false;
+                    //MessageBox.Show("Please enter Address.");
+                    txtAddress.BackColor = Color.Red;
+                    txtAddress.Focus();
+                }
+            }
+
+            //if (result)
+            //{
+            //    if (chkDontKnowBloodGroup.Checked)
+            //    {
+            //        DialogResult confirmation = MessageBox.Show("Blood group is not selected. Are you sure to continue?","",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+            //        if (confirmation == System.Windows.Forms.DialogResult.No)
+            //            result = false;
+            //    }
+            //}
+
+            if (result)
+            {
+                if (!chkDontKnowBloodGroup.Checked && cbBloodGroup.SelectedIndex == -1)
+                {
+                    result = false;
+                    //MessageBox.Show("Please select Blood Group.");
+                    cbBloodGroup.BackColor = Color.Red;
+                    cbBloodGroup.Focus();
+                }
+            }
+
+            
 
             //if (result)
             //{
@@ -397,7 +412,8 @@ namespace Lakshya_Yatra
                 if (cbBus.SelectedIndex == -1)
                 {
                     result = false;
-                    MessageBox.Show("Please select Bus.");
+                    //MessageBox.Show("Please select Bus.");
+                    cbBus.BackColor = Color.Red;
                     cbBus.Focus();
                 }
             }
@@ -407,7 +423,8 @@ namespace Lakshya_Yatra
                 if (cbSeatNo.SelectedIndex == -1)
                 {
                     result = false;
-                    MessageBox.Show("Please select Seat Number.");
+                    //MessageBox.Show("Please select Seat Number.");
+                    cbSeatNo.BackColor = Color.Red;
                     cbSeatNo.Focus();
                 }
             }
@@ -418,7 +435,7 @@ namespace Lakshya_Yatra
                                             string.IsNullOrEmpty(txtDiscountReason.Text.Trim())))
                 {
                     result = false;
-                    MessageBox.Show("Please enter discount and reason.");
+                    //MessageBox.Show("Please enter discount and reason.");
                     txtDiscount.Focus();
                 }
             }
@@ -461,7 +478,7 @@ namespace Lakshya_Yatra
             //    }
             //}
              * */
-
+            validationInProgress = false;
             return result;
         }
 
@@ -781,18 +798,18 @@ namespace Lakshya_Yatra
                 printImg.Dispose();
             }
 
-            g.DrawString("ID : \t\t" + print_CustomerID.ToString(), f, Brushes.Black, 145.0f, 10.0f);
-            g.DrawString("Vehicle No. : \t" + print_Bus_Name.ToString(), f, Brushes.Black, 145.0f, 30.0f);
-            g.DrawString("Seat No. : \t" + print_Seat_No.ToString(), f, Brushes.Black, 145.0f, 50.0f);
-            g.DrawString("Yatra Date : \t" + print_Yatra_Date.ToString(), f, Brushes.Black, 145.0f, 70.0f);
+            g.DrawString("ID : \t\t" + print_CustomerID.ToString(), f, Brushes.Black, 130.0f, 10.0f);
+            g.DrawString("Vehicle No. : \t" + print_Bus_Name.ToString(), f, Brushes.Black, 130.0f, 30.0f);
+            g.DrawString("Seat No. : \t" + print_Seat_No.ToString(), f, Brushes.Black, 130.0f, 50.0f);
+            g.DrawString("Yatra Date : \t" + print_Yatra_Date.ToString(), f, Brushes.Black, 130.0f, 70.0f);
 
-            g.DrawString("Name : \t" + print_Name.ToString(), f, Brushes.Black, 10.0f, 100.0f);
-            g.DrawString("Address : \t" + print_Address.ToString(), f, Brushes.Black, 10.0f, 120.0f);
+            g.DrawString("Name : \t" + print_Name.ToString(), f, Brushes.Black, 10.0f, 120.0f);
+            g.DrawString("Address : " + print_Address.ToString(), f, Brushes.Black, 10.0f, 140.0f);
         }
 
         private void btnAddNew_Click(object sender, EventArgs e)
         {
-            Customer_ID = 0; Bus_Master_ID = 0; txtSearchAddress.Text = string.Empty;
+            Customer_ID = 0; Bus_Master_ID = 0; //txtSearchAddress.Text = string.Empty;
             InitializeForm();
             //DialogResult newCustomer = MessageBox.Show("Is it new ticket for same customer?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             //if (newCustomer == System.Windows.Forms.DialogResult.No)
@@ -1268,8 +1285,11 @@ namespace Lakshya_Yatra
         
         private void ActivateControl(object sender, EventArgs e)
         {
-            ((Control)sender).BackColor = Color.Aqua;
-            ((Control)sender).ForeColor = Color.DarkRed;
+            if (!validationInProgress)
+            {
+                ((Control)sender).BackColor = Color.Aqua;
+                ((Control)sender).ForeColor = Color.DarkRed;
+            }
             toolTip1.Show(Convert.ToString(((Control)sender).Tag), ((Control)sender));
         }
 
@@ -1322,15 +1342,7 @@ namespace Lakshya_Yatra
             }
             toolTip1.Hide(((Control)sender));
         }
-
-        private void txtSearchAddress_TextChanged(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(txtSearchAddress.Text.Trim()))
-            {
-                txtAddress.Text = txtSearchAddress.Text;
-            }
-        }
-
+        
         private void btnSelect_Click(object sender, EventArgs e)
         {
             TransferContents();
@@ -1464,6 +1476,30 @@ namespace Lakshya_Yatra
             {
                 txtAddress.Text += Clipboard.GetText(TextDataFormat.Text).ToString();
             }
+        }
+
+        private void dgvPreviousTickets_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridView grid = (DataGridView)sender;
+            if (grid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0) 
+            {
+                print_CustomerID = print_Address = print_Bus_Name = print_Name = print_Seat_No = print_Yatra_Date = string.Empty;
+
+                print_CustomerID = Convert.ToString(grid.Rows[e.RowIndex].Cells["CustomerID1"].Value);
+                print_Bus_Name = Convert.ToString(grid.Rows[e.RowIndex].Cells["Bus_Name1"].Value);
+                print_Seat_No = Convert.ToString(grid.Rows[e.RowIndex].Cells["Seat_No1"].Value);
+                print_Yatra_Date = Convert.ToString(grid.Rows[e.RowIndex].Cells["Yatra_Date1"].Value);
+                print_Name = string.Format("{0} {1}", Convert.ToString(grid.Rows[e.RowIndex].Cells["First_Name1"].Value), Convert.ToString(grid.Rows[e.RowIndex].Cells["Last_Name1"].Value));
+                print_Address = Convert.ToString(grid.Rows[e.RowIndex].Cells["Address1"].Value);
+                printPreviewDialog1.Document = printDocument1;
+                //printDocument1.Print();
+                printPreviewDialog1.ShowDialog();
+            }
+        }
+
+        private void cbArea_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtAddress.Text = cbArea.SelectedIndex > 0 ? cbArea.Text : string.Empty;
         }
 
     }

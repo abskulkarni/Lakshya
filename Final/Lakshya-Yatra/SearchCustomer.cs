@@ -154,33 +154,17 @@ namespace Lakshya_Yatra
 
         private void editCustomerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            bool IsOpen = false;
-            foreach (Form f in Application.OpenForms)
-            {
-                if (f.Text == "Registration")
-                {
-                    IsOpen = true;
-                    Multiple_Registration frmRegistration = (Multiple_Registration)f;                    
-                    frmRegistration.Customer_ID = Convert.ToInt32(dgvCustomers.SelectedRows[0].Cells["Customer_ID"].Value);
-                    frmRegistration.Bus_Master_ID = Convert.ToInt32(dgvCustomers.SelectedRows[0].Cells["Bus_Master_ID"].Value);
-                    frmRegistration.Show();
-                    frmRegistration.InitializeForm(true);
-                    f.Focus();
-                    break;
-                }
-            }
-            if (IsOpen == false)
-            {
-                Multiple_Registration frmRegistration = new Multiple_Registration();
-                frmRegistration.MdiParent = this.MdiParent;
-                frmRegistration.WindowState = FormWindowState.Maximized;
-                frmRegistration.Customer_ID = Convert.ToInt32(dgvCustomers.SelectedRows[0].Cells["Customer_ID"].Value);
-                frmRegistration.Bus_Master_ID = Convert.ToInt32(dgvCustomers.SelectedRows[0].Cells["Bus_Master_ID"].Value);
-                frmRegistration.Show();
-                frmRegistration.InitializeForm(true);
-            }
+
+            Multiple_Registration frmRegistration = (Multiple_Registration)FormFactory.Instance.CreateOrActivateForm("Multiple Registration");
+            frmRegistration.Customer_ID = Convert.ToInt32(dgvCustomers.SelectedRows[0].Cells["Customer_ID"].Value);
+            frmRegistration.Bus_Master_ID = Convert.ToInt32(dgvCustomers.SelectedRows[0].Cells["Bus_Master_ID"].Value);
+            frmRegistration.InitializeForm(true);
+            frmRegistration.MdiParent = this.MdiParent;
+            frmRegistration.WindowState = FormWindowState.Maximized;
+            frmRegistration.Show();
+            frmRegistration.Focus();
         }
-        
+
         private void AllowDecimal(object sender, KeyPressEventArgs e)
         {
             if (!(char.IsDigit(e.KeyChar) || e.KeyChar == (char)Keys.Back ||

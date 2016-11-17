@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Multiple_Registration));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.txtRegistrationDate = new System.Windows.Forms.TextBox();
             this.bntCapture = new System.Windows.Forms.Button();
@@ -55,8 +55,6 @@
             this.cbArea = new System.Windows.Forms.ComboBox();
             this.lblCustomerID = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.txtSearchAddress = new System.Windows.Forms.TextBox();
             this.chkDontKnowBirthdate = new System.Windows.Forms.CheckBox();
             this.chkDontKnowAlternateMobile = new System.Windows.Forms.CheckBox();
             this.chkDontKnowBloodGroup = new System.Windows.Forms.CheckBox();
@@ -73,6 +71,8 @@
             this.txtFirstName = new System.Windows.Forms.TextBox();
             this.cbBloodGroup = new System.Windows.Forms.ComboBox();
             this.txtAddress = new System.Windows.Forms.TextBox();
+            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtMobileNo = new System.Windows.Forms.TextBox();
             this.btnRefreshAutoLists = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
@@ -123,6 +123,7 @@
             this.editTicketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteTicketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dgvPreviousTickets = new System.Windows.Forms.DataGridView();
+            this.btnPrintOld = new System.Windows.Forms.Button();
             this.CustomerID1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Bus_Route1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Yatra_Date1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -132,21 +133,19 @@
             this.Address1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.First_Name1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Last_Name1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnPrintOld = new System.Windows.Forms.Button();
-            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.PrintTicket = new System.Windows.Forms.DataGridViewButtonColumn();
             this.grpPicture.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgCapture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgVideo)).BeginInit();
             this.grpRegistrationDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgSnapShot)).BeginInit();
+            this.contextMenuStrip2.SuspendLayout();
             this.grpTravelDetails.SuspendLayout();
             this.panelSearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTickets)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPreviousTickets)).BeginInit();
-            this.contextMenuStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -366,8 +365,6 @@
             this.grpRegistrationDetails.Controls.Add(this.cbArea);
             this.grpRegistrationDetails.Controls.Add(this.lblCustomerID);
             this.grpRegistrationDetails.Controls.Add(this.label5);
-            this.grpRegistrationDetails.Controls.Add(this.label24);
-            this.grpRegistrationDetails.Controls.Add(this.txtSearchAddress);
             this.grpRegistrationDetails.Controls.Add(this.chkDontKnowBirthdate);
             this.grpRegistrationDetails.Controls.Add(this.chkDontKnowAlternateMobile);
             this.grpRegistrationDetails.Controls.Add(this.chkDontKnowBloodGroup);
@@ -408,12 +405,14 @@
             // cbArea
             // 
             this.cbArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbArea.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbArea.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbArea.FormattingEnabled = true;
             this.cbArea.Location = new System.Drawing.Point(103, 113);
             this.cbArea.Name = "cbArea";
             this.cbArea.Size = new System.Drawing.Size(161, 22);
             this.cbArea.TabIndex = 4;
+            this.cbArea.SelectedIndexChanged += new System.EventHandler(this.cbArea_SelectedIndexChanged);
             // 
             // lblCustomerID
             // 
@@ -436,31 +435,6 @@
             this.label5.Size = new System.Drawing.Size(30, 14);
             this.label5.TabIndex = 20;
             this.label5.Text = "ID :";
-            // 
-            // label24
-            // 
-            this.label24.Font = new System.Drawing.Font("Verdana", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.ForeColor = System.Drawing.Color.Black;
-            this.label24.Location = new System.Drawing.Point(101, 176);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(149, 26);
-            this.label24.TabIndex = 19;
-            this.label24.Text = "Type In Above Textbox to Search Address";
-            // 
-            // txtSearchAddress
-            // 
-            this.txtSearchAddress.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.txtSearchAddress.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.txtSearchAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSearchAddress.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSearchAddress.Location = new System.Drawing.Point(103, 151);
-            this.txtSearchAddress.MaxLength = 40;
-            this.txtSearchAddress.Name = "txtSearchAddress";
-            this.txtSearchAddress.Size = new System.Drawing.Size(161, 22);
-            this.txtSearchAddress.TabIndex = 5;
-            this.txtSearchAddress.TextChanged += new System.EventHandler(this.txtSearchAddress_TextChanged);
-            this.txtSearchAddress.Enter += new System.EventHandler(this.ActivateControl);
-            this.txtSearchAddress.Leave += new System.EventHandler(this.DeActivateControl);
             // 
             // chkDontKnowBirthdate
             // 
@@ -526,7 +500,7 @@
             this.txtAlternateMobileNo.Name = "txtAlternateMobileNo";
             this.txtAlternateMobileNo.Size = new System.Drawing.Size(98, 22);
             this.txtAlternateMobileNo.TabIndex = 11;
-            this.txtAlternateMobileNo.Tag = "Please enter 10 digit Mobile Number (9999999999)";
+            this.txtAlternateMobileNo.Tag = "Please enter 10 digit Mobile Number";
             this.txtAlternateMobileNo.Enter += new System.EventHandler(this.ActivateControl);
             this.txtAlternateMobileNo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.RestrictToPositiveInteger);
             this.txtAlternateMobileNo.Leave += new System.EventHandler(this.DeActivateControl);
@@ -640,6 +614,7 @@
             // cbBloodGroup
             // 
             this.cbBloodGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbBloodGroup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbBloodGroup.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbBloodGroup.FormattingEnabled = true;
             this.cbBloodGroup.Items.AddRange(new object[] {
@@ -665,7 +640,7 @@
             this.txtAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtAddress.ContextMenuStrip = this.contextMenuStrip2;
             this.txtAddress.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAddress.Location = new System.Drawing.Point(270, 151);
+            this.txtAddress.Location = new System.Drawing.Point(105, 151);
             this.txtAddress.MaxLength = 200;
             this.txtAddress.Multiline = true;
             this.txtAddress.Name = "txtAddress";
@@ -673,6 +648,20 @@
             this.txtAddress.TabIndex = 6;
             this.txtAddress.Enter += new System.EventHandler(this.ActivateControl);
             this.txtAddress.Leave += new System.EventHandler(this.DeActivateControl);
+            // 
+            // contextMenuStrip2
+            // 
+            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pasteToolStripMenuItem});
+            this.contextMenuStrip2.Name = "contextMenuStrip2";
+            this.contextMenuStrip2.Size = new System.Drawing.Size(103, 26);
+            // 
+            // pasteToolStripMenuItem
+            // 
+            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.pasteToolStripMenuItem.Text = "&Paste";
+            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
             // 
             // txtMobileNo
             // 
@@ -685,7 +674,7 @@
             this.txtMobileNo.Name = "txtMobileNo";
             this.txtMobileNo.Size = new System.Drawing.Size(98, 22);
             this.txtMobileNo.TabIndex = 1;
-            this.txtMobileNo.Tag = "Please enter 10 digit Mobile Number (9999999999)";
+            this.txtMobileNo.Tag = "Please enter 10 digit Mobile Number";
             this.txtMobileNo.Enter += new System.EventHandler(this.ActivateControl);
             this.txtMobileNo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.RestrictToPositiveInteger);
             this.txtMobileNo.Leave += new System.EventHandler(this.DeActivateControl);
@@ -771,6 +760,7 @@
             // cbBusRoutes
             // 
             this.cbBusRoutes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbBusRoutes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbBusRoutes.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbBusRoutes.ForeColor = System.Drawing.SystemColors.MenuHighlight;
             this.cbBusRoutes.FormattingEnabled = true;
@@ -892,6 +882,7 @@
             // cbBus
             // 
             this.cbBus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbBus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbBus.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbBus.ForeColor = System.Drawing.SystemColors.MenuHighlight;
             this.cbBus.FormattingEnabled = true;
@@ -906,6 +897,7 @@
             // cbSeatNo
             // 
             this.cbSeatNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbSeatNo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbSeatNo.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbSeatNo.FormattingEnabled = true;
             this.cbSeatNo.Location = new System.Drawing.Point(112, 204);
@@ -1010,7 +1002,7 @@
             this.txtSearchAlternateMobileNumber.Name = "txtSearchAlternateMobileNumber";
             this.txtSearchAlternateMobileNumber.Size = new System.Drawing.Size(167, 22);
             this.txtSearchAlternateMobileNumber.TabIndex = 28;
-            this.txtSearchAlternateMobileNumber.Tag = "Please enter 10 digit Mobile Number (9999999999)";
+            this.txtSearchAlternateMobileNumber.Tag = "Please enter 10 digit Mobile Number";
             this.txtSearchAlternateMobileNumber.TextChanged += new System.EventHandler(this.SearchParameterChanged);
             this.txtSearchAlternateMobileNumber.Enter += new System.EventHandler(this.ActivateControl);
             this.txtSearchAlternateMobileNumber.Leave += new System.EventHandler(this.DeActivateControl);
@@ -1030,27 +1022,27 @@
             // 
             this.dgvCustomers.AllowUserToAddRows = false;
             this.dgvCustomers.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.dgvCustomers.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle37.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.dgvCustomers.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle37;
             this.dgvCustomers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvCustomers.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvCustomers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.LightGray;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCustomers.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle38.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle38.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle38.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle38.SelectionBackColor = System.Drawing.Color.LightGray;
+            dataGridViewCellStyle38.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle38.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCustomers.DefaultCellStyle = dataGridViewCellStyle38;
             this.dgvCustomers.Location = new System.Drawing.Point(23, 85);
             this.dgvCustomers.MultiSelect = false;
             this.dgvCustomers.Name = "dgvCustomers";
             this.dgvCustomers.ReadOnly = true;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-            this.dgvCustomers.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle39.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle39.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle39.ForeColor = System.Drawing.Color.Black;
+            this.dgvCustomers.RowsDefaultCellStyle = dataGridViewCellStyle39;
             this.dgvCustomers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvCustomers.Size = new System.Drawing.Size(923, 499);
             this.dgvCustomers.TabIndex = 31;
@@ -1067,7 +1059,7 @@
             this.txtSearchMobileNumber.Name = "txtSearchMobileNumber";
             this.txtSearchMobileNumber.Size = new System.Drawing.Size(167, 22);
             this.txtSearchMobileNumber.TabIndex = 27;
-            this.txtSearchMobileNumber.Tag = "Please enter 10 digit Mobile Number (9999999999)";
+            this.txtSearchMobileNumber.Tag = "Please enter 10 digit Mobile Number";
             this.txtSearchMobileNumber.TextChanged += new System.EventHandler(this.SearchParameterChanged);
             this.txtSearchMobileNumber.Enter += new System.EventHandler(this.ActivateControl);
             this.txtSearchMobileNumber.Leave += new System.EventHandler(this.DeActivateControl);
@@ -1263,6 +1255,7 @@
             // 
             this.dgvPreviousTickets.AllowUserToAddRows = false;
             this.dgvPreviousTickets.AllowUserToDeleteRows = false;
+            this.dgvPreviousTickets.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvPreviousTickets.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPreviousTickets.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.CustomerID1,
@@ -1273,14 +1266,27 @@
             this.BusMasterID1,
             this.Address1,
             this.First_Name1,
-            this.Last_Name1});
+            this.Last_Name1,
+            this.PrintTicket});
             this.dgvPreviousTickets.Location = new System.Drawing.Point(838, 27);
             this.dgvPreviousTickets.Name = "dgvPreviousTickets";
             this.dgvPreviousTickets.ReadOnly = true;
             this.dgvPreviousTickets.RowHeadersVisible = false;
-            this.dgvPreviousTickets.Size = new System.Drawing.Size(406, 258);
+            this.dgvPreviousTickets.Size = new System.Drawing.Size(520, 258);
             this.dgvPreviousTickets.TabIndex = 29;
             this.dgvPreviousTickets.TabStop = false;
+            this.dgvPreviousTickets.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPreviousTickets_CellContentClick);
+            // 
+            // btnPrintOld
+            // 
+            this.btnPrintOld.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPrintOld.Location = new System.Drawing.Point(1267, 370);
+            this.btnPrintOld.Name = "btnPrintOld";
+            this.btnPrintOld.Size = new System.Drawing.Size(91, 32);
+            this.btnPrintOld.TabIndex = 30;
+            this.btnPrintOld.Text = "Print";
+            this.btnPrintOld.UseVisualStyleBackColor = false;
+            this.btnPrintOld.Click += new System.EventHandler(this.btnPrintOld_Click);
             // 
             // CustomerID1
             // 
@@ -1289,11 +1295,11 @@
             this.CustomerID1.Name = "CustomerID1";
             this.CustomerID1.ReadOnly = true;
             this.CustomerID1.Visible = false;
-            this.CustomerID1.Width = 120;
             // 
             // Bus_Route1
             // 
             this.Bus_Route1.DataPropertyName = "Bus_Route";
+            this.Bus_Route1.FillWeight = 60F;
             this.Bus_Route1.HeaderText = "Bus Route";
             this.Bus_Route1.Name = "Bus_Route1";
             this.Bus_Route1.ReadOnly = true;
@@ -1301,6 +1307,7 @@
             // Yatra_Date1
             // 
             this.Yatra_Date1.DataPropertyName = "Yatra_Date";
+            this.Yatra_Date1.FillWeight = 40F;
             this.Yatra_Date1.HeaderText = "Yatra Date";
             this.Yatra_Date1.Name = "Yatra_Date1";
             this.Yatra_Date1.ReadOnly = true;
@@ -1308,6 +1315,7 @@
             // Bus_Name1
             // 
             this.Bus_Name1.DataPropertyName = "Bus_Name";
+            this.Bus_Name1.FillWeight = 20F;
             this.Bus_Name1.HeaderText = "Bus Name";
             this.Bus_Name1.Name = "Bus_Name1";
             this.Bus_Name1.ReadOnly = true;
@@ -1315,6 +1323,7 @@
             // Seat_No1
             // 
             this.Seat_No1.DataPropertyName = "Seat_No";
+            this.Seat_No1.FillWeight = 20F;
             this.Seat_No1.HeaderText = "Seat No";
             this.Seat_No1.Name = "Seat_No1";
             this.Seat_No1.ReadOnly = true;
@@ -1351,30 +1360,14 @@
             this.Last_Name1.ReadOnly = true;
             this.Last_Name1.Visible = false;
             // 
-            // btnPrintOld
+            // PrintTicket
             // 
-            this.btnPrintOld.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPrintOld.Location = new System.Drawing.Point(1250, 253);
-            this.btnPrintOld.Name = "btnPrintOld";
-            this.btnPrintOld.Size = new System.Drawing.Size(91, 32);
-            this.btnPrintOld.TabIndex = 30;
-            this.btnPrintOld.Text = "Print";
-            this.btnPrintOld.UseVisualStyleBackColor = false;
-            this.btnPrintOld.Click += new System.EventHandler(this.btnPrintOld_Click);
-            // 
-            // contextMenuStrip2
-            // 
-            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.pasteToolStripMenuItem});
-            this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(103, 26);
-            // 
-            // pasteToolStripMenuItem
-            // 
-            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
-            this.pasteToolStripMenuItem.Text = "&Paste";
-            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+            this.PrintTicket.FillWeight = 59.29933F;
+            this.PrintTicket.HeaderText = "";
+            this.PrintTicket.Name = "PrintTicket";
+            this.PrintTicket.ReadOnly = true;
+            this.PrintTicket.Text = "Print";
+            this.PrintTicket.UseColumnTextForButtonValue = true;
             // 
             // Multiple_Registration
             // 
@@ -1408,6 +1401,7 @@
             this.grpRegistrationDetails.ResumeLayout(false);
             this.grpRegistrationDetails.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgSnapShot)).EndInit();
+            this.contextMenuStrip2.ResumeLayout(false);
             this.grpTravelDetails.ResumeLayout(false);
             this.grpTravelDetails.PerformLayout();
             this.panelSearch.ResumeLayout(false);
@@ -1416,7 +1410,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvTickets)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPreviousTickets)).EndInit();
-            this.contextMenuStrip2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1485,8 +1478,6 @@
         private System.Windows.Forms.Label lblOriginalDiscountReason;
         private System.Windows.Forms.CheckBox chkDontKnowBirthdate;
         private System.Windows.Forms.CheckBox chkDontKnowAlternateMobile;
-        private System.Windows.Forms.TextBox txtSearchAddress;
-        private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox txtSearchAlternateMobileNumber;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Button btnSelect;
@@ -1515,6 +1506,8 @@
         private System.Windows.Forms.ComboBox cbArea;
         private System.Windows.Forms.DataGridView dgvPreviousTickets;
         private System.Windows.Forms.Button btnPrintOld;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
+        private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn CustomerID1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Bus_Route1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Yatra_Date1;
@@ -1524,7 +1517,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Address1;
         private System.Windows.Forms.DataGridViewTextBoxColumn First_Name1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Last_Name1;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
-        private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
+        private System.Windows.Forms.DataGridViewButtonColumn PrintTicket;
     }
 }
