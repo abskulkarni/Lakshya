@@ -1,3 +1,4 @@
+D:\Abhijit\personal\GitHub\Lakshya\Final\Lakshya-Yatra\bin\Release\Lakshya-Yatra.exe.config
 D:\Abhijit\personal\GitHub\Lakshya\Final\Lakshya-Yatra\bin\Release\Reports\ExpenseReport\rptExpenseReport_Userwise.rpt
 D:\Abhijit\personal\GitHub\Lakshya\Final\Lakshya-Yatra\bin\Release\Reports\ExpenseReport\rptExpenseReport_Userwise.cs
 D:\Abhijit\personal\GitHub\Lakshya\Final\Lakshya-Yatra\bin\Release\Reports\BusReport\rptBusReport.rpt
@@ -29,12 +30,10 @@ D:\Abhijit\personal\GitHub\Lakshya\Final\Lakshya-Yatra\bin\Release\Reports\Other
 D:\Abhijit\personal\GitHub\Lakshya\Final\Lakshya-Yatra\bin\Release\Reports\Other Reports\Bloodgroup\rptBloodGroupReport.cs
 D:\Abhijit\personal\GitHub\Lakshya\Final\Lakshya-Yatra\bin\Release\Reports\TicketReports\UserwiseTicketReport\rptUserwiseTicketReport.cs
 D:\Abhijit\personal\GitHub\Lakshya\Final\Lakshya-Yatra\bin\Release\Resources\NoImage.png
-D:\Abhijit\personal\GitHub\Lakshya\Final\Lakshya-Yatra\bin\Release\Lakshya-Yatra.exe.config
 D:\Abhijit\personal\GitHub\Lakshya\Final\Lakshya-Yatra\bin\Release\Lakshya-Yatra.exe
 D:\Abhijit\personal\GitHub\Lakshya\Final\Lakshya-Yatra\bin\Release\Lakshya-Yatra.pdb
 D:\Abhijit\personal\GitHub\Lakshya\Final\Lakshya-Yatra\bin\Release\AForge.Video.DirectShow.dll
 D:\Abhijit\personal\GitHub\Lakshya\Final\Lakshya-Yatra\bin\Release\AForge.Video.dll
-D:\Abhijit\personal\GitHub\Lakshya\Final\Lakshya-Yatra\obj\Release\Lakshya-Yatra.csprojResolveAssemblyReference.cache
 D:\Abhijit\personal\GitHub\Lakshya\Final\Lakshya-Yatra\obj\Release\Lakshya_Yatra.AreaMaintenance.resources
 D:\Abhijit\personal\GitHub\Lakshya\Final\Lakshya-Yatra\obj\Release\Lakshya_Yatra.BirthdayWishes.resources
 D:\Abhijit\personal\GitHub\Lakshya\Final\Lakshya-Yatra\obj\Release\Lakshya_Yatra.BusRegistration.resources

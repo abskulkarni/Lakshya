@@ -35,6 +35,7 @@ namespace Lakshya_Yatra
         string print_Address;
 
         DataSet dsAllCustomers = new DataSet();
+        DataTable dtRouteAndDates = new DataTable();
         private string submitMode { get; set; }
         public int Customer_ID { get; set; }
         public int Bus_Master_ID { get; set; }
@@ -60,19 +61,18 @@ namespace Lakshya_Yatra
         {
             Utilities.Instance.WriteLog("Loading Registration Form");
             grpRegistrationDetails.BackColor = grpPicture.BackColor = grpTravelDetails.BackColor = label1.BackColor = lblBusTime.BackColor = Color.Transparent;
-            imagesFolder = ConfigurationManager.AppSettings["ImagesFolder"];
+            
             dgvTickets.AutoGenerateColumns = false;
             dgvPreviousTickets.AutoGenerateColumns = false;
 
             dsAllCustomers = objBusinessRules.getAllCustomers();
-
             ExtractAutoCompleteStringCollections();
 
             timer1.Start();
             if (Customer_ID == 0 && Bus_Master_ID == 0)
                 InitializeForm(true);
         }
-        
+
         public void InitializeForm(bool formLoad = false)
         {
             try
@@ -148,9 +148,29 @@ namespace Lakshya_Yatra
                     Utilities.Instance.WriteLog("Called getCustomerDetails");
                    // Auto_Time = ds.Tables[0].Rows[0]["Auto_Time"] as byte[];
                     txtRegistrationDate.Text = Convert.ToDateTime(ds.Tables[0].Rows[0]["Registration_Date"]).ToString("dd-MMM-yyyy");
-                    cbBusRoutes.SelectedValue = Convert.ToInt16(ds.Tables[0].Rows[0]["Route_ID"]);
+                    
+                    string dateAndRouteIDValue = string.Format("{0:yyyy-MM-dd}", Convert.ToDateTime(ds.Tables[0].Rows[0]["yatra_date"]));
 
-                    dtpNavratriDate.Value = Convert.ToDateTime(ds.Tables[0].Rows[0]["yatra_date"]).Date;
+                    dateAndRouteIDValue += "|" + ds.Tables[0].Rows[0]["Route_ID"].ToString();
+
+                    string dateAndRouteIDDisplay = string.Format("{0:dd/MMM/yyyy}", Convert.ToDateTime(ds.Tables[0].Rows[0]["yatra_date"]));
+
+                    dateAndRouteIDDisplay += "|" + ds.Tables[0].Rows[0]["Route_ID"].ToString();
+                    //cbBusRoutes.SelectedValue = Convert.ToInt16(ds.Tables[0].Rows[0]["Route_ID"]);
+
+                    //dtpNavratriDate.Value = Convert.ToDateTime(ds.Tables[0].Rows[0]["yatra_date"]).Date;
+
+                    dtRouteAndDates.Rows[0]["IsVisible"] = true;
+                    if (cbRouteAndDates.Items.IndexOf(dateAndRouteIDValue) == -1)
+                    {
+                        var query = from row in dtRouteAndDates.AsEnumerable()
+                                    where Convert.ToString(row["ValueMember"]) == dateAndRouteIDValue
+                                    select row;
+                        DataRow dr = query.First<DataRow>();
+                        dr["IsVisible"] = true;
+                    }
+                    cbRouteAndDates.DataSource = dtRouteAndDates.AsEnumerable().Where<DataRow>(row => Convert.ToBoolean(row["IsVisible"]) == true).CopyToDataTable();
+                    cbRouteAndDates.SelectedValue = dateAndRouteIDValue;
                     
                     cbArea.SelectedValue = ds.Tables[0].Rows[0]["Area_ID"] != DBNull.Value ? Convert.ToInt16(ds.Tables[0].Rows[0]["Area_ID"]) : 0;
 
@@ -223,6 +243,7 @@ namespace Lakshya_Yatra
 
         private void SetCustomerImage()
         {
+            imagesFolder = ConfigurationManager.AppSettings["ImagesFolder"];
             if (System.IO.File.Exists(imagesFolder + Customer_ID.ToString() + ".jpg"))
             {
                 using (var bmpTemp = new Bitmap(imagesFolder + Customer_ID.ToString() + ".jpg"))
@@ -499,8 +520,12 @@ namespace Lakshya_Yatra
                 //        return;
                 //}
 
+                string value = Convert.ToString(cbRouteAndDates.SelectedValue);
+                DateTime navratriDate = Convert.ToDateTime(value.Split("|".ToCharArray())[0]);
+                int Route_ID = Convert.ToInt16(value.Split("|".ToCharArray())[1]);
+
                 DateTime strRegistrationDate = Convert.ToDateTime(txtRegistrationDate.Text);
-                DateTime strYatraDate = dtpNavratriDate.Value.Date;
+                DateTime strYatraDate = navratriDate.Date; //dtpNavratriDate.Value.Date;
                 string strFirstName = txtFirstName.Text;
                 string strLastName = txtLastName.Text;
                 string strAddress = txtAddress.Text;
@@ -827,6 +852,18 @@ namespace Lakshya_Yatra
             txtFees.Enabled = false;
             txtFees.Text = string.Empty;
             chkDiscount.Checked = false; lblOriginalDiscount.Text = "0"; txtDiscount.Enabled = false; txtDiscountReason.Enabled = false;
+            
+            cbRouteAndDates.DataSource = null;
+            dtRouteAndDates = objBusinessRules.GetRouteAndDates().Tables[0];
+            
+            if (dtRouteAndDates.Rows.Count > 0)
+            {
+                cbRouteAndDates.DisplayMember = "DisplayMember";
+                cbRouteAndDates.ValueMember = "ValueMember";
+                cbRouteAndDates.DataSource = dtRouteAndDates.AsEnumerable().Where<DataRow>(row => Convert.ToBoolean(row["IsVisible"]) == true).CopyToDataTable();
+
+                cbRouteAndDates.SelectedIndex = 0;
+            }
 
             //using (DataSet dsDates = objBusinessRules.GetNavratriDatesForBusRoute(0))
             //{
@@ -839,43 +876,43 @@ namespace Lakshya_Yatra
             //}
 
             lblOriginalDiscountReason.Text = txtDiscountReason.Text = txtDiscount.Text = string.Empty;
-            using(DataSet dsBusRoutes = objBusinessRules.GetBusRoutes())
-            {
-                if (dsBusRoutes.Tables[0].Rows.Count > 0)
-                {
-                    cbBusRoutes.DisplayMember = "Bus_Route";
-                    cbBusRoutes.ValueMember = "Route_ID";
-                    cbBusRoutes.DataSource = dsBusRoutes.Tables[0].Rows.Count > 0 ? dsBusRoutes.Tables[0] : null ;
+            //using(DataSet dsBusRoutes = objBusinessRules.GetBusRoutes())
+            //{
+            //    if (dsBusRoutes.Tables[0].Rows.Count > 0)
+            //    {
+            //        cbBusRoutes.DisplayMember = "Bus_Route";
+            //        cbBusRoutes.ValueMember = "Route_ID";
+            //        cbBusRoutes.DataSource = dsBusRoutes.Tables[0].Rows.Count > 0 ? dsBusRoutes.Tables[0] : null ;
 
-                    if (cbBusRoutes.DataSource != null)
-                    {
-                        cbBusRoutes.SelectedIndex = 0;
-                    }
-                }
-            }
+            //        if (cbBusRoutes.DataSource != null)
+            //        {
+            //            cbBusRoutes.SelectedIndex = 0;
+            //        }
+            //    }
+            //}
         }
 
         private void ResetNavaratriDates(int Route_ID)
         {
-            cbBus.Items.Clear();
-            cbSeatNo.Items.Clear();
-            lblBusTime.Text = string.Empty;
+            //cbBus.Items.Clear();
+            //cbSeatNo.Items.Clear();
+            //lblBusTime.Text = string.Empty;
 
-            busRoute = string.Empty;
-            //chkEditFees.Checked = false; 
-            txtFees.Enabled = false;
-            chkDiscount.Checked = false; lblOriginalDiscount.Text = "0"; txtDiscount.Enabled = false; txtDiscountReason.Enabled = false;
+            //busRoute = string.Empty;
+            ////chkEditFees.Checked = false; 
+            //txtFees.Enabled = false;
+            //chkDiscount.Checked = false; lblOriginalDiscount.Text = "0"; txtDiscount.Enabled = false; txtDiscountReason.Enabled = false;
 
-            using (DataSet dsDates = objBusinessRules.GetNavratriDatesForBusRoute(Route_ID))
-            {
-                if (dsDates.Tables[0].Rows.Count > 0)
-                {
-                    if (dtpNavratriDate.Value.Date != Convert.ToDateTime(dsDates.Tables[0].Rows[0]["Navratri_Date"]).Date)
-                        dtpNavratriDate.Value = Convert.ToDateTime(dsDates.Tables[0].Rows[0]["Navratri_Date"]).Date;
-                    else
-                        ResetAvailableBusNames(Route_ID, dtpNavratriDate.Value.Date);
-                }
-            }
+            //using (DataSet dsDates = objBusinessRules.GetNavratriDatesForBusRoute(Route_ID))
+            //{
+            //    if (dsDates.Tables[0].Rows.Count > 0)
+            //    {
+            //        if (dtpNavratriDate.Value.Date != Convert.ToDateTime(dsDates.Tables[0].Rows[0]["Navratri_Date"]).Date)
+            //            dtpNavratriDate.Value = Convert.ToDateTime(dsDates.Tables[0].Rows[0]["Navratri_Date"]).Date;
+            //        else
+            //            ResetAvailableBusNames(Route_ID, dtpNavratriDate.Value.Date);
+            //    }
+            //}
         }
 
         private void ResetAvailableBusNames(int Route_ID, DateTime navratriDate)
@@ -935,17 +972,34 @@ namespace Lakshya_Yatra
 
         private void cbBus_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ResetAvailableSeats(Convert.ToInt16(cbBusRoutes.SelectedValue), dtpNavratriDate.Value.Date, cbBus.SelectedItem.ToString());
+            string value = Convert.ToString(cbRouteAndDates.SelectedValue);
+            DateTime navratriDate = Convert.ToDateTime(value.Split("|".ToCharArray())[0]);
+            int Route_ID = Convert.ToInt16(value.Split("|".ToCharArray())[1]);
+
+            ResetAvailableSeats(Route_ID, navratriDate, cbBus.SelectedItem.ToString());
         }
 
         private void cbBusRoutes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ResetNavaratriDates(Convert.ToInt16(cbBusRoutes.SelectedValue));
+            //ResetNavaratriDates(Convert.ToInt16(cbBusRoutes.SelectedValue));
+        }
+        
+        private void cbRouteAndDates_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbRouteAndDates.DataSource != null)
+            {
+                string value = Convert.ToString(cbRouteAndDates.SelectedValue);
+                DateTime navratriDate = Convert.ToDateTime(value.Split("|".ToCharArray())[0]);
+                int Route_ID = Convert.ToInt16(value.Split("|".ToCharArray())[1]);
+
+                ResetAvailableBusNames(Route_ID, navratriDate);
+            }
+
         }
 
         private void dtpNavratriDate_ValueChanged(object sender, EventArgs e)
         {
-            ResetAvailableBusNames(Convert.ToInt16(cbBusRoutes.SelectedValue), dtpNavratriDate.Value.Date);
+            //ResetAvailableBusNames(Convert.ToInt16(cbBusRoutes.SelectedValue), dtpNavratriDate.Value.Date);
         }
         private void AllowDecimal(object sender, KeyPressEventArgs e)
         {
@@ -1024,7 +1078,8 @@ namespace Lakshya_Yatra
         {
             ResetTravelDetails();
             Bus_Master_ID = 0;
-            cbBusRoutes.Focus();
+            //cbBusRoutes.Focus();
+            cbRouteAndDates.Focus();
         }
 
         private void GetCustomerDetailsForMobile(string mobileNo)
@@ -1071,7 +1126,8 @@ namespace Lakshya_Yatra
 
                     GetCustomerTickets();
                     btnPrint.Visible = true;
-                    cbBusRoutes.Focus();
+                    //cbBusRoutes.Focus();
+                    cbRouteAndDates.Focus();
                 }
                 else
                 {
@@ -1110,7 +1166,12 @@ namespace Lakshya_Yatra
             try
             {
                 Utilities.Instance.WriteLog("Entered cbSeatNo_SelectedIndexChanged");
-                DataSet ds = objBusinessRules.getLatestUpdatedTimeStamp(dtpNavratriDate.Value.Date, cbBus.SelectedItem.ToString(), Convert.ToInt16(cbSeatNo.SelectedItem));
+
+                string value = Convert.ToString(cbRouteAndDates.SelectedValue);
+                DateTime navratriDate = Convert.ToDateTime(value.Split("|".ToCharArray())[0]);
+                int Route_ID = Convert.ToInt16(value.Split("|".ToCharArray())[1]);
+
+                DataSet ds = objBusinessRules.getLatestUpdatedTimeStamp(navratriDate.Date, cbBus.SelectedItem.ToString(), Convert.ToInt16(cbSeatNo.SelectedItem));
                 Auto_Time = ds.Tables[0].Rows[0]["Auto_Time"] as byte[];
                 Utilities.Instance.WriteLog("Exited cbSeatNo_SelectedIndexChanged");
             }
@@ -1312,6 +1373,11 @@ namespace Lakshya_Yatra
                         break;
                 }
             }
+            else if (sender is ComboBox)
+            {
+                ((Control)sender).BackColor = Color.FromKnownColor(KnownColor.ScrollBar);
+                ((Control)sender).ForeColor = Color.Black;
+            }
             else if (sender is TextBox && ((TextBox)sender).Name == "txtMobileNo")
             {
                 TextBox txt = (TextBox)sender;
@@ -1329,7 +1395,8 @@ namespace Lakshya_Yatra
                 
                 if (chkDontKnowBirthdate.Checked && chkDontKnowAlternateMobile.Checked && chkDontKnowBloodGroup.Checked)
                 {
-                    cbBusRoutes.Focus();
+                    //cbBusRoutes.Focus();
+                    cbRouteAndDates.Focus();
                 }
 
                 ((Control)sender).BackColor = Color.White;
@@ -1492,8 +1559,8 @@ namespace Lakshya_Yatra
                 print_Name = string.Format("{0} {1}", Convert.ToString(grid.Rows[e.RowIndex].Cells["First_Name1"].Value), Convert.ToString(grid.Rows[e.RowIndex].Cells["Last_Name1"].Value));
                 print_Address = Convert.ToString(grid.Rows[e.RowIndex].Cells["Address1"].Value);
                 printPreviewDialog1.Document = printDocument1;
-                //printDocument1.Print();
-                printPreviewDialog1.ShowDialog();
+                printDocument1.Print();
+                //printPreviewDialog1.ShowDialog();
             }
         }
 
@@ -1501,6 +1568,13 @@ namespace Lakshya_Yatra
         {
             txtAddress.Text = cbArea.SelectedIndex > 0 ? cbArea.Text : string.Empty;
         }
+
+        private void txtAddress_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.A && sender != null)
+                ((TextBox)sender).SelectAll();
+        }
+
 
     }
 }

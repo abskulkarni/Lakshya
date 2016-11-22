@@ -530,5 +530,10 @@ namespace Lakshya_Yatra
                 MessageBox.Show("Error in updating Record, please contact System Administrator!\n" + ex.Message.ToString());
             }
         }
+
+        private void btnAddEditBusRoute_Click(object sender, EventArgs e)
+        {
+            panelBusRoute.Visible = true;
+        }
     }
 }

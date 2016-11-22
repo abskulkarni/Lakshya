@@ -255,6 +255,15 @@ namespace Lakshya_Yatra
         }
         #endregion
 
+        public DataSet GetRouteAndDates()
+        {
+            SqlCommand sqlCmd = new SqlCommand();
+            sqlCmd.CommandText = "dbo.GetRouteAndDates";
+            sqlCmd.CommandType = CommandType.StoredProcedure;
+            DataSet dsGetRouteAndDates = this.ExecuteToDataSet(sqlCmd);
+            return dsGetRouteAndDates;
+        }
+
         public DataSet GetNavratriDatesForBusRoute(int Route_ID = 0)
         {
             SqlCommand sqlCmd = new SqlCommand();

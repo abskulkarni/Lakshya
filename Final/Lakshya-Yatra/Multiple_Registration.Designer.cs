@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Multiple_Registration));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.txtRegistrationDate = new System.Windows.Forms.TextBox();
             this.bntCapture = new System.Windows.Forms.Button();
@@ -78,8 +78,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.txtFees = new System.Windows.Forms.TextBox();
             this.grpTravelDetails = new System.Windows.Forms.GroupBox();
-            this.label26 = new System.Windows.Forms.Label();
-            this.cbBusRoutes = new System.Windows.Forms.ComboBox();
+            this.cbRouteAndDates = new System.Windows.Forms.ComboBox();
             this.lblOriginalDiscountReason = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.txtDiscountReason = new System.Windows.Forms.TextBox();
@@ -88,10 +87,8 @@
             this.txtDiscount = new System.Windows.Forms.TextBox();
             this.lblBusTime = new System.Windows.Forms.Label();
             this.btnRefreshTravelDetails = new System.Windows.Forms.Button();
-            this.dtpNavratriDate = new System.Windows.Forms.DateTimePicker();
             this.cbBus = new System.Windows.Forms.ComboBox();
             this.cbSeatNo = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -123,7 +120,6 @@
             this.editTicketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteTicketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dgvPreviousTickets = new System.Windows.Forms.DataGridView();
-            this.btnPrintOld = new System.Windows.Forms.Button();
             this.CustomerID1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Bus_Route1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Yatra_Date1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -134,6 +130,7 @@
             this.First_Name1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Last_Name1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PrintTicket = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.btnPrintOld = new System.Windows.Forms.Button();
             this.grpPicture.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgCapture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgVideo)).BeginInit();
@@ -256,6 +253,7 @@
             // 
             // cbResolution
             // 
+            this.cbResolution.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.cbResolution.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbResolution.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbResolution.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -269,6 +267,7 @@
             // 
             // cbCamera
             // 
+            this.cbCamera.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.cbCamera.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCamera.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbCamera.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -404,6 +403,7 @@
             // 
             // cbArea
             // 
+            this.cbArea.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.cbArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbArea.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbArea.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -413,6 +413,8 @@
             this.cbArea.Size = new System.Drawing.Size(161, 22);
             this.cbArea.TabIndex = 4;
             this.cbArea.SelectedIndexChanged += new System.EventHandler(this.cbArea_SelectedIndexChanged);
+            this.cbArea.Enter += new System.EventHandler(this.ActivateControl);
+            this.cbArea.Leave += new System.EventHandler(this.DeActivateControl);
             // 
             // lblCustomerID
             // 
@@ -604,7 +606,7 @@
             this.txtFirstName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtFirstName.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFirstName.Location = new System.Drawing.Point(103, 78);
-            this.txtFirstName.MaxLength = 40;
+            this.txtFirstName.MaxLength = 20;
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.Size = new System.Drawing.Size(145, 22);
             this.txtFirstName.TabIndex = 2;
@@ -613,6 +615,7 @@
             // 
             // cbBloodGroup
             // 
+            this.cbBloodGroup.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.cbBloodGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbBloodGroup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbBloodGroup.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -647,6 +650,7 @@
             this.txtAddress.Size = new System.Drawing.Size(159, 51);
             this.txtAddress.TabIndex = 6;
             this.txtAddress.Enter += new System.EventHandler(this.ActivateControl);
+            this.txtAddress.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtAddress_KeyDown);
             this.txtAddress.Leave += new System.EventHandler(this.DeActivateControl);
             // 
             // contextMenuStrip2
@@ -698,7 +702,7 @@
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.Black;
-            this.label11.Location = new System.Drawing.Point(249, 79);
+            this.label11.Location = new System.Drawing.Point(58, 82);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(37, 14);
             this.label11.TabIndex = 11;
@@ -708,7 +712,7 @@
             // 
             this.txtFees.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtFees.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFees.Location = new System.Drawing.Point(304, 77);
+            this.txtFees.Location = new System.Drawing.Point(111, 82);
             this.txtFees.MaxLength = 4;
             this.txtFees.Name = "txtFees";
             this.txtFees.Size = new System.Drawing.Size(103, 22);
@@ -720,8 +724,7 @@
             // 
             // grpTravelDetails
             // 
-            this.grpTravelDetails.Controls.Add(this.label26);
-            this.grpTravelDetails.Controls.Add(this.cbBusRoutes);
+            this.grpTravelDetails.Controls.Add(this.cbRouteAndDates);
             this.grpTravelDetails.Controls.Add(this.lblOriginalDiscountReason);
             this.grpTravelDetails.Controls.Add(this.label23);
             this.grpTravelDetails.Controls.Add(this.txtDiscountReason);
@@ -730,10 +733,8 @@
             this.grpTravelDetails.Controls.Add(this.txtDiscount);
             this.grpTravelDetails.Controls.Add(this.lblBusTime);
             this.grpTravelDetails.Controls.Add(this.btnRefreshTravelDetails);
-            this.grpTravelDetails.Controls.Add(this.dtpNavratriDate);
             this.grpTravelDetails.Controls.Add(this.cbBus);
             this.grpTravelDetails.Controls.Add(this.cbSeatNo);
-            this.grpTravelDetails.Controls.Add(this.label2);
             this.grpTravelDetails.Controls.Add(this.label10);
             this.grpTravelDetails.Controls.Add(this.label9);
             this.grpTravelDetails.Controls.Add(this.txtFees);
@@ -746,29 +747,21 @@
             this.grpTravelDetails.TabStop = false;
             this.grpTravelDetails.Text = "Travel Details ";
             // 
-            // label26
+            // cbRouteAndDates
             // 
-            this.label26.AutoSize = true;
-            this.label26.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label26.ForeColor = System.Drawing.Color.Black;
-            this.label26.Location = new System.Drawing.Point(22, 50);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(71, 14);
-            this.label26.TabIndex = 29;
-            this.label26.Text = "Bus Route";
-            // 
-            // cbBusRoutes
-            // 
-            this.cbBusRoutes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbBusRoutes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbBusRoutes.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbBusRoutes.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this.cbBusRoutes.FormattingEnabled = true;
-            this.cbBusRoutes.Location = new System.Drawing.Point(111, 43);
-            this.cbBusRoutes.Name = "cbBusRoutes";
-            this.cbBusRoutes.Size = new System.Drawing.Size(296, 22);
-            this.cbBusRoutes.TabIndex = 14;
-            this.cbBusRoutes.SelectedIndexChanged += new System.EventHandler(this.cbBusRoutes_SelectedIndexChanged);
+            this.cbRouteAndDates.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.cbRouteAndDates.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbRouteAndDates.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbRouteAndDates.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbRouteAndDates.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.cbRouteAndDates.FormattingEnabled = true;
+            this.cbRouteAndDates.Location = new System.Drawing.Point(111, 45);
+            this.cbRouteAndDates.Name = "cbRouteAndDates";
+            this.cbRouteAndDates.Size = new System.Drawing.Size(296, 22);
+            this.cbRouteAndDates.TabIndex = 30;
+            this.cbRouteAndDates.SelectedIndexChanged += new System.EventHandler(this.cbRouteAndDates_SelectedIndexChanged);
+            this.cbRouteAndDates.Enter += new System.EventHandler(this.ActivateControl);
+            this.cbRouteAndDates.Leave += new System.EventHandler(this.DeActivateControl);
             // 
             // lblOriginalDiscountReason
             // 
@@ -867,24 +860,13 @@
             this.btnRefreshTravelDetails.UseVisualStyleBackColor = false;
             this.btnRefreshTravelDetails.Click += new System.EventHandler(this.btnRefreshTravelDetails_Click);
             // 
-            // dtpNavratriDate
-            // 
-            this.dtpNavratriDate.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpNavratriDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpNavratriDate.Location = new System.Drawing.Point(111, 79);
-            this.dtpNavratriDate.Name = "dtpNavratriDate";
-            this.dtpNavratriDate.Size = new System.Drawing.Size(103, 22);
-            this.dtpNavratriDate.TabIndex = 15;
-            this.dtpNavratriDate.ValueChanged += new System.EventHandler(this.dtpNavratriDate_ValueChanged);
-            this.dtpNavratriDate.Enter += new System.EventHandler(this.ActivateControl);
-            this.dtpNavratriDate.Leave += new System.EventHandler(this.DeActivateControl);
-            // 
             // cbBus
             // 
+            this.cbBus.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.cbBus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbBus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbBus.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbBus.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.cbBus.ForeColor = System.Drawing.Color.Black;
             this.cbBus.FormattingEnabled = true;
             this.cbBus.Location = new System.Drawing.Point(111, 155);
             this.cbBus.Name = "cbBus";
@@ -896,6 +878,7 @@
             // 
             // cbSeatNo
             // 
+            this.cbSeatNo.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.cbSeatNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSeatNo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbSeatNo.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -907,17 +890,6 @@
             this.cbSeatNo.SelectedIndexChanged += new System.EventHandler(this.cbSeatNo_SelectedIndexChanged);
             this.cbSeatNo.Enter += new System.EventHandler(this.ActivateControl);
             this.cbSeatNo.Leave += new System.EventHandler(this.DeActivateControl);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(2, 79);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(91, 14);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Navratri Date";
             // 
             // label10
             // 
@@ -1022,27 +994,27 @@
             // 
             this.dgvCustomers.AllowUserToAddRows = false;
             this.dgvCustomers.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle37.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.dgvCustomers.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle37;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.dgvCustomers.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
             this.dgvCustomers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvCustomers.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvCustomers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle38.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle38.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle38.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle38.SelectionBackColor = System.Drawing.Color.LightGray;
-            dataGridViewCellStyle38.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle38.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCustomers.DefaultCellStyle = dataGridViewCellStyle38;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.LightGray;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCustomers.DefaultCellStyle = dataGridViewCellStyle11;
             this.dgvCustomers.Location = new System.Drawing.Point(23, 85);
             this.dgvCustomers.MultiSelect = false;
             this.dgvCustomers.Name = "dgvCustomers";
             this.dgvCustomers.ReadOnly = true;
-            dataGridViewCellStyle39.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle39.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle39.ForeColor = System.Drawing.Color.Black;
-            this.dgvCustomers.RowsDefaultCellStyle = dataGridViewCellStyle39;
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black;
+            this.dgvCustomers.RowsDefaultCellStyle = dataGridViewCellStyle12;
             this.dgvCustomers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvCustomers.Size = new System.Drawing.Size(923, 499);
             this.dgvCustomers.TabIndex = 31;
@@ -1277,17 +1249,6 @@
             this.dgvPreviousTickets.TabStop = false;
             this.dgvPreviousTickets.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPreviousTickets_CellContentClick);
             // 
-            // btnPrintOld
-            // 
-            this.btnPrintOld.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPrintOld.Location = new System.Drawing.Point(1267, 370);
-            this.btnPrintOld.Name = "btnPrintOld";
-            this.btnPrintOld.Size = new System.Drawing.Size(91, 32);
-            this.btnPrintOld.TabIndex = 30;
-            this.btnPrintOld.Text = "Print";
-            this.btnPrintOld.UseVisualStyleBackColor = false;
-            this.btnPrintOld.Click += new System.EventHandler(this.btnPrintOld_Click);
-            // 
             // CustomerID1
             // 
             this.CustomerID1.DataPropertyName = "CustomerID";
@@ -1368,6 +1329,17 @@
             this.PrintTicket.ReadOnly = true;
             this.PrintTicket.Text = "Print";
             this.PrintTicket.UseColumnTextForButtonValue = true;
+            // 
+            // btnPrintOld
+            // 
+            this.btnPrintOld.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPrintOld.Location = new System.Drawing.Point(1267, 370);
+            this.btnPrintOld.Name = "btnPrintOld";
+            this.btnPrintOld.Size = new System.Drawing.Size(91, 32);
+            this.btnPrintOld.TabIndex = 30;
+            this.btnPrintOld.Text = "Print";
+            this.btnPrintOld.UseVisualStyleBackColor = false;
+            this.btnPrintOld.Click += new System.EventHandler(this.btnPrintOld_Click);
             // 
             // Multiple_Registration
             // 
@@ -1450,10 +1422,8 @@
         private System.Windows.Forms.GroupBox grpTravelDetails;
         private System.Windows.Forms.ComboBox cbBus;
         private System.Windows.Forms.ComboBox cbSeatNo;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.DateTimePicker dtpNavratriDate;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TextBox txtAlternateMobileNo;
         private System.Windows.Forms.Timer timer1;
@@ -1482,8 +1452,6 @@
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Button btnSelect;
         private System.Windows.Forms.Button btnRefreshAutoLists;
-        private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.ComboBox cbBusRoutes;
         private System.Windows.Forms.Button bntStart;
         private System.Windows.Forms.TextBox txtMobileNo;
         private System.Windows.Forms.ToolTip toolTip1;
@@ -1518,5 +1486,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn First_Name1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Last_Name1;
         private System.Windows.Forms.DataGridViewButtonColumn PrintTicket;
+        private System.Windows.Forms.ComboBox cbRouteAndDates;
     }
 }

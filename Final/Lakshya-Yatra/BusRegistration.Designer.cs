@@ -55,7 +55,7 @@
             this.btnSubmitBusRoute = new System.Windows.Forms.Button();
             this.txtAddEditBusRoute = new System.Windows.Forms.TextBox();
             this.cbBusRoutes = new System.Windows.Forms.ComboBox();
-            this.lnkAddEditBusRoute = new System.Windows.Forms.LinkLabel();
+            this.btnAddEditBusRoute = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.panelBusRoute.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBusRoutes)).BeginInit();
@@ -373,16 +373,21 @@
             this.cbBusRoutes.Size = new System.Drawing.Size(167, 22);
             this.cbBusRoutes.TabIndex = 7;
             // 
-            // lnkAddEditBusRoute
+            // btnAddEditBusRoute
             // 
-            this.lnkAddEditBusRoute.AutoSize = true;
-            this.lnkAddEditBusRoute.Location = new System.Drawing.Point(312, 196);
-            this.lnkAddEditBusRoute.Name = "lnkAddEditBusRoute";
-            this.lnkAddEditBusRoute.Size = new System.Drawing.Size(128, 14);
-            this.lnkAddEditBusRoute.TabIndex = 94;
-            this.lnkAddEditBusRoute.TabStop = true;
-            this.lnkAddEditBusRoute.Text = "Add/Edit Bus Route";
-            this.lnkAddEditBusRoute.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkAddEditBusRoute_LinkClicked);
+            this.btnAddEditBusRoute.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.btnAddEditBusRoute.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddEditBusRoute.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddEditBusRoute.Location = new System.Drawing.Point(312, 189);
+            this.btnAddEditBusRoute.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
+            this.btnAddEditBusRoute.Name = "btnAddEditBusRoute";
+            this.btnAddEditBusRoute.Size = new System.Drawing.Size(141, 31);
+            this.btnAddEditBusRoute.TabIndex = 95;
+            this.btnAddEditBusRoute.TabStop = false;
+            this.btnAddEditBusRoute.Text = "Add/Edit Bus Route";
+            this.btnAddEditBusRoute.UseVisualStyleBackColor = false;
+            this.btnAddEditBusRoute.Visible = false;
+            this.btnAddEditBusRoute.Click += new System.EventHandler(this.btnAddEditBusRoute_Click);
             // 
             // BusRegistration
             // 
@@ -390,7 +395,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::Lakshya_Yatra.Properties.Resources.digital_waves_background;
             this.ClientSize = new System.Drawing.Size(990, 603);
-            this.Controls.Add(this.lnkAddEditBusRoute);
+            this.Controls.Add(this.btnAddEditBusRoute);
             this.Controls.Add(this.cbBusRoutes);
             this.Controls.Add(this.panelBusRoute);
             this.Controls.Add(this.btnDeleteBus);
@@ -450,10 +455,10 @@
         private System.Windows.Forms.Panel panelBusRoute;
         private System.Windows.Forms.ComboBox cbBusRoutes;
         private System.Windows.Forms.TextBox txtAddEditBusRoute;
-        private System.Windows.Forms.LinkLabel lnkAddEditBusRoute;
         private System.Windows.Forms.Button btnAddNewBusRoute;
         private System.Windows.Forms.Button btnSubmitBusRoute;
         private System.Windows.Forms.Button btnCloseAddEditBusRoute;
         private System.Windows.Forms.DataGridView dgvBusRoutes;
+        private System.Windows.Forms.Button btnAddEditBusRoute;
     }
 }

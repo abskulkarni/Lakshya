@@ -262,11 +262,12 @@
             this.txtAddress.ContextMenuStrip = this.contextMenuStrip1;
             this.txtAddress.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtAddress.Location = new System.Drawing.Point(404, 58);
-            this.txtAddress.MaxLength = 20;
+            this.txtAddress.MaxLength = 100;
             this.txtAddress.Multiline = true;
             this.txtAddress.Name = "txtAddress";
-            this.txtAddress.Size = new System.Drawing.Size(184, 47);
+            this.txtAddress.Size = new System.Drawing.Size(188, 103);
             this.txtAddress.TabIndex = 8;
+            this.txtAddress.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtAddress_KeyDown);
             // 
             // contextMenuStrip1
             // 

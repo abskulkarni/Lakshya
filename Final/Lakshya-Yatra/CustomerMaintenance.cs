@@ -314,5 +314,11 @@ namespace Lakshya_Yatra
                 }
             }
         }
+
+        private void txtAddress_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.A && sender != null)
+                ((TextBox)sender).SelectAll();
+        }
     }
 }
