@@ -104,8 +104,9 @@ namespace Lakshya_Yatra
             {
                 dgvCustomers.ClearSelection();
                 this.dgvCustomers.Rows[e.RowIndex].Selected = true;
-                customerID = int.Parse(dgvCustomers.Rows[e.RowIndex].Cells[0].Value.ToString().Trim());
-                old_Bus_Master_ID = int.Parse(dgvCustomers.Rows[e.RowIndex].Cells[1].Value.ToString().Trim());
+                customerID = int.Parse(dgvCustomers.Rows[e.RowIndex].Cells["Customer_ID"].Value.ToString().Trim());
+                old_Bus_Master_ID = int.Parse(dgvCustomers.Rows[e.RowIndex].Cells["Bus_Master_ID"].Value.ToString().Trim());
+                editCustomerToolStripMenuItem.Visible = Convert.ToDateTime((dgvCustomers.Rows[e.RowIndex].Cells["Yatra_Date"].Value.ToString().Trim())).Year != DateTime.Now.Year ? false : true;
                 //this.dgvCustomers.CurrentCell = this.dgvCustomers.Rows[e.RowIndex].Cells[1];
                 this.contextMenuStrip1.Show(this.dgvCustomers, e.Location);
                 contextMenuStrip1.Show(Cursor.Position);
@@ -131,7 +132,7 @@ namespace Lakshya_Yatra
                 }
 
                 BusinessRules objDatabase = new BusinessRules();
-                DataSet ds = objDatabase.DeleteTicket(customerID, old_Bus_Master_ID);
+                DataSet ds = objDatabase.DeleteTicket(customerID, old_Bus_Master_ID, User.Instance.User_Name);
                 //if (System.IO.File.Exists(imagesFolder + customerID.ToString() + ".jpg"))
                 //{
                 //    System.IO.File.Delete(imagesFolder + customerID.ToString() + ".jpg");

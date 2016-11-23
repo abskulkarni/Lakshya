@@ -98,11 +98,11 @@
             // lstBlockedSeatNo
             // 
             this.lstBlockedSeatNo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lstBlockedSeatNo.Enabled = false;
             this.lstBlockedSeatNo.FormattingEnabled = true;
             this.lstBlockedSeatNo.ItemHeight = 14;
             this.lstBlockedSeatNo.Location = new System.Drawing.Point(277, 265);
             this.lstBlockedSeatNo.Name = "lstBlockedSeatNo";
+            this.lstBlockedSeatNo.SelectionMode = System.Windows.Forms.SelectionMode.None;
             this.lstBlockedSeatNo.Size = new System.Drawing.Size(135, 254);
             this.lstBlockedSeatNo.TabIndex = 10;
             this.lstBlockedSeatNo.TabStop = false;

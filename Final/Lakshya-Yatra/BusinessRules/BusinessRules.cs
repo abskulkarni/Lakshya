@@ -373,13 +373,14 @@ namespace Lakshya_Yatra
         # endregion UpdateBusRegistration
 
         # region DeleteCustomer 
-        public DataSet DeleteTicket(int Customer_ID, int old_Bus_Master_ID)
+        public DataSet DeleteTicket(int Customer_ID, int old_Bus_Master_ID, string userName)
         {
             SqlCommand sqlCmd = new SqlCommand();
             sqlCmd.Parameters.Clear();
             sqlCmd.CommandText = "DeleteTicket";
             sqlCmd.Parameters.Add(new SqlParameter("@Customer_ID", SqlDbType.Int)).Value = Customer_ID;
             sqlCmd.Parameters.Add(new SqlParameter("@old_Bus_Master_ID", SqlDbType.Int)).Value = old_Bus_Master_ID;
+            sqlCmd.Parameters.Add(new SqlParameter("@UserName", SqlDbType.VarChar)).Value = userName;
             sqlCmd.CommandType = CommandType.StoredProcedure;
             DataSet dsUpdateBusRegistration = this.ExecuteToDataSet(sqlCmd);
             return dsUpdateBusRegistration;
