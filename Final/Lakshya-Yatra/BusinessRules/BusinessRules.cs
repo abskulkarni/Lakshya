@@ -264,6 +264,17 @@ namespace Lakshya_Yatra
             return dsGetRouteAndDates;
         }
 
+        public DataTable GetRouteAndDateVisibility(DateTime Navratri_Date, int Route_ID)
+        {
+            SqlCommand sqlCmd = new SqlCommand();
+            sqlCmd.CommandText = "dbo.GetRouteAndDateVisibility";
+            sqlCmd.Parameters.Add(new SqlParameter("@Route_ID", SqlDbType.Int)).Value = Route_ID;
+            sqlCmd.Parameters.Add(new SqlParameter("@Navratri_Date", SqlDbType.Date)).Value = Navratri_Date;
+            sqlCmd.CommandType = CommandType.StoredProcedure;
+            using(DataSet dsGetRouteAndDates = this.ExecuteToDataSet(sqlCmd))
+                return dsGetRouteAndDates.Tables[0];
+        }
+
         public DataSet GetNavratriDatesForBusRoute(int Route_ID = 0)
         {
             SqlCommand sqlCmd = new SqlCommand();
@@ -352,7 +363,7 @@ namespace Lakshya_Yatra
 
         # region UpdateBusRegistration 
         public DataSet UpdateBusRegistration(string Bus_Name, DateTime Navratri_Date, string Seat_No, 
-                                            int Seat_Count, int Bus_Fees, int Route_ID, DateTime Bus_Time,
+                                            int Seat_Count, int Bus_Fees, int Route_ID, DateTime Bus_Time,bool Is_Visible,
                                             string userName)
         {
             SqlCommand sqlCmd = new SqlCommand();
@@ -365,6 +376,7 @@ namespace Lakshya_Yatra
             sqlCmd.Parameters.Add(new SqlParameter("@Bus_Fees", SqlDbType.Int)).Value = Bus_Fees;
             sqlCmd.Parameters.Add(new SqlParameter("@Route_ID", SqlDbType.Int)).Value = Route_ID;
             sqlCmd.Parameters.Add(new SqlParameter("@Bus_Time", SqlDbType.DateTime)).Value = Bus_Time;
+            sqlCmd.Parameters.Add(new SqlParameter("@Is_Visible", SqlDbType.Bit)).Value = Is_Visible;
             sqlCmd.Parameters.Add(new SqlParameter("@UserName", SqlDbType.VarChar)).Value = userName;
             sqlCmd.CommandType = CommandType.StoredProcedure;
             DataSet dsUpdateBusRegistration = this.ExecuteToDataSet(sqlCmd);

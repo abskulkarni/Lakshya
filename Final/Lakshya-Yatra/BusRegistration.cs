@@ -38,7 +38,7 @@ namespace Lakshya_Yatra
             InitializeForm();
             
             label1.BackColor = label2.BackColor = label3.BackColor = label5.BackColor = label6.BackColor
-                = label9.BackColor = label4.BackColor = groupBox1.BackColor = Color.Transparent;
+                = label9.BackColor = label4.BackColor = groupBox1.BackColor = groupBox2.BackColor = chkIsVisible.BackColor = Color.Transparent;
             Utilities.Instance.WriteLog("Exited BusRegistration_Load");
         }
 
@@ -93,8 +93,11 @@ namespace Lakshya_Yatra
                 Utilities.Instance.WriteLog("Calling Business Method GetBusRegistrationInfo");
                 dsBusRegistrationInfo = objBusiness.GetBusRegistrationInfo();
                 Utilities.Instance.WriteLog("Called Business Method GetBusRegistrationInfo");
+                btnDeleteBus.Visible = false;
                 //rbEdit.Checked = true;
                 txtBus.Text = string.Empty;
+                chkIsVisible.Checked = true;
+                chkIsVisible.Enabled = true;
                 chkSelectAll.Checked = false;
                 seatsPerBus = Convert.ToInt16(ConfigurationManager.AppSettings["SeatsPerBus"]);
                 panelBusRoute.Visible = false;
@@ -111,47 +114,49 @@ namespace Lakshya_Yatra
 
         private void GetBusNames()
         {
-            //BusinessRules objBusinessRules = new BusinessRules();
-            //DataSet ds = objBusinessRules.getAvailableBusName(cbNavratraDate.SelectedItem.ToString());
             Utilities.Instance.WriteLog("Entering GetBusNames Method");
             txtBusFees.Text = string.Empty;
-            cbBusRoutes.SelectedValue = 0;
+            //cbBusRoutes.SelectedValue = 0;
             txtBusFees.Enabled = true;
             cbBus.Items.Clear();
             chkLstAvailableSeatNo.Items.Clear();
             lstBlockedSeatNo.Items.Clear();
             Utilities.Instance.WriteLog("Cleared Control values");
-            string expression = string.Format("Navratri_Date = '{0}'", dtpNavratriDate.Value.ToString("yyyy-MM-dd"));
-            DataRow[] busNos = dsBusRegistrationInfo.Tables[0].Select(expression);
-            Utilities.Instance.WriteLog("Applied filter : " + expression);
 
-            if (busNos.Count() > 0)
-            {
-                foreach (DataRow row in busNos)
+            if (cbBusRoutes.SelectedIndex > 0)
+            {                
+                string expression = string.Format("Navratri_Date = '{0}' and Route_ID = {1}", dtpNavratriDate.Value.ToString("yyyy-MM-dd"), Convert.ToInt16(cbBusRoutes.SelectedValue));
+                DataRow[] busNos = dsBusRegistrationInfo.Tables[0].Select(expression);
+                Utilities.Instance.WriteLog("Applied filter : " + expression);
+
+                if (busNos.Count() > 0)
                 {
-                    if (!cbBus.Items.Contains(row["Bus_Name"].ToString()))
+                    foreach (DataRow row in busNos)
                     {
-                        cbBus.Items.Add(row["Bus_Name"].ToString().Trim());                        
+                        if (!cbBus.Items.Contains(row["Bus_Name"].ToString()))
+                        {
+                            cbBus.Items.Add(row["Bus_Name"].ToString().Trim());
+                        }
+                    }
+
+                    if (cbBus.Items.Count > 0)
+                    {
+                        Utilities.Instance.WriteLog("Setting cbBus SelectedIndex 0");
+                        cbBus.SelectedIndex = 0;
+                        btnDeleteBus.Visible = !addNew ? true : false;
+                    }
+                    else
+                    {
+                        btnDeleteBus.Visible = false;
                     }
                 }
-
-                if (cbBus.Items.Count > 0)
+                if (addNew)
                 {
-                    Utilities.Instance.WriteLog("Setting cbBus SelectedIndex 0");
-                    cbBus.SelectedIndex = 0;
-                    btnDeleteBus.Visible = !addNew ? true : false;
-                }
-                else
-                {
-                    btnDeleteBus.Visible = false;
-                }
-            }
-            if (addNew)
-            {
-                Utilities.Instance.WriteLog("AddNew Mode : Adding seats in list box");
-                for (int i = 1; i <= seatsPerBus; i++)
-                {
-                    chkLstAvailableSeatNo.Items.Add(i.ToString());
+                    Utilities.Instance.WriteLog("AddNew Mode : Adding seats in list box");
+                    for (int i = 1; i <= seatsPerBus; i++)
+                    {
+                        chkLstAvailableSeatNo.Items.Add(i.ToString());
+                    }
                 }
             }
         }
@@ -170,6 +175,8 @@ namespace Lakshya_Yatra
                 cbBus.Visible = false;
                 chkLstAvailableSeatNo.Items.Clear();
                 lstBlockedSeatNo.Items.Clear();
+                chkIsVisible.Checked = true;
+                chkIsVisible.Enabled = false;
                 RaiseBusRouteChangedEvent();
 
                 for (int i = 1; i <= seatsPerBus; i++)
@@ -318,7 +325,7 @@ namespace Lakshya_Yatra
                 int Bus_Fees = Convert.ToInt16(txtBusFees.Text.Trim());
                 int Route_ID = Convert.ToInt16(cbBusRoutes.SelectedValue);
                 DateTime Bus_Time = dtpBusTime.Value;
-
+                bool Is_Visible = chkIsVisible.Checked;
 
                 StringBuilder Seat_No = new StringBuilder();
                 foreach (string item in chkLstAvailableSeatNo.CheckedItems)
@@ -328,7 +335,7 @@ namespace Lakshya_Yatra
                 Utilities.Instance.WriteLog("Got Form Control Values");
                 BusinessRules objBusinessRules = new BusinessRules();
                 Utilities.Instance.WriteLog("Calling Business Method UpdateBusRegistration");
-                DataSet ds = objBusinessRules.UpdateBusRegistration(Bus_Name, Navratri_Date, Seat_No.ToString(), Seat_Count, Bus_Fees, Route_ID, Bus_Time, User.Instance.User_Name);
+                DataSet ds = objBusinessRules.UpdateBusRegistration(Bus_Name, Navratri_Date, Seat_No.ToString(), Seat_Count, Bus_Fees, Route_ID, Bus_Time, Is_Visible, User.Instance.User_Name);
                 if (ds.Tables[0].Rows[0][0].ToString() != "")
                 {
                     Utilities.Instance.WriteLog("Calling InitializeForm after UpdateBusRegistration");
@@ -348,7 +355,19 @@ namespace Lakshya_Yatra
         {
             Utilities.Instance.WriteLog("Entering dtpNavratriDate_ValueChanged");
             GetBusNames();
+            GetRouteAndDateVisibility();
             Utilities.Instance.WriteLog("Exiting dtpNavratriDate_ValueChanged");
+        }
+
+        private void GetRouteAndDateVisibility()
+        {
+            if (cbBusRoutes.SelectedIndex > 0)
+            {
+                using (DataTable dt = objBusiness.GetRouteAndDateVisibility(dtpNavratriDate.Value.Date, Convert.ToInt16(cbBusRoutes.SelectedValue)))
+                {
+                    chkIsVisible.Checked = dt.Rows.Count > 0 && !addNew ? Convert.ToBoolean(dt.Rows[0][0]) : true;
+                }
+            }
         }
 
         private void AllowDecimal(object sender, KeyPressEventArgs e)
@@ -413,6 +432,13 @@ namespace Lakshya_Yatra
                 return;
             }
 
+            if (cbBus.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a Bus.",
+                                        "Information", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                return;
+            }
+
             DialogResult f = MessageBox.Show("Are you sure to delete this entry?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (f == System.Windows.Forms.DialogResult.No)
@@ -436,7 +462,7 @@ namespace Lakshya_Yatra
 
             try
             {
-                if (!addNew)
+                if (!addNew && cbBus.SelectedItem != null)
                 {
                     DateTime Navratri_Date = dtpNavratriDate.Value.Date;
                     string Bus_Name = cbBus.SelectedItem.ToString();
@@ -534,6 +560,12 @@ namespace Lakshya_Yatra
         private void btnAddEditBusRoute_Click(object sender, EventArgs e)
         {
             panelBusRoute.Visible = true;
+        }
+
+        private void cbBusRoutes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GetBusNames();
+            GetRouteAndDateVisibility();
         }
     }
 }

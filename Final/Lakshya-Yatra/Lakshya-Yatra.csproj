@@ -727,6 +727,7 @@
   <ItemGroup>
     <Content Include="DBChangeScripts\Changes_14_Nov_2016.sql" />
     <Content Include="DBChangeScripts\Changes_18_Nov_2016.sql" />
+    <Content Include="DBChangeScripts\Changes_30_Nov_2016.sql" />
     <Content Include="Images\Fasticon-Happy-Bus-Bus-green.ico" />
   </ItemGroup>
   <ItemGroup>
