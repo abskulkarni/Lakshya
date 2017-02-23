@@ -33,7 +33,6 @@ namespace Lakshya_Yatra
 
         private void InitializeForm()
         {
-            rdEditDeleteCustomer.Checked = true;
             txtFirstName.Text = string.Empty;
             txtLastName.Text = string.Empty;
             txtMobileNo.Text = string.Empty;
@@ -64,15 +63,6 @@ namespace Lakshya_Yatra
             txtAlternateMobileNo.Enabled = !chkDontKnowAlternateMobile.Checked;
         }
 
-        private void rdEditDeleteCustomer_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rdEditDeleteCustomer.Checked)
-            {
-                splitContainer1.Panel1Collapsed = false;
-                SetFormForEditCustomer();
-            }
-        }
-
         private void SetFormForEditCustomer()
         {
             runningMode = OperationMode.EditCustomer;
@@ -85,15 +75,6 @@ namespace Lakshya_Yatra
             chkDontKnowBirthdate.Checked = chkDontKnowBloodGroup.Checked = chkDontKnowAlternateMobile.Checked = false;
 
             SearchCustomers(string.Empty, string.Empty, string.Empty);
-        }
-
-        private void rdAddNewCustomer_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rdAddNewCustomer.Checked)
-            {
-                splitContainer1.Panel1Collapsed = true;
-                SetFormForAddCustomer();
-            }
         }
 
         private void SetFormForAddCustomer()
@@ -137,6 +118,9 @@ namespace Lakshya_Yatra
                     txtAlternateMobileNo.Text = Convert.ToString(dgvCustomers.SelectedRows[0].Cells["Alternate_Mobile"].Value);
                     chkDontKnowAlternateMobile.Checked = string.IsNullOrEmpty(txtAlternateMobileNo.Text);
 
+                    cbArea.SelectedValue = !string.IsNullOrEmpty(Convert.ToString(dgvCustomers.SelectedRows[0].Cells["Area_ID"].Value)) ?
+                        Convert.ToInt16(dgvCustomers.SelectedRows[0].Cells["Area_ID"].Value) : 0;
+
                     if (!string.IsNullOrEmpty(dgvCustomers.SelectedRows[0].Cells["Birth_Date"].Value.ToString()))
                         dtpBirthDate.Value = Convert.ToDateTime(dgvCustomers.SelectedRows[0].Cells["Birth_Date"].Value);
                     else
@@ -177,7 +161,6 @@ namespace Lakshya_Yatra
             this.Cursor = Cursors.WaitCursor;
             try
             {
-                
                 dtCustomers = objBusinessRules.GetCustomers(FirstName, LastName, Mobile_No);
                 dgvCustomers.DataSource = dtCustomers.Rows.Count > 0 ? dtCustomers : null;
 
@@ -250,9 +233,10 @@ namespace Lakshya_Yatra
         {
             bool result = true;
             if (string.IsNullOrEmpty(txtMobileNo.Text.Trim()) ||
-                string.IsNullOrEmpty(txtFirstName.Text.Trim()) || string.IsNullOrEmpty(txtLastName.Text.Trim()) || string.IsNullOrEmpty(txtAddress.Text.Trim()))
+                string.IsNullOrEmpty(txtFirstName.Text.Trim()) || string.IsNullOrEmpty(txtLastName.Text.Trim()) || string.IsNullOrEmpty(txtAddress.Text.Trim())
+                || Convert.ToInt16(cbArea.SelectedValue) == 0)
             {
-                MessageBox.Show("Name, Mobile Number and Address are mandatory", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Name, Mobile Number, Area and Address are mandatory", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 result = false;
             }
             return result;
@@ -260,9 +244,41 @@ namespace Lakshya_Yatra
 
         private void btnDeleteSelected_Click(object sender, EventArgs e)
         {
+            
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Clipboard.ContainsText())
+            {
+                txtAddress.Text += Clipboard.GetText(TextDataFormat.Text).ToString();
+            }
+        }
+
+        private void dgvCustomers_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                dgvCustomers.ClearSelection();
+                this.dgvCustomers.Rows[e.RowIndex].Selected = true;
+                Customer_ID = Convert.ToInt16(dgvCustomers.Rows[e.RowIndex].Cells["Customer_ID"].Value);
+                //this.dgvCustomers.CurrentCell = this.dgvCustomers.Rows[e.RowIndex].Cells[1];
+                this.contextMenuStrip2.Show(this.dgvCustomers, e.Location);
+                contextMenuStrip2.Show(Cursor.Position);
+            }
+        }
+
+        private void deleteCustomerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
             if (dgvCustomers.SelectedRows.Count > 0)
             {
                 DialogResult userConfirmation = MessageBox.Show("Are you sure to delete selected customer?", "Confirm", MessageBoxButtons.YesNoCancel);
+                if (userConfirmation != System.Windows.Forms.DialogResult.Yes) return;
+
+                userConfirmation = MessageBox.Show("Are you sure to delete selected customer?", "Confirm", MessageBoxButtons.YesNoCancel);
+                if (userConfirmation != System.Windows.Forms.DialogResult.Yes) return;
+
+                userConfirmation = MessageBox.Show("Are you sure to delete selected customer?", "Confirm", MessageBoxButtons.YesNoCancel);
                 if (userConfirmation != System.Windows.Forms.DialogResult.Yes) return;
 
                 this.Cursor = Cursors.WaitCursor;
@@ -272,10 +288,10 @@ namespace Lakshya_Yatra
                     using (DataTable dt = objBusinessRules.DeleteCustomer(Customer_ID))
                     {
                         switch (Convert.ToInt16(dt.Rows[0][0]))
-                        {                            
+                        {
                             case 0:
                                 {
-                                    MessageBox.Show("Customer is having seats booked. Cannot be deleted", "Information", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);                                    
+                                    MessageBox.Show("Customer is having seats booked. Cannot be deleted", "Information", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                                     break;
                                 }
                             default:
@@ -297,6 +313,12 @@ namespace Lakshya_Yatra
                     this.Cursor = DefaultCursor;
                 }
             }
+        }
+
+        private void txtAddress_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.A && sender != null)
+                ((TextBox)sender).SelectAll();
         }
     }
 }

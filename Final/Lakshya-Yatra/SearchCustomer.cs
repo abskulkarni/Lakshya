@@ -104,8 +104,9 @@ namespace Lakshya_Yatra
             {
                 dgvCustomers.ClearSelection();
                 this.dgvCustomers.Rows[e.RowIndex].Selected = true;
-                customerID = int.Parse(dgvCustomers.Rows[e.RowIndex].Cells[0].Value.ToString().Trim());
-                old_Bus_Master_ID = int.Parse(dgvCustomers.Rows[e.RowIndex].Cells[1].Value.ToString().Trim());
+                customerID = int.Parse(dgvCustomers.Rows[e.RowIndex].Cells["Customer_ID"].Value.ToString().Trim());
+                old_Bus_Master_ID = int.Parse(dgvCustomers.Rows[e.RowIndex].Cells["Bus_Master_ID"].Value.ToString().Trim());
+                editCustomerToolStripMenuItem.Visible = Convert.ToDateTime((dgvCustomers.Rows[e.RowIndex].Cells["Yatra_Date"].Value.ToString().Trim())).Year != DateTime.Now.Year ? false : true;
                 //this.dgvCustomers.CurrentCell = this.dgvCustomers.Rows[e.RowIndex].Cells[1];
                 this.contextMenuStrip1.Show(this.dgvCustomers, e.Location);
                 contextMenuStrip1.Show(Cursor.Position);
@@ -131,7 +132,7 @@ namespace Lakshya_Yatra
                 }
 
                 BusinessRules objDatabase = new BusinessRules();
-                DataSet ds = objDatabase.DeleteTicket(customerID, old_Bus_Master_ID);
+                DataSet ds = objDatabase.DeleteTicket(customerID, old_Bus_Master_ID, User.Instance.User_Name);
                 //if (System.IO.File.Exists(imagesFolder + customerID.ToString() + ".jpg"))
                 //{
                 //    System.IO.File.Delete(imagesFolder + customerID.ToString() + ".jpg");
@@ -154,33 +155,17 @@ namespace Lakshya_Yatra
 
         private void editCustomerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            bool IsOpen = false;
-            foreach (Form f in Application.OpenForms)
-            {
-                if (f.Text == "Registration")
-                {
-                    IsOpen = true;
-                    Multiple_Registration frmRegistration = (Multiple_Registration)f;                    
-                    frmRegistration.Customer_ID = Convert.ToInt32(dgvCustomers.SelectedRows[0].Cells["Customer_ID"].Value);
-                    frmRegistration.Bus_Master_ID = Convert.ToInt32(dgvCustomers.SelectedRows[0].Cells["Bus_Master_ID"].Value);
-                    frmRegistration.Show();
-                    frmRegistration.InitializeForm(true);
-                    f.Focus();
-                    break;
-                }
-            }
-            if (IsOpen == false)
-            {
-                Multiple_Registration frmRegistration = new Multiple_Registration();
-                frmRegistration.MdiParent = this.MdiParent;
-                frmRegistration.WindowState = FormWindowState.Maximized;
-                frmRegistration.Customer_ID = Convert.ToInt32(dgvCustomers.SelectedRows[0].Cells["Customer_ID"].Value);
-                frmRegistration.Bus_Master_ID = Convert.ToInt32(dgvCustomers.SelectedRows[0].Cells["Bus_Master_ID"].Value);
-                frmRegistration.Show();
-                frmRegistration.InitializeForm(true);
-            }
+
+            Multiple_Registration frmRegistration = (Multiple_Registration)FormFactory.Instance.CreateOrActivateForm("Multiple Registration");
+            frmRegistration.Customer_ID = Convert.ToInt32(dgvCustomers.SelectedRows[0].Cells["Customer_ID"].Value);
+            frmRegistration.Bus_Master_ID = Convert.ToInt32(dgvCustomers.SelectedRows[0].Cells["Bus_Master_ID"].Value);
+            frmRegistration.InitializeForm(true);
+            frmRegistration.MdiParent = this.MdiParent;
+            frmRegistration.WindowState = FormWindowState.Maximized;
+            frmRegistration.Show();
+            frmRegistration.Focus();
         }
-        
+
         private void AllowDecimal(object sender, KeyPressEventArgs e)
         {
             if (!(char.IsDigit(e.KeyChar) || e.KeyChar == (char)Keys.Back ||

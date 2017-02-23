@@ -17,6 +17,7 @@ namespace Lakshya_Yatra
         private VideoCaptureDevice camera = null;
         string imagesFolder = string.Empty;
         string busRoute = string.Empty;
+        bool validationInProgress = false;
 
         AutoCompleteStringCollection autoCompleteCollectionFirstName = new AutoCompleteStringCollection();
         AutoCompleteStringCollection autoCompleteCollectionLastName = new AutoCompleteStringCollection();
@@ -34,6 +35,7 @@ namespace Lakshya_Yatra
         string print_Address;
 
         DataSet dsAllCustomers = new DataSet();
+        DataTable dtRouteAndDates = new DataTable();
         private string submitMode { get; set; }
         public int Customer_ID { get; set; }
         public int Bus_Master_ID { get; set; }
@@ -57,28 +59,30 @@ namespace Lakshya_Yatra
         
         private void Registration_Load(object sender, EventArgs e)
         {
-            Utilities.Instance.WriteLog("Loading Registration Form");
-            grpRegistrationDetails.BackColor = grpPicture.BackColor = grpTravelDetails.BackColor = label1.BackColor = lblBusTime.BackColor = Color.Transparent;
-            imagesFolder = ConfigurationManager.AppSettings["ImagesFolder"];
+            //Utilities.Instance.WriteLog("Loading Registration Form");
+            grpRegistrationDetails.BackColor = grpPicture.BackColor = 
+                grpTravelDetails.BackColor = label1.BackColor = lblBusTime.BackColor = lblProgress.BackColor = Color.Transparent;
+            
             dgvTickets.AutoGenerateColumns = false;
+            dgvPreviousTickets.AutoGenerateColumns = false;
 
             dsAllCustomers = objBusinessRules.getAllCustomers();
-
             ExtractAutoCompleteStringCollections();
 
             timer1.Start();
             if (Customer_ID == 0 && Bus_Master_ID == 0)
                 InitializeForm(true);
         }
-        
+
         public void InitializeForm(bool formLoad = false)
         {
             try
             {
-                Utilities.Instance.WriteLog("Entered InitializeForm : formLoad=" + formLoad.ToString());
+                //Utilities.Instance.WriteLog("Entered InitializeForm : formLoad=" + formLoad.ToString());
                 submitMode = "Add";
                 HideShowSearchCustomer("hide");
                 lblCustomerID.Text = "New Customer";
+                dgvPreviousTickets.AutoGenerateColumns = false;
                 chkDontKnowBirthdate.Checked = true; dtpBirthDate.Enabled = false;
 
                 chkDontKnowAlternateMobile.Checked = true; txtAlternateMobileNo.Enabled = false;
@@ -93,21 +97,21 @@ namespace Lakshya_Yatra
                 //cbNavratraDate.SelectedIndex = -1;
                 //txtFirstName.Text = txtLastName.Text = txtMobileNo.Text = txtFees.Text = txtAge.Text = txtAddress.Text = txtAlternateMobileNo.Text = string.Empty;
                 
-                Utilities.Instance.WriteLog("Cleared control values");
+                //Utilities.Instance.WriteLog("Cleared control values");
 
                 dtpBirthDate.MaxDate = DateTime.Now.Date;
 
                 SetNoImageForAll();
-                Utilities.Instance.WriteLog("Set No Image for three images");
+                //Utilities.Instance.WriteLog("Set No Image for three images");
 
                 ResetTravelDetails();
-                Utilities.Instance.WriteLog("Called date value changed event");
+                //Utilities.Instance.WriteLog("Called date value changed event");
 
                 GetAreas();
 
                 if (formLoad)
                 {
-                    Utilities.Instance.WriteLog("Entered Camera Initialization snippet");
+                    //Utilities.Instance.WriteLog("Entered Camera Initialization snippet");
                     cbCamera.Items.Clear();
                     cbResolution.Items.Clear();
                     cameraCollection = new FilterInfoCollection(FilterCategory.VideoInputDevice);
@@ -115,12 +119,12 @@ namespace Lakshya_Yatra
                     {
                         //if (videoDevice.Name.Contains("Face2Face"))
                         cbCamera.Items.Add(videoDevice.Name);
-                        Utilities.Instance.WriteLog("Adding names of Video devices");
+                        //Utilities.Instance.WriteLog("Adding names of Video devices");
                     }
 
                     if (cbCamera.Items.Count > 0)
                     {
-                        Utilities.Instance.WriteLog("Setting Camera dropdown index = 0");
+                        //Utilities.Instance.WriteLog("Setting Camera dropdown index = 0");
                         if (cbCamera.Items.Contains("Face2Face ROBO K20 Webcam"))
                         {
                             cbCamera.SelectedIndex = cbCamera.Items.IndexOf("Face2Face ROBO K20 Webcam");
@@ -136,18 +140,38 @@ namespace Lakshya_Yatra
 
                 if (Customer_ID > 0 && Bus_Master_ID > 0)
                 {
-                    Utilities.Instance.WriteLog("Initializing for Customer ID = " + Customer_ID.ToString());
+                    //Utilities.Instance.WriteLog("Initializing for Customer ID = " + Customer_ID.ToString());
                     submitMode = "Edit";
                     lblCustomerID.Text = Customer_ID.ToString();
                     btnPrint.Visible = true;
-                    Utilities.Instance.WriteLog("Calling getCustomerDetails");
+                    //Utilities.Instance.WriteLog("Calling getCustomerDetails");
                     DataSet ds = objBusinessRules.getCustomerDetails(Customer_ID, Bus_Master_ID);
-                    Utilities.Instance.WriteLog("Called getCustomerDetails");
+                    //Utilities.Instance.WriteLog("Called getCustomerDetails");
                    // Auto_Time = ds.Tables[0].Rows[0]["Auto_Time"] as byte[];
                     txtRegistrationDate.Text = Convert.ToDateTime(ds.Tables[0].Rows[0]["Registration_Date"]).ToString("dd-MMM-yyyy");
+                    
+                    string dateAndRouteIDValue = string.Format("{0:yyyy-MM-dd}", Convert.ToDateTime(ds.Tables[0].Rows[0]["yatra_date"]));
 
-                    dtpNavratriDate.Value = Convert.ToDateTime(ds.Tables[0].Rows[0]["yatra_date"]).Date;
+                    dateAndRouteIDValue += "|" + ds.Tables[0].Rows[0]["Route_ID"].ToString();
 
+                    string dateAndRouteIDDisplay = string.Format("{0:dd/MMM/yyyy}", Convert.ToDateTime(ds.Tables[0].Rows[0]["yatra_date"]));
+
+                    dateAndRouteIDDisplay += "|" + ds.Tables[0].Rows[0]["Route_ID"].ToString();
+                    //cbBusRoutes.SelectedValue = Convert.ToInt16(ds.Tables[0].Rows[0]["Route_ID"]);
+
+                    //dtpNavratriDate.Value = Convert.ToDateTime(ds.Tables[0].Rows[0]["yatra_date"]).Date;
+
+                    if (cbRouteAndDates.Items.IndexOf(dateAndRouteIDValue) == -1)
+                    {
+                        var query = from row in dtRouteAndDates.AsEnumerable()
+                                    where Convert.ToString(row["ValueMember"]) == dateAndRouteIDValue
+                                    select row;
+                        DataRow dr = query.First<DataRow>();
+                        dr["Is_Active"] = true;
+                    }
+                    cbRouteAndDates.DataSource = dtRouteAndDates.AsEnumerable().Where<DataRow>(row => Convert.ToBoolean(row["Is_Active"]) == true).CopyToDataTable();
+                    cbRouteAndDates.SelectedValue = dateAndRouteIDValue;
+                    
                     cbArea.SelectedValue = ds.Tables[0].Rows[0]["Area_ID"] != DBNull.Value ? Convert.ToInt16(ds.Tables[0].Rows[0]["Area_ID"]) : 0;
 
                     txtFirstName.Text = ds.Tables[0].Rows[0]["First_Name"].ToString();
@@ -171,7 +195,7 @@ namespace Lakshya_Yatra
 
                     txtAlternateMobileNo.Text = ds.Tables[0].Rows[0]["Alternate_Mobile"].ToString();
                     chkDontKnowAlternateMobile.Checked = string.IsNullOrEmpty(txtAlternateMobileNo.Text.Trim());
-                    Utilities.Instance.WriteLog("Setting Snapshot image");
+                    //Utilities.Instance.WriteLog("Setting Snapshot image");
                     SetCustomerImage();
 
                     if (cbBus.Items.IndexOf(ds.Tables[0].Rows[0]["Bus_Name"].ToString()) == -1)
@@ -200,12 +224,12 @@ namespace Lakshya_Yatra
                 CalculateAge();
                 //Customer_ID = 0; Bus_Master_ID = 0; -- Commented for re-opening Edit requirement.
                 //txtFirstName.Focus();
-                Utilities.Instance.WriteLog("Calling GC Collect : InitializeForm method");
+                //Utilities.Instance.WriteLog("Calling GC Collect : InitializeForm method");
                 GC.Collect();
             }
             catch (Exception ex)
             {
-                Utilities.Instance.WriteLog("*** Exception in InitializeForm \n" + ex.Message);
+                //Utilities.Instance.WriteLog("*** Exception in InitializeForm \n" + ex.Message);
                 MessageBox.Show(ex.Message);
             }           
         }
@@ -219,6 +243,7 @@ namespace Lakshya_Yatra
 
         private void SetCustomerImage()
         {
+            imagesFolder = ConfigurationManager.AppSettings["ImagesFolder"];
             if (System.IO.File.Exists(imagesFolder + Customer_ID.ToString() + ".jpg"))
             {
                 using (var bmpTemp = new Bitmap(imagesFolder + Customer_ID.ToString() + ".jpg"))
@@ -272,7 +297,7 @@ namespace Lakshya_Yatra
                         autoCompleteCollectionMobile.Add(dr["Mobile_No"].ToString());
                 }
 
-            txtSearchAddress.AutoCompleteCustomSource = autoCompleteCollectionAddress;
+            //txtSearchAddress.AutoCompleteCustomSource = autoCompleteCollectionAddress;
             txtAlternateMobileNo.AutoCompleteCustomSource = autoCompleteCollectionAlternateMobile;
             txtFirstName.AutoCompleteCustomSource = autoCompleteCollectionFirstName;
             txtLastName.AutoCompleteCustomSource = autoCompleteCollectionLastName;
@@ -281,84 +306,27 @@ namespace Lakshya_Yatra
 
         private void ClearImages()
         {
-            Utilities.Instance.WriteLog("Entered ClearImages method");            
+            //Utilities.Instance.WriteLog("Entered ClearImages method");            
             if (imgCapture.Image != null) imgCapture.Image = null;
             if (imgSnapShot.Image != null) imgSnapShot.Image = null;
 
             GC.Collect();
-            Utilities.Instance.WriteLog("Exited ClearImages method");
+            //Utilities.Instance.WriteLog("Exited ClearImages method");
         }
 
         private bool Authenticate()
         {
             //int i = cbNavratraDate.SelectedIndex;
             bool result = true;
-            //FirstName
-            if (string.IsNullOrEmpty(txtFirstName.Text))
+            validationInProgress = true;
+
+            //Mobile No
+            if (string.IsNullOrEmpty(txtMobileNo.Text))
             {
                 result = false;
-                MessageBox.Show("Please enter First Name.");
-                txtFirstName.Focus();
-            }
-
-            if (result)
-            {
-                if (string.IsNullOrEmpty(txtLastName.Text))
-                {
-                    result = false;
-                    MessageBox.Show("Please enter Last Name.");
-                    txtLastName.Focus();
-                }
-            }
-
-            if (result)
-            {
-                if (string.IsNullOrEmpty(txtAddress.Text))
-                {
-                    result = false;
-                    MessageBox.Show("Please enter Address.");
-                    txtAddress.Focus();
-                }
-            }
-
-            if (result)
-            {
-                if (Convert.ToInt16(cbArea.SelectedValue) == 0)
-                {
-                    result = false;
-                    MessageBox.Show("Please select Area.");
-                    txtAddress.Focus();
-                }
-            }
-
-            if (result)
-            {
-                if (chkDontKnowBloodGroup.Checked)
-                {
-                    DialogResult confirmation = MessageBox.Show("Blood group is not selected. Are you sure to continue?","",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
-                    if (confirmation == System.Windows.Forms.DialogResult.No)
-                        result = false;
-                }
-            }
-
-            if (result)
-            {
-                if (!chkDontKnowBloodGroup.Checked && cbBloodGroup.SelectedIndex == -1)
-                {
-                    result = false;
-                    MessageBox.Show("Please select Blood Group.");
-                    cbBloodGroup.Focus();
-                }
-            }
-
-            if (result)
-            {
-                if (string.IsNullOrEmpty(txtMobileNo.Text))
-                {
-                    result = false;
-                    MessageBox.Show("Please enter Mobile Number.");
-                    txtMobileNo.Focus();
-                }
+                //MessageBox.Show("Please enter Mobile Number.");
+                txtMobileNo.BackColor = Color.Red;
+                txtMobileNo.Focus();
             }
 
             if (result)
@@ -367,9 +335,78 @@ namespace Lakshya_Yatra
                 {
                     result = false;
                     MessageBox.Show("Please enter 10 digit valid Mobile Number.");
+                    txtMobileNo.BackColor = Color.Red;
                     txtMobileNo.Focus();
                 }
             }
+
+            //FirstName
+            if (result)
+            {
+                if (string.IsNullOrEmpty(txtFirstName.Text))
+                {
+                    result = false;
+                    //MessageBox.Show("Please enter First Name.");
+                    txtFirstName.BackColor = Color.Red;
+                    txtFirstName.Focus();
+                }
+            }
+
+            if (result)
+            {
+                if (string.IsNullOrEmpty(txtLastName.Text))
+                {
+                    result = false;
+                    //MessageBox.Show("Please enter Last Name.");
+                    txtLastName.BackColor = Color.Red;
+                    txtLastName.Focus();
+                }
+            }
+
+            if (result)
+            {
+                if (Convert.ToInt16(cbArea.SelectedValue) == 0)
+                {
+                    result = false;
+                    //MessageBox.Show("Please select Area.");
+                    cbArea.BackColor = Color.Red;
+                    cbArea.Focus();
+                }
+            }
+
+            if (result)
+            {
+                if (string.IsNullOrEmpty(txtAddress.Text))
+                {
+                    result = false;
+                    //MessageBox.Show("Please enter Address.");
+                    txtAddress.BackColor = Color.Red;
+                    txtAddress.Focus();
+                }
+            }
+
+            //if (result)
+            //{
+            //    if (chkDontKnowBloodGroup.Checked)
+            //    {
+            //        DialogResult confirmation = MessageBox.Show("Blood group is not selected. Are you sure to continue?","",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+            //        if (confirmation == System.Windows.Forms.DialogResult.No)
+            //            result = false;
+            //    }
+            //}
+
+            if (result)
+            {
+                if (!chkDontKnowBloodGroup.Checked && cbBloodGroup.SelectedIndex == -1)
+                {
+                    result = false;
+                    //MessageBox.Show("Please select Blood Group.");
+                    cbBloodGroup.BackColor = Color.Red;
+                    cbBloodGroup.Focus();
+                }
+            }
+
+            
 
             //if (result)
             //{
@@ -396,7 +433,8 @@ namespace Lakshya_Yatra
                 if (cbBus.SelectedIndex == -1)
                 {
                     result = false;
-                    MessageBox.Show("Please select Bus.");
+                    //MessageBox.Show("Please select Bus.");
+                    cbBus.BackColor = Color.Red;
                     cbBus.Focus();
                 }
             }
@@ -406,7 +444,8 @@ namespace Lakshya_Yatra
                 if (cbSeatNo.SelectedIndex == -1)
                 {
                     result = false;
-                    MessageBox.Show("Please select Seat Number.");
+                    //MessageBox.Show("Please select Seat Number.");
+                    cbSeatNo.BackColor = Color.Red;
                     cbSeatNo.Focus();
                 }
             }
@@ -417,7 +456,7 @@ namespace Lakshya_Yatra
                                             string.IsNullOrEmpty(txtDiscountReason.Text.Trim())))
                 {
                     result = false;
-                    MessageBox.Show("Please enter discount and reason.");
+                    //MessageBox.Show("Please enter discount and reason.");
                     txtDiscount.Focus();
                 }
             }
@@ -460,13 +499,13 @@ namespace Lakshya_Yatra
             //    }
             //}
              * */
-
+            validationInProgress = false;
             return result;
         }
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
-            Utilities.Instance.WriteLog("Entered Submit Click Method");
+            //Utilities.Instance.WriteLog("Entered Submit Click Method");
             if (!Authenticate())
             {
                 return;
@@ -480,9 +519,13 @@ namespace Lakshya_Yatra
                 //    if (confirmation == System.Windows.Forms.DialogResult.No)
                 //        return;
                 //}
-
+                SetProgressText("Collecting Form values...");
+                string value = Convert.ToString(cbRouteAndDates.SelectedValue);
+                DateTime navratriDate = Convert.ToDateTime(value.Split("|".ToCharArray())[0]);
+                int Route_ID = Convert.ToInt16(value.Split("|".ToCharArray())[1]);
+                string route = Convert.ToString(cbRouteAndDates.Text).Split("|".ToCharArray())[1].Trim();
                 DateTime strRegistrationDate = Convert.ToDateTime(txtRegistrationDate.Text);
-                DateTime strYatraDate = dtpNavratriDate.Value.Date;
+                DateTime strYatraDate = navratriDate.Date; //dtpNavratriDate.Value.Date;
                 string strFirstName = txtFirstName.Text;
                 string strLastName = txtLastName.Text;
                 string strAddress = txtAddress.Text;
@@ -501,6 +544,11 @@ namespace Lakshya_Yatra
                 string AlternateMobile = !chkDontKnowAlternateMobile.Checked ? txtAlternateMobileNo.Text.Trim() : string.Empty;
                 int Area_ID = Convert.ToInt16(cbArea.SelectedValue);
 
+                string date = strYatraDate.DayOfWeek.ToString() + " " + strYatraDate.ToString("dd MMM") + "\n";
+                string time = lblBusTime.Text.Replace("( Time :", "").Replace(" )", "") + "\n";
+                string vehicleNo = strBusNo + "\n";
+                string SeatNo = strSeatNo.ToString() + "\n";
+
                 bool DiscountChanged = true;
                 if (lblOriginalDiscount.Text == txtDiscount.Text.Trim() && lblOriginalDiscountReason.Text.Trim() == txtDiscountReason.Text.Trim())
                 {
@@ -510,27 +558,31 @@ namespace Lakshya_Yatra
                 int Discount = string.IsNullOrEmpty(txtDiscount.Text.Trim()) ? 0 : Convert.ToInt16(txtDiscount.Text.Trim());
                 string DiscountReason = txtDiscountReason.Text.Trim();
 
-                Utilities.Instance.WriteLog("Collected form values");
-                Utilities.Instance.WriteLog("Calling InsertUpdateCustomer method from UI");
+                //Utilities.Instance.WriteLog("Collected form values");
+                //Utilities.Instance.WriteLog("Calling InsertUpdateCustomer method from UI");
+                SetProgressText("Updating Database...");
                 DataSet ds = objBusinessRules.InsertUpdateCustomer(strRegistrationDate, strYatraDate, strFirstName, strLastName, strAddress, Area_ID, strAge, strBirthDate, 
                                                                     strBloodGroup, strMobileNo, strBusNo, strSeatNo, strFees, Auto_Time,
                                                                     DiscountChanged, Discount, Discount_Given_By,DiscountReason,User.Instance.User_Name,
                                                                     Customer_ID, Bus_Master_ID,AlternateMobile);
-                Utilities.Instance.WriteLog("Called InsertUpdateCustomer method");
+                //Utilities.Instance.WriteLog("Called InsertUpdateCustomer method");
+                SetProgressText("Database updated...");
                 if (!string.IsNullOrEmpty(ds.Tables[0].Rows[0][0].ToString()))
                 {
                     string result = ds.Tables[0].Rows[0][0].ToString();
                     if (result == "Seat Availability Changed")
                     {
                         MessageBox.Show("For some reason, Availability of selected seat is changed. Please refresh \"Travel Details\" section");
+                        SetProgressText("", true);
                         return;
                     }
                     Customer_ID = int.Parse(ds.Tables[0].Rows[0][0].ToString().Split("|".ToCharArray())[0]);
                     Bus_Master_ID = int.Parse(ds.Tables[0].Rows[0][0].ToString().Split("|".ToCharArray())[1]);
-                    Utilities.Instance.WriteLog("obtained Customer ID " + Customer_ID.ToString());
+                    //Utilities.Instance.WriteLog("obtained Customer ID " + Customer_ID.ToString());
                     if (imageCaptured)
                     {
-                        Utilities.Instance.WriteLog("Entered saving Snapshot image");
+                        SetProgressText("Saving Customer Image...");
+                        //Utilities.Instance.WriteLog("Entered saving Snapshot image");
                         using (Bitmap saveImg = (Bitmap)imgSnapShot.Image.Clone())
                         {
                             //saveImg.Save(imagesFolder + Customer_ID.ToString() + ".jpg", System.Drawing.Imaging.ImageFormat.jpg);
@@ -547,54 +599,59 @@ namespace Lakshya_Yatra
                                 memory.Close();
                             }
                         }
-                        Utilities.Instance.WriteLog("Exited saving Snapshot image");
+                        //Utilities.Instance.WriteLog("Exited saving Snapshot image");
                     }
-
+                    SetProgressText("Re-Initializing Form Values...");
                     InitializeForm();
 
-                    string date = strYatraDate.DayOfWeek.ToString() + " " + strYatraDate.ToString("dd MMM") + "\n";
-                    string time = lblBusTime.Text.Replace("( Time :", "").Replace(" )", "") + "\n";
-                    string route = busRoute.Replace(Environment.NewLine, " ");
-                    //string vehicleNo = lblVehicleNo.Text + "\n";
-                    //string SeatNo = lblSeatNo.Text + "\n";
-                    //string smsResult = Utilities.Instance.SendSMSUsingBS(strFirstName, strLastName, date, time, route, "+91" + txtMobileNo.Text.Trim(), lblVehicleNo.Text, lblSeatNo.Text);
-                    //if (smsResult.StartsWith("ES1009"))
-                    //{
-                    //    MessageBox.Show("SMS could not be sent. Invalid Mobile Number", "SMS Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //}
-                    //else if (smsResult.StartsWith("Unable to connect to the remote server"))
-                    //{
-                    //    MessageBox.Show("SMS could not be sent. Please check internet connection", "SMS Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //}
+                    
+                    SetProgressText("Sending SMS...");
+                    string smsResult = Utilities.Instance.SendSMSUsingBS(strFirstName, strLastName, date, time, route, "+91" + txtMobileNo.Text.Trim(), strBusNo, strSeatNo.ToString());
+                    if (smsResult.StartsWith("ES1009"))
+                    {
+                        MessageBox.Show("SMS could not be sent. Invalid Mobile Number", "SMS Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else if (smsResult.StartsWith("Unable to connect to the remote server"))
+                    {
+                        MessageBox.Show("SMS could not be sent. Please check internet connection", "SMS Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                    // MessageBox.Show("Record updated successfully. Customer ID is " + Customer_ID.ToString());
                     //MessageBox.Show("Record updated successfully. Customer ID is " + lblCustomerID.Text);
                     MessageBox.Show("Record updated successfully.");
+                    SetProgressText("", true);
                     btnPrint.Focus();
                 }
                 
             }
             catch (Exception ex)
             {
-                Utilities.Instance.WriteLog("*** Exception in Submit Click \n" + ex.Message);
+                //Utilities.Instance.WriteLog("*** Exception in Submit Click \n" + ex.Message);
                 MessageBox.Show(ex.Message);
+                SetProgressText("", true);
             }
            
+        }
+
+        private void SetProgressText(string p, bool setEmpty = false)
+        {
+            lblProgress.Text = setEmpty ? string.Empty : string.Concat(p, "Please wait...");
+            Application.DoEvents();
         }
         
         private void bntStart_Click(object sender, EventArgs e)
         {
-            Utilities.Instance.WriteLog("Entered Camera Start click");
+            //Utilities.Instance.WriteLog("Entered Camera Start click");
             if (camera != null && camera.IsRunning)
             {                
                 camera.Stop();
             }
             camera.Start();
-            Utilities.Instance.WriteLog("Exited Camera start click");
+            //Utilities.Instance.WriteLog("Exited Camera start click");
         }
 
         private void bntStop_Click(object sender, EventArgs e)
         {
-            Utilities.Instance.WriteLog("Entered Camera Stop click");
+            //Utilities.Instance.WriteLog("Entered Camera Stop click");
             if (camera != null && camera.IsRunning)
             {
                 camera.Stop();
@@ -603,7 +660,7 @@ namespace Lakshya_Yatra
                 imgCapture.Image = null;
                 SetNoImageForAll();
             }
-            Utilities.Instance.WriteLog("Exited Camera Stop Click");
+            //Utilities.Instance.WriteLog("Exited Camera Stop Click");
         }
 
         private void SetNoImageForAll()
@@ -619,7 +676,7 @@ namespace Lakshya_Yatra
         private void bntCapture_Click(object sender, EventArgs e)
         {
             //customerImage.im.Dispose();
-            Utilities.Instance.WriteLog("Entered Capture Click");
+            //Utilities.Instance.WriteLog("Entered Capture Click");
             ClearImages();
 
             imgVideo.Image.Save("Customer.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
@@ -633,14 +690,14 @@ namespace Lakshya_Yatra
                 imgSnapShot.Image = img;
             }
 
-            Utilities.Instance.WriteLog("Exited Capture Click");
+            //Utilities.Instance.WriteLog("Exited Capture Click");
         }
         
         private void cbCamera_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {
-                Utilities.Instance.WriteLog("Entered Camera Selected Index Changed " + cbCamera.SelectedIndex.ToString());
+                //Utilities.Instance.WriteLog("Entered Camera Selected Index Changed " + cbCamera.SelectedIndex.ToString());
                 if (camera != null && camera.IsRunning)
                 {
                     camera.NewFrame -= camera_NewFrame;
@@ -662,30 +719,30 @@ namespace Lakshya_Yatra
 
                 if (cbResolution.Items.Count > 0)
                 {
-                    Utilities.Instance.WriteLog("Setting Resolution dropdown selected index = 0");
+                    //Utilities.Instance.WriteLog("Setting Resolution dropdown selected index = 0");
                     cbResolution.SelectedIndex = 0;
                 }
 
             }
             catch (Exception ex)
             {
-                Utilities.Instance.WriteLog("*** Exception at Camera selected index changed \n" + ex.Message);
+                //Utilities.Instance.WriteLog("*** Exception at Camera selected index changed \n" + ex.Message);
             }
             
         }
 
         private void cbResolution_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Utilities.Instance.WriteLog("Entered cbResolution_SelectedIndexChanged");
+            //Utilities.Instance.WriteLog("Entered cbResolution_SelectedIndexChanged");
             if (camera != null)
             {
                 camera.VideoResolution = camera.VideoCapabilities[cbResolution.SelectedIndex];
                 camera.NewFrame += camera_NewFrame;
                 if (camera.IsRunning) camera.Stop();
-                Utilities.Instance.WriteLog("Starting Camera");
+                //Utilities.Instance.WriteLog("Starting Camera");
                 camera.Start();
             }
-            Utilities.Instance.WriteLog("Exiting cbResolution_SelectedIndexChanged");
+            //Utilities.Instance.WriteLog("Exiting cbResolution_SelectedIndexChanged");
         }
 
         void camera_NewFrame(object sender, NewFrameEventArgs eventArgs)
@@ -699,7 +756,7 @@ namespace Lakshya_Yatra
             }
             catch(Exception ex)
             {
-                Utilities.Instance.WriteLog("*** Exception in camera_NewFrame \n" + ex.Message);
+                //Utilities.Instance.WriteLog("*** Exception in camera_NewFrame \n" + ex.Message);
                 //Not able to find exact step of the error
             }
             //Logger.Instance.WriteLog("Exiting camera_NewFrame");
@@ -707,7 +764,7 @@ namespace Lakshya_Yatra
 
         private void Registration_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Utilities.Instance.WriteLog("Entered Registration_FormClosing");
+            //Utilities.Instance.WriteLog("Entered Registration_FormClosing");
             if (camera != null)
             {
                 camera.NewFrame -= camera_NewFrame;
@@ -717,12 +774,12 @@ namespace Lakshya_Yatra
             ClearImages();
             GC.Collect();
             timer1.Stop();
-            Utilities.Instance.WriteLog("Exited Registration_FormClosing");
+            //Utilities.Instance.WriteLog("Exited Registration_FormClosing");
         }
 
         private void btnPrint_Click(object sender, EventArgs e)
         {
-            Utilities.Instance.WriteLog("Entered btnPrint_Click");
+            //Utilities.Instance.WriteLog("Entered btnPrint_Click");
             try
             {            
                 if (dgvTickets.DataSource == null) return;
@@ -746,19 +803,19 @@ namespace Lakshya_Yatra
             }
             catch (Exception ex)
             {
-                Utilities.Instance.WriteLog("*** Exception in btnPrint_Click \n" + ex.Message);
+                //Utilities.Instance.WriteLog("*** Exception in btnPrint_Click \n" + ex.Message);
                 MessageBox.Show("Error in printing ticket.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 //Not able to find exact step of the error
             }
-            Utilities.Instance.WriteLog("Exited btnPrint_Click");
+            //Utilities.Instance.WriteLog("Exited btnPrint_Click");
         }
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
             //Print the contents.
-            //Utilities.Instance.WriteLog("Entered printDocument1_PrintPage");            
+            ////Utilities.Instance.WriteLog("Entered printDocument1_PrintPage");            
             //e.Graphics.DrawImage(bitmap, 0, 0);
-            //Utilities.Instance.WriteLog("Exited printDocument1_PrintPage");
+            ////Utilities.Instance.WriteLog("Exited printDocument1_PrintPage");
             //bitmap.Dispose();
 
             //New Code
@@ -780,18 +837,18 @@ namespace Lakshya_Yatra
                 printImg.Dispose();
             }
 
-            g.DrawString("ID : \t\t" + print_CustomerID.ToString(), f, Brushes.Black, 145.0f, 10.0f);
-            g.DrawString("Vehicle No. : \t" + print_Bus_Name.ToString(), f, Brushes.Black, 145.0f, 30.0f);
-            g.DrawString("Seat No. : \t" + print_Seat_No.ToString(), f, Brushes.Black, 145.0f, 50.0f);
-            g.DrawString("Yatra Date : \t" + print_Yatra_Date.ToString(), f, Brushes.Black, 145.0f, 70.0f);
+            g.DrawString("ID : \t\t" + print_CustomerID.ToString(), f, Brushes.Black, 130.0f, 10.0f);
+            g.DrawString("Vehicle No. : \t" + print_Bus_Name.ToString(), f, Brushes.Black, 130.0f, 30.0f);
+            g.DrawString("Seat No. : \t" + print_Seat_No.ToString(), f, Brushes.Black, 130.0f, 50.0f);
+            g.DrawString("Yatra Date : \t" + print_Yatra_Date.ToString(), f, Brushes.Black, 130.0f, 70.0f);
 
-            g.DrawString("Name : \t" + print_Name.ToString(), f, Brushes.Black, 10.0f, 100.0f);
-            g.DrawString("Address : \t" + print_Address.ToString(), f, Brushes.Black, 10.0f, 120.0f);
+            g.DrawString("Name : \t" + print_Name.ToString(), f, Brushes.Black, 10.0f, 120.0f);
+            g.DrawString("Address : " + print_Address.ToString(), f, Brushes.Black, 10.0f, 140.0f);
         }
 
         private void btnAddNew_Click(object sender, EventArgs e)
         {
-            Customer_ID = 0; Bus_Master_ID = 0; txtSearchAddress.Text = string.Empty;
+            Customer_ID = 0; Bus_Master_ID = 0; //txtSearchAddress.Text = string.Empty;
             InitializeForm();
             //DialogResult newCustomer = MessageBox.Show("Is it new ticket for same customer?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             //if (newCustomer == System.Windows.Forms.DialogResult.No)
@@ -809,55 +866,67 @@ namespace Lakshya_Yatra
             txtFees.Enabled = false;
             txtFees.Text = string.Empty;
             chkDiscount.Checked = false; lblOriginalDiscount.Text = "0"; txtDiscount.Enabled = false; txtDiscountReason.Enabled = false;
-
-            using (DataSet dsDates = objBusinessRules.GetNavratriDatesForBusRoute(0))
+            
+            cbRouteAndDates.DataSource = null;
+            dtRouteAndDates = objBusinessRules.GetRouteAndDates().Tables[0];
+            
+            if (dtRouteAndDates.Rows.Count > 0)
             {
-                if (dsDates.Tables[0].Rows.Count > 0)
-                {
-                    dtpNavratriDate.MaxDate = new DateTime(9998, 12, 12);
-                    dtpNavratriDate.MinDate = Convert.ToDateTime(dsDates.Tables[0].Rows[0]["Navratri_Date"]);
-                    dtpNavratriDate.MaxDate = Convert.ToDateTime(dsDates.Tables[0].Rows[dsDates.Tables[0].Rows.Count - 1]["Navratri_Date"]);                    
-                }
+                cbRouteAndDates.DisplayMember = "DisplayMember";
+                cbRouteAndDates.ValueMember = "ValueMember";
+                cbRouteAndDates.DataSource = dtRouteAndDates.AsEnumerable().Where<DataRow>(row => Convert.ToBoolean(row["Is_Active"]) == true).CopyToDataTable();
+
+                cbRouteAndDates.SelectedIndex = 0;
             }
+
+            //using (DataSet dsDates = objBusinessRules.GetNavratriDatesForBusRoute(0))
+            //{
+            //    if (dsDates.Tables[0].Rows.Count > 0)
+            //    {
+            //        dtpNavratriDate.MaxDate = new DateTime(9998, 12, 12);
+            //        dtpNavratriDate.MinDate = Convert.ToDateTime(dsDates.Tables[0].Rows[0]["Navratri_Date"]);
+            //        dtpNavratriDate.MaxDate = Convert.ToDateTime(dsDates.Tables[0].Rows[dsDates.Tables[0].Rows.Count - 1]["Navratri_Date"]);                    
+            //    }
+            //}
 
             lblOriginalDiscountReason.Text = txtDiscountReason.Text = txtDiscount.Text = string.Empty;
-            using(DataSet dsBusRoutes = objBusinessRules.GetBusRoutes())
-            {
-                if (dsBusRoutes.Tables[0].Rows.Count > 0)
-                {
-                    cbBusRoutes.DisplayMember = "Bus_Route";
-                    cbBusRoutes.ValueMember = "Route_ID";
-                    cbBusRoutes.DataSource = dsBusRoutes.Tables[0].Rows.Count > 0 ? dsBusRoutes.Tables[0] : null ;
+            //using(DataSet dsBusRoutes = objBusinessRules.GetBusRoutes())
+            //{
+            //    if (dsBusRoutes.Tables[0].Rows.Count > 0)
+            //    {
+            //        cbBusRoutes.DisplayMember = "Bus_Route";
+            //        cbBusRoutes.ValueMember = "Route_ID";
+            //        cbBusRoutes.DataSource = dsBusRoutes.Tables[0].Rows.Count > 0 ? dsBusRoutes.Tables[0] : null ;
 
-                    if (cbBusRoutes.DataSource != null)
-                    {
-                        cbBusRoutes.SelectedIndex = 0;
-                    }
-                }
-            }
+            //        if (cbBusRoutes.DataSource != null)
+            //        {
+            //            cbBusRoutes.SelectedIndex = 0;
+            //        }
+            //    }
+            //}
         }
 
         private void ResetNavaratriDates(int Route_ID)
         {
-            cbBus.Items.Clear();
-            cbSeatNo.Items.Clear();
-            lblBusTime.Text = string.Empty;
+            //cbBus.Items.Clear();
+            //cbSeatNo.Items.Clear();
+            //lblBusTime.Text = string.Empty;
 
-            busRoute = string.Empty;
-            //chkEditFees.Checked = false; 
-            txtFees.Enabled = false;
-            chkDiscount.Checked = false; lblOriginalDiscount.Text = "0"; txtDiscount.Enabled = false; txtDiscountReason.Enabled = false;
+            //busRoute = string.Empty;
+            ////chkEditFees.Checked = false; 
+            //txtFees.Enabled = false;
+            //chkDiscount.Checked = false; lblOriginalDiscount.Text = "0"; txtDiscount.Enabled = false; txtDiscountReason.Enabled = false;
 
-            using (DataSet dsDates = objBusinessRules.GetNavratriDatesForBusRoute(Route_ID))
-            {
-                if (dsDates.Tables[0].Rows.Count > 0)
-                {
-                    if (dtpNavratriDate.Value.Date != Convert.ToDateTime(dsDates.Tables[0].Rows[0]["Navratri_Date"]).Date)
-                        dtpNavratriDate.Value = Convert.ToDateTime(dsDates.Tables[0].Rows[0]["Navratri_Date"]).Date;
-                    else
-                        ResetAvailableBusNames(Route_ID, dtpNavratriDate.Value.Date);
-                }
-            }
+            //using (DataSet dsDates = objBusinessRules.GetNavratriDatesForBusRoute(Route_ID))
+            //{
+            //    if (dsDates.Tables[0].Rows.Count > 0)
+            //    {
+            //        if (dtpNavratriDate.Value.Date != Convert.ToDateTime(dsDates.Tables[0].Rows[0]["Navratri_Date"]).Date)
+            //            dtpNavratriDate.Value = Convert.ToDateTime(dsDates.Tables[0].Rows[0]["Navratri_Date"]).Date;
+            //        else
+            //            ResetAvailableBusNames(Route_ID, dtpNavratriDate.Value.Date);
+            //    }
+            //}
         }
 
         private void ResetAvailableBusNames(int Route_ID, DateTime navratriDate)
@@ -917,17 +986,34 @@ namespace Lakshya_Yatra
 
         private void cbBus_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ResetAvailableSeats(Convert.ToInt16(cbBusRoutes.SelectedValue), dtpNavratriDate.Value.Date, cbBus.SelectedItem.ToString());
+            string value = Convert.ToString(cbRouteAndDates.SelectedValue);
+            DateTime navratriDate = Convert.ToDateTime(value.Split("|".ToCharArray())[0]);
+            int Route_ID = Convert.ToInt16(value.Split("|".ToCharArray())[1]);
+
+            ResetAvailableSeats(Route_ID, navratriDate, cbBus.SelectedItem.ToString());
         }
 
         private void cbBusRoutes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ResetNavaratriDates(Convert.ToInt16(cbBusRoutes.SelectedValue));
+            //ResetNavaratriDates(Convert.ToInt16(cbBusRoutes.SelectedValue));
+        }
+        
+        private void cbRouteAndDates_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbRouteAndDates.DataSource != null)
+            {
+                string value = Convert.ToString(cbRouteAndDates.SelectedValue);
+                DateTime navratriDate = Convert.ToDateTime(value.Split("|".ToCharArray())[0]);
+                int Route_ID = Convert.ToInt16(value.Split("|".ToCharArray())[1]);
+
+                ResetAvailableBusNames(Route_ID, navratriDate);
+            }
+
         }
 
         private void dtpNavratriDate_ValueChanged(object sender, EventArgs e)
         {
-            ResetAvailableBusNames(Convert.ToInt16(cbBusRoutes.SelectedValue), dtpNavratriDate.Value.Date);
+            //ResetAvailableBusNames(Convert.ToInt16(cbBusRoutes.SelectedValue), dtpNavratriDate.Value.Date);
         }
         private void AllowDecimal(object sender, KeyPressEventArgs e)
         {
@@ -1006,7 +1092,8 @@ namespace Lakshya_Yatra
         {
             ResetTravelDetails();
             Bus_Master_ID = 0;
-            cbBusRoutes.Focus();
+            //cbBusRoutes.Focus();
+            cbRouteAndDates.Focus();
         }
 
         private void GetCustomerDetailsForMobile(string mobileNo)
@@ -1053,7 +1140,8 @@ namespace Lakshya_Yatra
 
                     GetCustomerTickets();
                     btnPrint.Visible = true;
-                    cbBusRoutes.Focus();
+                    //cbBusRoutes.Focus();
+                    cbRouteAndDates.Focus();
                 }
                 else
                 {
@@ -1091,14 +1179,19 @@ namespace Lakshya_Yatra
         {
             try
             {
-                Utilities.Instance.WriteLog("Entered cbSeatNo_SelectedIndexChanged");
-                DataSet ds = objBusinessRules.getLatestUpdatedTimeStamp(dtpNavratriDate.Value.Date, cbBus.SelectedItem.ToString(), Convert.ToInt16(cbSeatNo.SelectedItem));
+                //Utilities.Instance.WriteLog("Entered cbSeatNo_SelectedIndexChanged");
+
+                string value = Convert.ToString(cbRouteAndDates.SelectedValue);
+                DateTime navratriDate = Convert.ToDateTime(value.Split("|".ToCharArray())[0]);
+                int Route_ID = Convert.ToInt16(value.Split("|".ToCharArray())[1]);
+
+                DataSet ds = objBusinessRules.getLatestUpdatedTimeStamp(navratriDate.Date, cbBus.SelectedItem.ToString(), Convert.ToInt16(cbSeatNo.SelectedItem));
                 Auto_Time = ds.Tables[0].Rows[0]["Auto_Time"] as byte[];
-                Utilities.Instance.WriteLog("Exited cbSeatNo_SelectedIndexChanged");
+                //Utilities.Instance.WriteLog("Exited cbSeatNo_SelectedIndexChanged");
             }
             catch(Exception ex)
             {
-                Utilities.Instance.WriteLog("*** Exception in cbSeatNo_SelectedIndexChanged \n" + ex.Message);
+                //Utilities.Instance.WriteLog("*** Exception in cbSeatNo_SelectedIndexChanged \n" + ex.Message);
             }
         }
 
@@ -1132,7 +1225,7 @@ namespace Lakshya_Yatra
             {
                 EnableDisableForm(true);
                 panelSearch.Hide();
-                txtFirstName.Focus();
+                txtMobileNo.Focus();
             }
         }
 
@@ -1267,8 +1360,11 @@ namespace Lakshya_Yatra
         
         private void ActivateControl(object sender, EventArgs e)
         {
-            ((Control)sender).BackColor = Color.Aqua;
-            ((Control)sender).ForeColor = Color.DarkRed;
+            if (!validationInProgress)
+            {
+                ((Control)sender).BackColor = Color.Aqua;
+                ((Control)sender).ForeColor = Color.DarkRed;
+            }
             toolTip1.Show(Convert.ToString(((Control)sender).Tag), ((Control)sender));
         }
 
@@ -1291,6 +1387,11 @@ namespace Lakshya_Yatra
                         break;
                 }
             }
+            else if (sender is ComboBox)
+            {
+                ((Control)sender).BackColor = Color.FromKnownColor(KnownColor.ScrollBar);
+                ((Control)sender).ForeColor = Color.Black;
+            }
             else if (sender is TextBox && ((TextBox)sender).Name == "txtMobileNo")
             {
                 TextBox txt = (TextBox)sender;
@@ -1308,7 +1409,8 @@ namespace Lakshya_Yatra
                 
                 if (chkDontKnowBirthdate.Checked && chkDontKnowAlternateMobile.Checked && chkDontKnowBloodGroup.Checked)
                 {
-                    cbBusRoutes.Focus();
+                    //cbBusRoutes.Focus();
+                    cbRouteAndDates.Focus();
                 }
 
                 ((Control)sender).BackColor = Color.White;
@@ -1321,15 +1423,7 @@ namespace Lakshya_Yatra
             }
             toolTip1.Hide(((Control)sender));
         }
-
-        private void txtSearchAddress_TextChanged(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(txtSearchAddress.Text.Trim()))
-            {
-                txtAddress.Text = txtSearchAddress.Text;
-            }
-        }
-
+        
         private void btnSelect_Click(object sender, EventArgs e)
         {
             TransferContents();
@@ -1413,7 +1507,7 @@ namespace Lakshya_Yatra
                 }
 
                 BusinessRules objDatabase = new BusinessRules();
-                DataSet ds = objDatabase.DeleteTicket(Customer_ID, Bus_Master_ID);
+                DataSet ds = objDatabase.DeleteTicket(Customer_ID, Bus_Master_ID, User.Instance.User_Name);
                 //if (System.IO.File.Exists(imagesFolder + customerID.ToString() + ".jpg"))
                 //{
                 //    System.IO.File.Delete(imagesFolder + customerID.ToString() + ".jpg");
@@ -1435,27 +1529,45 @@ namespace Lakshya_Yatra
                 MessageBox.Show("Error in updating Record, please contact System Administrator!\n" + ex.Message.ToString());
             }
         }
-
-        private void btnPrintOld_Click(object sender, EventArgs e)
+        
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (dgvPreviousTickets.DataSource == null) return;
+            if (Clipboard.ContainsText())
+            {
+                txtAddress.Text += Clipboard.GetText(TextDataFormat.Text).ToString();
+            }
+        }
 
-
-            foreach (DataGridViewRow dgvRow in dgvPreviousTickets.Rows)
+        private void dgvPreviousTickets_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridView grid = (DataGridView)sender;
+            if (grid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0) 
             {
                 print_CustomerID = print_Address = print_Bus_Name = print_Name = print_Seat_No = print_Yatra_Date = string.Empty;
 
-                print_CustomerID = Convert.ToString(dgvRow.Cells["CustomerID1"].Value);
-                print_Bus_Name = Convert.ToString(dgvRow.Cells["Bus_Name1"].Value);
-                print_Seat_No = Convert.ToString(dgvRow.Cells["Seat_No1"].Value);
-                print_Yatra_Date = Convert.ToString(dgvRow.Cells["Yatra_Date1"].Value);
-                print_Name = string.Format("{0} {1}", Convert.ToString(dgvRow.Cells["First_Name1"].Value), Convert.ToString(dgvRow.Cells["Last_Name1"].Value));
-                print_Address = Convert.ToString(dgvRow.Cells["Address1"].Value);
+                print_CustomerID = Convert.ToString(grid.Rows[e.RowIndex].Cells["CustomerID1"].Value);
+                print_Bus_Name = Convert.ToString(grid.Rows[e.RowIndex].Cells["Bus_Name1"].Value);
+                print_Seat_No = Convert.ToString(grid.Rows[e.RowIndex].Cells["Seat_No1"].Value);
+                print_Yatra_Date = Convert.ToString(grid.Rows[e.RowIndex].Cells["Yatra_Date1"].Value);
+                print_Name = string.Format("{0} {1}", Convert.ToString(grid.Rows[e.RowIndex].Cells["First_Name1"].Value), Convert.ToString(grid.Rows[e.RowIndex].Cells["Last_Name1"].Value));
+                print_Address = Convert.ToString(grid.Rows[e.RowIndex].Cells["Address1"].Value);
                 printPreviewDialog1.Document = printDocument1;
                 printDocument1.Print();
                 //printPreviewDialog1.ShowDialog();
             }
         }
+
+        private void cbArea_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtAddress.Text = cbArea.SelectedIndex > 0 ? cbArea.Text : string.Empty;
+        }
+
+        private void txtAddress_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.A && sender != null)
+                ((TextBox)sender).SelectAll();
+        }
+
 
     }
 }
